@@ -33,8 +33,8 @@ import org.jfree.data.time.TimeSeries;
  */
 public class LineGraph extends BaseGraph {
 
-    public LineGraph(kSar hissar, String Title, String str, int skipColumn, SortedTreeNode pp) {
-        super(hissar, Title, skipColumn);
+    public LineGraph(kSar hissar, String Title, String str, int i, SortedTreeNode pp) {
+        super(hissar, Title, i);
         this.setTitle(str);
         if (pp != null) {
             TreeNodeInfo infotmp = new TreeNodeInfo(Title, this);
@@ -43,6 +43,7 @@ public class LineGraph extends BaseGraph {
         }
     }
 
+    
     public void setTitle(String s) {
         HeaderStr = s.split("\\s+");
         for (int i = skipColumn; i < HeaderStr.length; i++) {
@@ -53,8 +54,6 @@ public class LineGraph extends BaseGraph {
     public int parse(Second now, String s) {
         String[] cols = s.split("\\s+");
         Float colvalue = null;
-        System.out.println("parse " + s );
-        System.out.println("hdr "  +HeaderStr.length + " cols " + cols.length );
         for (int i = skipColumn; i < HeaderStr.length; i++) {
             try {
                 colvalue = new Float(cols[i]);

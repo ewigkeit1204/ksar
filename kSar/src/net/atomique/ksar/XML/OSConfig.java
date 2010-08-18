@@ -30,6 +30,7 @@ public class OSConfig {
     }
 
     public String getStat(String [] columns, int firstdatacolumn) {
+
         StringBuffer tmpbuf = new StringBuffer();
         int num=0;
         for (int i=firstdatacolumn; i< columns.length; i++) {
@@ -39,7 +40,7 @@ public class OSConfig {
             tmpbuf.append(columns[i]);
             num++;
         }
-        
+
         Iterator<String> ite = StatHash.keySet().iterator();
         while (ite.hasNext() ) {
             String tmptitle = ite.next();

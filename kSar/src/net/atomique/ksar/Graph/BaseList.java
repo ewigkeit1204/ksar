@@ -76,15 +76,15 @@ public abstract class BaseList {
     public int parse(Second now, String s) {
         String cols[] = s.split("\\s+");
         LineGraph tmp = null;
-        if (!nodeHashList.containsKey(cols[skipColumn])) {
-            tmp = new LineGraph(mysar, Title + " " + cols[skipColumn], HeaderStr, skipColumn, null);
+        if (!nodeHashList.containsKey(cols[1])) {
+            tmp = new LineGraph(mysar, Title + " " + cols[1], HeaderStr, 1+skipColumn, null);
             tmp.setPlotList(PlotList);
-            nodeHashList.put(cols[skipColumn], tmp);
-            TreeNodeInfo infotmp = new TreeNodeInfo(cols[skipColumn], tmp);
+            nodeHashList.put(cols[1], tmp);
+            TreeNodeInfo infotmp = new TreeNodeInfo(cols[1], tmp);
             SortedTreeNode nodetmp = new SortedTreeNode(infotmp);
             mysar.add2tree(parentTreeNode, nodetmp);
         } else {
-            tmp = (LineGraph) nodeHashList.get(cols[skipColumn]);
+            tmp = (LineGraph) nodeHashList.get(cols[1]);
         }
 
         return tmp.parse(now, s);
