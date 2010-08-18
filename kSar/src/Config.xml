@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : Config.xml
+    Created on : 10 août 2010, 16:31
+    Author     : Max
+    Description:
+        Configure color of graphs
+
+-->
+
+<ConfiG>
+    <colors>
+    <!-- BEGIN CPU -->
+    <itemcolor name="%usr">
+        <color>0,255,0</color>
+    </itemcolor>
+    <itemcolor name="%sys">
+        <color>255,0,0</color>
+    </itemcolor>
+    <itemcolor name ="%system">
+        <color>255,0,0</color>
+    </itemcolor>
+    <itemcolor name="%user">
+        <color>0,255,0</color>
+    </itemcolor>
+    <itemcolor name="%idle">
+        <color>127,127,127</color>
+    </itemcolor>
+    <itemcolor name="%nice">
+        <color>255,255,0</color>
+    </itemcolor>
+    <itemcolor name="%steal">
+        <color>255,127,0</color>
+    </itemcolor>
+    <itemcolor name="%iowait">
+        <color>255,0,127</color>
+    </itemcolor>
+    <!-- END CPU -->
+    <itemcolor name="intr/s">
+        <color>255,127,127</color>
+    </itemcolor>
+    <!-- BEGIN LOAD AVERAGE -->
+    <itemcolor name="ldavg-1">
+        <color>255,0,0</color>
+    </itemcolor>
+    <itemcolor name="ldavg-5">
+        <color>0,255,0</color>
+    </itemcolor>
+    <itemcolor name="ldavg-15">
+        <color>0,255,0</color>
+    </itemcolor>
+    <!-- END LOAD AVERAGE -->
+    <!-- BEGIN LINUX LOAD-->
+    <itemcolor name="plist-sz">
+        <color>0,255,255</color>
+    </itemcolor>
+    <itemcolor name="runq-sz">
+        <color>255,255,0</color>
+    </itemcolor>
+    <!-- END LINUX LOAD-->
+    <!-- BEGIN NFS -->
+    <itemcolor name="coll/s">
+        <color>255,0,0</color>
+    </itemcolor>
+    <itemcolor name="rxerr/s">
+        <color>255,255,0</color>
+    </itemcolor>
+    <itemcolor name="rxdrop/s">
+        <color>255,0,255</color>
+    </itemcolor>
+    <itemcolor name="rxfram/s">
+        <color>0,255,255</color>
+    </itemcolor>
+    <itemcolor name="rxfifo/s">
+        <color>255,255,255</color>
+    </itemcolor>
+    <itemcolor name="txerr/s">
+        <color>255,0,0</color>
+    </itemcolor>
+    <itemcolor name="txdrop/s">
+        <color>0,255,0</color>
+    </itemcolor>
+    <itemcolor name="txcarr/s">
+        <color>0,0,255</color>
+    </itemcolor>
+    <itemcolor name="txfifo/s">
+        <color>255,0,255</color>
+    </itemcolor>
+    <!-- END NFS -->
+    <itemcolor name="cswch/s">
+        <color>255,0,255</color>
+    </itemcolor>
+    <!-- BEGIN DEVICE -->
+    <itemcolor name="blks/s">
+        <color>255,0,255</color>
+    </itemcolor>
+    <itemcolor name="tps">
+        <color>255,0,0</color>
+    </itemcolor>
+    <!-- END DEVICE -->
+    <!-- BEGIN BLOCK -->
+    <itemcolor name="bread/s">
+        <color>255,0,0</color>
+    </itemcolor>
+    <itemcolor name="bwrtn/s">
+        <color>255,255,0</color>
+    </itemcolor>
+    <itemcolor name="rtps">
+        <color>255,0,255</color>
+    </itemcolor>
+    <itemcolor name="wtps">
+        <color>0,0,255</color>
+    </itemcolor>
+    <!-- END BLOCK -->
+    </colors>
+    <!--  BEGIN OS -->
+    <OS>
+        <OSType name="Linux">
+            <Stat name="proc1">
+                <headerstr>proc/s</headerstr>
+                <graphname>PROC</graphname>
+            </Stat>
+            <Graph name="PROC" Title="Proc" type="line">
+                <Plot title="proc">proc/s</Plot>
+            </Graph>
+
+            <Stat name="cswch">
+                <headerstr>cswch/s</headerstr>
+                <graphname>CSWCH</graphname>
+            </Stat>
+            <Graph name="CSWCH" Title="Context" type="line">
+                <Plot title="cwsch">cswch/s</Plot>
+            </Graph>
+
+            <Stat name="intr">
+                <headerstr>INTR intr/s</headerstr>
+                <graphname>INTR</graphname>
+            </Stat>
+            <Graph name="INTR" Title="Interrupts" type="linelist">
+                <Plot title="intr">intr/s</Plot>
+            </Graph>
+            
+            <Stat name="swap1">
+                <headerstr>pswpin/s pswpout/s</headerstr>
+                <graphname>SWAP</graphname>
+            </Stat>
+            <Graph name="SWAP" Title="Swap" type="line">
+                <Plot title="swap">pswpin/s pswpout/s</Plot>
+            </Graph>
+            <Stat name="proc2">
+                <headerstr>proc/s   cswch/s</headerstr>
+                <graphname>PROC2</graphname>
+            </Stat>
+            <Graph name="INTR" Title="Interrupt" type="linelist">
+                <Plot title="cwsch">cswch/s</Plot>
+            </Graph>
+            <Graph name="INET1" Title="Interfaces traffic" type="linelist">
+                <Plot title="packet">rxpck/s txpck/s</Plot>
+                <Plot title="bytes">rxbyt/s txbyt/s rxkB/s txkB/s</Plot>
+                <Plot title="cast">rxcmp/s txcmp/s rxmcst/s</Plot>
+            </Graph>
+            <Graph name="INET2" Title="Interfaces error" type="linelist">
+                <Plot title="Rx">rxerr/s rxdrop/s rxfram/s  rxfifo/s</Plot>
+                <Plot title="Tx">txerr/s txdrop/s txcarr/s  txfifo/s</Plot>
+                <Plot title="Collision">coll/s</Plot>
+            </Graph>
+            <Graph name="PAGING" Title="Paging" type="line">
+                <Plot title="pgp">pgpgin/s pgpgout/s</Plot>
+                <Plot title="pg">activepg inadtypg inaclnpg inatarpg</Plot>
+                <Plot title="fault">fault/s majflt/s</Plot>
+                <Plot title="free">pgfree/s pgscank/s pgscand/s pgsteal/s</Plot>
+                <Plot title="vmeff">vmeff</Plot>
+            </Graph>
+            <Graph name="DEV" Title="Devices" type="linelist">
+                <Plot title="tps">tps</Plot>
+                <Plot title="blks/s">blks/s</Plot>
+                <Plot title="sector">rd_sec/s wr_sec/s</Plot>
+                <Plot title="queue">avgrq-sz avgqu-sz</Plot>
+                <Plot title="service">await svctm</Plot>
+                <Plot title="util">%util</Plot>
+            </Graph>
+            <Graph name="IO" Title="I/O" type="line">
+                <Plot title="tps">tps rtps wtps</Plot>
+                <Plot title="byte">bread/s bwrtn/s</Plot>
+            </Graph>
+            <Graph name="PAGE" Title="Page" type="line">
+                <Plot title="Page">frmpg/s shmpg/s bufpg/s campg/s</Plot>
+            </Graph>
+            <Graph name="KMEM" Title="KMem" type="line">
+                <Plot title="KMem">kbmemfree kbmemused kbmemshrd kbbuffers kbcached kbcommit</Plot>
+                <Plot title="Swap">kbswpfree kbswpused kbswpcad</Plot>
+                <Plot title="%">%memused %swpused %commit</Plot>
+            </Graph>
+            <Graph name="KSWAP" Title="KSwap" type="line">
+                <Plot title="Swap">kbswpfree kbswpused kbswpcad</Plot>
+                <Plot title="%">%swpused %swpcad</Plot>
+            </Graph>
+            <Graph name="LOAD" Title="Load" type="line">
+                <Plot title="RunQ">runq-sz</Plot>
+                <Plot title="Plist">plist-sz</Plot>
+                <Plot title="LA">ldavg-1 ldavg-5 ldavg-15</Plot>
+            </Graph>
+            <Graph name="SOCKET" Title="Socket" type="line">
+                <Plot title="Socket">totsck tcpsck udpsck rawsck</Plot>
+                <Plot title="Frag">ip-frag tcp-tw</Plot>
+            </Graph>
+            <Graph name="NFSC" Title="NFS Client" type="line">
+                <Plot title="call">call/s retrans/s</Plot>
+                <Plot title="I/O">read/s write/s</Plot>
+                <Plot title="access">access/s getatt/s</Plot>
+            </Graph>
+            <Graph name="NFSM" Title="NFS Server" type="line">
+                <Plot title="call">call/s badcalls/s</Plot>
+                <Plot title="I/O">packet/s udp/s tcp/s</Plot>
+                <Plot title="cache">hit/s miss/s</Plot>
+                <Plot title="traffic">sread/s swrite/s saccess/s sgetatt/s</Plot>
+            </Graph>
+            <Graph name="PROC2" Title="Processus" type="line">
+                <Plot title="Proc">proc/s</Plot>
+                <Plot title="context">cswch/s</Plot>
+            </Graph>
+        </OSType>
+    </OS>
+    <!--  END OS -->
+</ConfiG>
