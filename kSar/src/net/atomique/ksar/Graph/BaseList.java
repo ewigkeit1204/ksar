@@ -4,8 +4,6 @@
  */
 package net.atomique.ksar.Graph;
 
-import java.awt.FlowLayout;
-import net.atomique.ksar.Graph.BaseGraph;
 import java.awt.LayoutManager;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,16 +11,14 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSeparator;
 import javax.swing.border.TitledBorder;
 import net.atomique.ksar.UI.ParentNodeInfo;
 import net.atomique.ksar.UI.SortedTreeNode;
-import net.atomique.ksar.UI.TreeNodeInfo;
 import net.atomique.ksar.kSar;
 import org.jfree.chart.ChartPanel;
 import org.jfree.data.time.Second;
+import org.jfree.data.time.TimeTableXYDataset;
 
 /**
  *
@@ -40,6 +36,14 @@ public abstract class BaseList {
         mysar.add2tree(mysar.graphtree, parentTreeNode);
     }
 
+    public void create_newstack(String s1, String s2) {
+        TimeTableXYDataset tmp = new TimeTableXYDataset();
+        String [] s = s2.split("\\s+");
+        for (int i=0 ; i< s.length; i++) {
+            StackList.put(s[i], tmp);
+        }
+    }
+    
     public void create_newplot(String plotname, String headername) {
         ArrayList<String> t = new ArrayList<String>();
         String[] s = headername.split("\\s+");
@@ -73,22 +77,7 @@ public abstract class BaseList {
         return tmppanel;
     }
 
-    public int parse(Second now, String s) {
-        String cols[] = s.split("\\s+");
-        LineGraph tmp = null;
-        if (!nodeHashList.containsKey(cols[1])) {
-            tmp = new LineGraph(mysar, Title + " " + cols[1], HeaderStr, skipColumn, null);
-            tmp.setPlotList(PlotList);
-            nodeHashList.put(cols[1], tmp);
-            TreeNodeInfo infotmp = new TreeNodeInfo(cols[1], tmp);
-            SortedTreeNode nodetmp = new SortedTreeNode(infotmp);
-            mysar.add2tree(parentTreeNode, nodetmp);
-        } else {
-            tmp = (LineGraph) nodeHashList.get(cols[1]);
-        }
-
-        return tmp.parse(now, s);
-    }
+    
 
     public JPanel getprintform() {
         JPanel panel = new JPanel();
@@ -124,7 +113,7 @@ public abstract class BaseList {
     public boolean isPrintSelected() {
         return false;
     }
-    //abstract public int parse(Second now, String s);
+    abstract public int parse(Second now, String s);
     protected SortedTreeNode parentTreeNode = null;
     protected kSar mysar = null;
     protected String HeaderStr = null;
@@ -132,4 +121,5 @@ public abstract class BaseList {
     protected int skipColumn = 0;
     protected String Title = null;
     protected Map<String, ArrayList> PlotList = new HashMap<String, ArrayList>();
+    protected Map<String, TimeTableXYDataset> StackList  = new HashMap<String, TimeTableXYDataset>();
 }

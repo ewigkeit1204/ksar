@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!--
+    TODO define vocabulary identification
+    PUBLIC ID: -//vendor//vocabulary//EN
+    SYSTEM ID: http://server/path/Config.dtd
+
+-->
+
+<!--
+    An example how to use this DTD from your XML document:
+
+    <?xml version="1.0"?>
+
+    <!DOCTYPE ConfiG SYSTEM "Config.dtd">
+
+    <ConfiG>
+    ...
+    </ConfiG>
+-->
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT ConfiG (OS|colors)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT colors (itemcolor)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT itemcolor (color)*>
+<!ATTLIST itemcolor
+    name CDATA #IMPLIED
+  >
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT color (#PCDATA)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT OS (OSType)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT OSType (Graph|Stat)*>
+<!ATTLIST OSType
+    name CDATA #IMPLIED
+  >
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT Stat (graphname|headerstr)*>
+<!ATTLIST Stat
+    name CDATA #IMPLIED
+  >
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT headerstr (#PCDATA)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT graphname (#PCDATA)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT Graph (Plot|Stack)*>
+<!ATTLIST Graph
+    type CDATA #IMPLIED
+    Title CDATA #IMPLIED
+    name CDATA #IMPLIED
+  >
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT Plot (#PCDATA)>
+<!ATTLIST Plot
+    Title CDATA #IMPLIED    
+  >
+
+  <!--- Put your DTDDoc comment here. -->
+<!ELEMENT Stack (#PCDATA)>
+<!ATTLIST Stack
+    Title CDATA #IMPLIED    
+  >

@@ -19,23 +19,22 @@ public class StackedList extends BaseList {
     public StackedList (kSar hissar, String s2,String s1, int skipColumn) {
         super(hissar,s2,s1,skipColumn);
     }
-
+    
     public int parse(Second now,String s) {
-        String cpu_cols[] = s.split("\\s+");
-        StackedGraph cputmp = null;
-        if ( ! nodeHashList.containsKey(cpu_cols[1])) {
-            cputmp= new StackedGraph(mysar, Title+" "+cpu_cols[1], skipColumn);
-            cputmp.setTitle(HeaderStr);
-            cputmp.setAxisTitle("%");
-            nodeHashList.put(cpu_cols[1], cputmp);
-            TreeNodeInfo infotmp= new TreeNodeInfo( cpu_cols[1], cputmp);
+        String cols[] = s.split("\\s+");
+        StackedGraph tmp = null;
+        if ( ! nodeHashList.containsKey(cols[1])) {
+            tmp= new StackedGraph(mysar, Title + " " + cols[1], HeaderStr, skipColumn, null);
+            nodeHashList.put(cols[1], tmp);
+            tmp.setStackList(StackList);
+            TreeNodeInfo infotmp= new TreeNodeInfo( cols[1], tmp);
             SortedTreeNode nodetmp = new SortedTreeNode(infotmp);
             mysar.add2tree(parentTreeNode, nodetmp);
         } else {
-            cputmp = (StackedGraph)nodeHashList.get(cpu_cols[1]);
+            tmp = (StackedGraph)nodeHashList.get(cols[1]);
         }
 
-        return cputmp.parse(now,s);
+        return tmp.parse(now,s);
     }
     
 }

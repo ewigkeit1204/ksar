@@ -6,8 +6,6 @@ package net.atomique.ksar;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -20,6 +18,7 @@ import net.atomique.ksar.XML.ColorConfig;
 import net.atomique.ksar.XML.GraphConfig;
 import net.atomique.ksar.XML.OSConfig;
 import net.atomique.ksar.XML.PlotConfig;
+import net.atomique.ksar.XML.StackConfig;
 import net.atomique.ksar.XML.StatConfig;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -157,8 +156,12 @@ public class XMLConfig extends DefaultHandler {
                 }
                 if (currentGraph != null) {
                     if ("Plot".equals(qName)) {
-                        currentPlot = new PlotConfig(attributes.getValue("title"));
+                        currentPlot = new PlotConfig(attributes.getValue("Title"));
                         currentGraph.addPlot(currentPlot);
+                    }
+                    if ("Stack".equals(qName)) {
+                        currentStack = new StackConfig(attributes.getValue("Title"));
+                        currentGraph.addStack(currentStack);
                     }
                 }
             }
@@ -196,6 +199,13 @@ public class XMLConfig extends DefaultHandler {
                 currentPlot = null;
             }
         }
+        if ( currentStack != null) {
+            if ("Stack".equals(qName)) {
+                currentStack.setHeaderStr(tempval);                
+                currentStack = null;
+            }
+        }
+        
         if ("itemcolor".equals(qName)) {
             if (cur_color.is_valid()) {
                 GlobalOptions.getColorlist().put(cur_color.getData_title(), cur_color);
@@ -222,5 +232,6 @@ public class XMLConfig extends DefaultHandler {
     private StatConfig currentStat = null;
     private GraphConfig currentGraph = null;
     private PlotConfig currentPlot = null;
+    private StackConfig currentStack = null;
     
 }

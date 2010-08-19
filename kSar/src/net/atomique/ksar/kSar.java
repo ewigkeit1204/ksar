@@ -113,7 +113,7 @@ public class kSar {
                 // SunOS host 5.9 Generic_118558-28 sun4u    09/01/2006
                 if ("SunOS".equals(columns[0])) {
                     if (myOS == null) {
-                        myOS = new OSInfo("SunOS", "automatically", current_line, this, null);
+                        myOS = new OSInfo("SunOS", "automatically", current_line, this, new net.atomique.ksar.Solaris.Parser(this,"Solaris"));
                     }
                     myOS.setHostname(columns[1]);
                     myOS.setOSversion(columns[2]);

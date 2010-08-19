@@ -11,8 +11,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import javax.swing.JCheckBox;
-import javax.swing.JPanel;
-import net.atomique.ksar.UI.GraphView;
 import net.atomique.ksar.kSar;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
@@ -25,6 +23,7 @@ import org.jfree.data.time.Second;
 import org.jfree.data.time.TimePeriod;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
+import org.jfree.data.time.TimeTableXYDataset;
 import org.jfree.data.xy.XYDataset;
 
 /**
@@ -54,7 +53,15 @@ public abstract class BaseGraph {
         boolean hasdata = false;
         for (int i = 0; i < l.size(); i++) {
             found = null;
-            found = (TimeSeries) Stats.get(l.get(i));
+            for (int j=0 ; j< Stats.size(); j++) {
+                found = (TimeSeries) Stats.get(j);
+                if ( found.getKey().equals(l.get(i))) {
+                    break;
+                } else {
+                    found=null;
+                }
+            }
+            
             if (found != null) {
                 graphcollection.addSeries(found);
                 hasdata = true;
@@ -73,6 +80,7 @@ public abstract class BaseGraph {
         return subplot;
     }
 
+    
     protected XYPlot create_plot(String axistitle, ArrayList l) {
         XYDataset t = create_collection(l);
         if ( t == null ) {
@@ -101,14 +109,16 @@ public abstract class BaseGraph {
     public void setPlotList(Map PlotList) {
         this.PlotList = PlotList;
     }
-
+    public void setStackList(Map StackList) {
+        this.StackList = StackList;
+    }
     
 
     public String make_csv() {
         StringBuilder tmp = new StringBuilder();
         tmp.append("Date;");
         tmp.append(getCsvHeader());
-        TimeSeries datelist = (TimeSeries) Stats.get(HeaderStr[1+skipColumn]);
+        TimeSeries datelist = (TimeSeries) Stats.get( (1+skipColumn) );
         Iterator ite = datelist.getTimePeriods().iterator();
         while (ite.hasNext()) {
             TimePeriod item =(TimePeriod) ite.next();
@@ -124,7 +134,8 @@ public abstract class BaseGraph {
     public String getCsvHeader() {
         StringBuilder tmp = new StringBuilder();
         for (int i = 1+skipColumn; i < HeaderStr.length; i++) {
-            tmp.append(HeaderStr[i]);
+            TimeSeries tmpseries = (TimeSeries) Stats.get(i-skipColumn);
+            tmp.append(tmpseries.getKey());
             tmp.append(";");
         }
         tmp.append("\n");
@@ -134,8 +145,9 @@ public abstract class BaseGraph {
     public String getCsvLine(RegularTimePeriod t) {
         StringBuilder tmp = new StringBuilder();
         for (int i = 1+skipColumn; i < HeaderStr.length; i++) {
-            TimeSeries tmpseries = (TimeSeries) Stats.get(HeaderStr[i]);
+            TimeSeries tmpseries = (TimeSeries) Stats.get(i-skipColumn);
             tmp.append(tmpseries.getValue(t));
+
             tmp.append(";");
         }
         return tmp.toString();
@@ -181,16 +193,24 @@ public abstract class BaseGraph {
         return printSelected;
     }
 
+    public void setTitle(String s) {
+        HeaderStr = s.split("\\s+");
+        for (int i = skipColumn; i < HeaderStr.length; i++) {
+            Stats.add(new TimeSeries(HeaderStr[i]));
+        }
+    }
+    
 
     abstract public JFreeChart makegraph(Second g_start, Second g_end);
     abstract public int parse(Second now, String s);
     protected kSar mysar = null;
     protected JFreeChart mygraph = null;
     protected String graphtitle = null;
-    protected Map<String, TimeSeries> Stats = new HashMap<String, TimeSeries>();
+    protected ArrayList<TimeSeries> Stats = new ArrayList<TimeSeries>();
     protected String[] HeaderStr = null;
     protected int skipColumn = 0;
-    protected Map<String, ArrayList> PlotList  = new HashMap<String, ArrayList>();
+    protected Map<String, ArrayList> PlotList = new HashMap<String, ArrayList>();
+    protected Map<String, TimeTableXYDataset> StackList  = new HashMap<String, TimeTableXYDataset>();
     protected boolean printSelected = true;
     protected JCheckBox printCheckBox = null;
     

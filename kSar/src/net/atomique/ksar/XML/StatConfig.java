@@ -45,7 +45,8 @@ public class StatConfig {
         if ( !  compare_Header(i) ) {
             return false;
         }
-        if ( HeaderStr.equals(c) ) {            
+        
+        if ( HeaderStr.equals(c) ) {
             return true;
         }
         return false;

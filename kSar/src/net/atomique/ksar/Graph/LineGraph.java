@@ -44,12 +44,7 @@ public class LineGraph extends BaseGraph {
     }
 
     
-    public void setTitle(String s) {
-        HeaderStr = s.split("\\s+");
-        for (int i = skipColumn; i < HeaderStr.length; i++) {
-            Stats.put(HeaderStr[i], new TimeSeries(HeaderStr[i]));
-        }
-    }
+    
 
     public int parse(Second now, String s) {
         String[] cols = s.split("\\s+");
@@ -61,9 +56,10 @@ public class LineGraph extends BaseGraph {
                 continue;
             }
             try {
-            ((TimeSeries) (Stats.get(HeaderStr[i]))).add(now, colvalue);
+            ((TimeSeries) (Stats.get(i-skipColumn))).add(now, colvalue);
             } catch ( SeriesException se) {
                 System.out.println(graphtitle + "oups" + s);
+                se.printStackTrace();
                 System.exit(1);
             }
         }

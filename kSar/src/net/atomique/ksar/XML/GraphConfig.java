@@ -38,10 +38,17 @@ public class GraphConfig {
         return Plotlist;
     }
 
-    
+    public void addStack(StackConfig s) {
+        Stacklist.put(s.getTitle(), s);
+    }
+
+    public HashMap<String, StackConfig> getStacklist() {
+        return Stacklist;
+    }
 
     private String name =null;
     private String Title = null;
     private String type = null;
     HashMap<String,PlotConfig> Plotlist = new HashMap<String,PlotConfig>();
+    HashMap<String,StackConfig> Stacklist = new HashMap<String,StackConfig>();
 }

@@ -6,16 +6,17 @@ package net.atomique.ksar.Graph;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import net.atomique.ksar.Graph.BaseGraph;
-import net.atomique.ksar.Config;
+import java.util.ArrayList;
 import net.atomique.ksar.Config;
 import net.atomique.ksar.GlobalOptions;
-import net.atomique.ksar.GlobalOptions;
-import net.atomique.ksar.kSar;
+import net.atomique.ksar.UI.SortedTreeNode;
+import net.atomique.ksar.UI.TreeNodeInfo;
 import net.atomique.ksar.kSar;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.plot.CombinedDomainXYPlot;
+import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.StackedXYAreaRenderer2;
 import org.jfree.data.general.SeriesException;
@@ -29,64 +30,83 @@ import org.jfree.data.time.TimeTableXYDataset;
  */
 public class StackedGraph extends BaseGraph {
 
-    public StackedGraph(kSar hissar, String str, int skipColumn) {
-        super(hissar, str, skipColumn);
-    }
-
-    public void setTitle(String s) {
-        HeaderStr = s.split("\\s+");
-        for (int i = skipColumn+1; i < HeaderStr.length; i++) {
-            Stats.put(HeaderStr[i], new TimeSeries(HeaderStr[i]));
+    public StackedGraph(kSar hissar, String Title, String str, int i, SortedTreeNode pp) {
+        super(hissar, Title, i);
+        this.setTitle(str);
+        if (pp != null) {
+            TreeNodeInfo infotmp = new TreeNodeInfo(Title, this);
+            SortedTreeNode nodetmp = new SortedTreeNode(infotmp);
+            mysar.add2tree(pp, nodetmp);
         }
     }
 
+    public void create_newstack(String s1, String s2) {
+        TimeTableXYDataset tmp = new TimeTableXYDataset();
+        String [] s = s2.split("\\s+");
+        for (int i=0 ; i< s.length; i++) {
+            StackList.put(s[i], tmp);
+        }        
+    }
+    
     public int parse(Second now, String s) {
         String[] cols = s.split("\\s+");
         Float colvalue = null;
-        for (int i = skipColumn+1; i < HeaderStr.length; i++) {
+        for (int i = skipColumn; i < HeaderStr.length; i++) {
             try {
-            colvalue = new Float(cols[i]);
-            } catch ( NumberFormatException ne ) {
+                colvalue = new Float(cols[i]);
+            } catch (NumberFormatException ne) {
                 System.out.println(graphtitle + " " + cols[i] + "is NaN");
                 return 0;
             }
             try {
-            ((TimeSeries) (Stats.get(HeaderStr[i]))).add(now, colvalue);
-            } catch ( SeriesException se) {
+                ((TimeSeries) (Stats.get(i - skipColumn))).add(now, colvalue);
+            } catch (SeriesException se) {
                 System.out.println(graphtitle + "oups" + s);
                 System.exit(1);
             }
-            stacked.add(now,colvalue,HeaderStr[i]);
+            
+            TimeTableXYDataset tmp = StackList.get(HeaderStr[i]);
+            if (tmp != null ) {
+                tmp.add(now, colvalue, HeaderStr[i]);
+            }
         }
 
         return 0;
     }
-    public void setAxisTitle(String s) {
-        this.axisTitle= s ;
-    }
 
     public JFreeChart makegraph(Second g_start, Second g_end) {
-        StackedXYAreaRenderer2 renderer = new StackedXYAreaRenderer2();
-        for (int i=0; i < stacked.getSeriesCount(); i++ ) {
-            Color color= GlobalOptions.getDataColor(stacked.getSeriesKey(i).toString());
-            if ( color != null ) {
-                renderer.setSeriesPaint(i, color);
-                renderer.setBaseStroke(new BasicStroke(1.0F));
+        long begingenerate = System.currentTimeMillis();
+        CombinedDomainXYPlot plot = new CombinedDomainXYPlot(new DateAxis(""));
+        ArrayList tmplist = new ArrayList();
+        for (Object key : StackList.values()) {
+            if ( ! tmplist.contains(key) ) {
+                tmplist.add(key);
             }
-
-            
         }
-        graphaxis= new NumberAxis(axisTitle);
-        graphaxis.setRange(0.0D, 100D);
-        XYPlot all = new XYPlot(stacked, new DateAxis(null), graphaxis, renderer);
-        
-        JFreeChart mychart = new JFreeChart(graphtitle, Config.getDEFAULT_FONT(), all, true);
+        for (Object key : tmplist) {
+            TimeTableXYDataset tmp = (TimeTableXYDataset)key;
+            StackedXYAreaRenderer2 renderer = new StackedXYAreaRenderer2();
+            XYPlot all_plot = new XYPlot(tmp, new DateAxis(null), graphaxis, renderer);
+            for (int i = 0; i < tmp.getSeriesCount(); i++) {
+                Color color = GlobalOptions.getDataColor(tmp.getSeriesKey(i).toString());
+                if (color != null) {
+                    renderer.setSeriesPaint(i, color);
+                    renderer.setBaseStroke(new BasicStroke(1.0F));
+                }
+            }
+            plot.add(all_plot, 1);
+        }
+        plot.setOrientation(PlotOrientation.VERTICAL);
+
+        JFreeChart mychart = new JFreeChart(graphtitle, Config.getDEFAULT_FONT(), plot, true);
+        long endgenerate = System.currentTimeMillis();
         mychart.setBackgroundPaint(Color.white);
+        if ( GlobalOptions.isDodebug()) {
+            System.out.println("graph generation: " + (endgenerate-begingenerate) + " ms");
+        }
         return mychart;
     }
-
-    private NumberAxis graphaxis = null;
-    private String axisTitle = "";
-    private TimeTableXYDataset stacked = new TimeTableXYDataset();
-   
+    private NumberAxis graphaxis = new NumberAxis();
+    private String axisTitle = "";    
+    
 }
