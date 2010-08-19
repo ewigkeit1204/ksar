@@ -135,7 +135,7 @@ public class kSar {
                 if ("Linux".equals(columns[0])) {
                     String tmpstr;
                     if (myOS == null) {
-                        myOS = new OSInfo("Linux", "automatically", current_line, this, new net.atomique.ksar.Linux.Parser(this));
+                        myOS = new OSInfo("Linux", "automatically", current_line, this, new net.atomique.ksar.Linux.Parser(this,"Linux"));
                     }
                     myOS.setKernel(columns[1]);
                     tmpstr = columns[2];

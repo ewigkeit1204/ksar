@@ -6,6 +6,7 @@ package net.atomique.ksar;
 
 import java.util.HashMap;
 import java.util.Map;
+import net.atomique.ksar.XML.OSConfig;
 import org.jfree.data.time.Second;
 
 /**
@@ -14,8 +15,9 @@ import org.jfree.data.time.Second;
  */
 public abstract class AllParser {
 
-    public AllParser(kSar hissar) {
+    public AllParser(kSar hissar, String OS) {
         mysar = hissar;
+        myosconfig = GlobalOptions.getOSinfo(OS);
     }
 
     public int parse(String line, String[] columns) {
@@ -25,7 +27,7 @@ public abstract class AllParser {
 
     
 
-    
+    protected OSConfig myosconfig = null;
     protected kSar mysar = null;
     protected Map<String,Object> GraphList = new HashMap<String, Object>();
     protected String currentStat = "NONE";

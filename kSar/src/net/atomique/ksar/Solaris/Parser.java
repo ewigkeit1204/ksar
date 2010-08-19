@@ -20,8 +20,8 @@ import org.jfree.data.time.Second;
  */
 public class Parser extends AllParser {
 
-    public Parser(kSar hissar) {
-        super(hissar);
+    public Parser(kSar hissar,String OS) {
+        super(hissar,OS);
     }
 
     @Override

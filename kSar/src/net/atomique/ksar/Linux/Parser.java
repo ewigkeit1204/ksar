@@ -15,7 +15,6 @@ import net.atomique.ksar.GlobalOptions;
 import net.atomique.ksar.Graph.LineList;
 import net.atomique.ksar.Graph.StackedList;
 import net.atomique.ksar.XML.GraphConfig;
-import net.atomique.ksar.XML.OSConfig;
 import net.atomique.ksar.XML.PlotConfig;
 import net.atomique.ksar.kSar;
 import org.jfree.data.time.Second;
@@ -26,9 +25,8 @@ import org.jfree.data.time.Second;
  */
 public class Parser extends AllParser {
 
-    public Parser(kSar hissar) {
-        super(hissar);
-        myosconfig = GlobalOptions.getOSinfo("Linux");
+    public Parser(kSar hissar, String OS) {
+        super(hissar, OS);        
     }
 
     @Override
@@ -163,5 +161,5 @@ public class Parser extends AllParser {
     }
 
     
-    private OSConfig myosconfig = null;
+    
 }
