@@ -77,7 +77,7 @@ public abstract class BaseList {
         String cols[] = s.split("\\s+");
         LineGraph tmp = null;
         if (!nodeHashList.containsKey(cols[1])) {
-            tmp = new LineGraph(mysar, Title + " " + cols[1], HeaderStr, 1+skipColumn, null);
+            tmp = new LineGraph(mysar, Title + " " + cols[1], HeaderStr, skipColumn, null);
             tmp.setPlotList(PlotList);
             nodeHashList.put(cols[1], tmp);
             TreeNodeInfo infotmp = new TreeNodeInfo(cols[1], tmp);

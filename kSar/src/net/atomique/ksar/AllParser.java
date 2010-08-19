@@ -23,8 +23,7 @@ public abstract class AllParser {
         return -1;
     }
 
-    abstract public Object getStatGraph(String statname, String headerline);
-
+    
 
     
     protected kSar mysar = null;

@@ -234,7 +234,7 @@
                 <headerstr>kbmemfree kbmemused %memused kbbuffers kbcached kbswpfree kbswpused %swpused kbswpcad</headerstr>
                 <graphname>KMEM</graphname>
             </Stat>
-            <Stat name="dev3">
+            <Stat name="dev4">
                 <headerstr>DEV tps rd_sec/s wr_sec/s avgrq-sz avgqu-sz await svctm %util</headerstr>
                 <graphname>DEV</graphname>
             </Stat>
@@ -254,7 +254,7 @@
                 <headerstr>dentunusd file-sz %file-sz inode-sz super-sz %super-sz dquot-sz %dquot-sz rtsig-sz %rtsig-sz</headerstr>
                 <graphname>IGNORE</graphname>
             </Stat>
-            <Stat name="cpu5">
+            <Stat name="cpu6">
                 <headerstr>CPU %usr %nice %sys %iowait %steal %irq %soft %guest %idle</headerstr>
                 <graphname>CPU</graphname>
             </Stat>
@@ -343,6 +343,7 @@
                 <Plot title="context">cswch/s</Plot>
             </Graph>
             <Graph name="CPU" Title="CPU" type="stackedlist">
+		
             </Graph>
         </OSType>
     </OS>

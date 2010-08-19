@@ -53,7 +53,7 @@ public class XMLConfig extends DefaultHandler {
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
-        dump_XML();
+        //dump_XML();
         try {
             is.close();
         } catch (IOException ex) {

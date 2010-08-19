@@ -113,6 +113,12 @@ public class Parser extends AllParser {
                         return 0;
 
                     }
+                    if ( "stackedlist".equals(mygraphinfo.getType())) {
+                        obj = new StackedList(mysar, mygraphinfo.getTitle(), line, firstdatacolumn);
+                        GraphList.put(checkStat, obj);
+                        currentStat = checkStat;
+                        return 0;
+                    }
                 }
             } else {
                 currentStat=checkStat;
@@ -139,7 +145,8 @@ public class Parser extends AllParser {
         if ("NONE".equals(currentStat)) {
             return -1;
         }
-        currentStatObj = getStatGraph(currentStat, null);
+        
+        currentStatObj = GraphList.get(currentStat);
         if (currentStatObj == null) {
             return -1;
         } else {
@@ -155,24 +162,6 @@ public class Parser extends AllParser {
         return -1;
     }
 
-    public Object getStatGraph(String s, String h) {
-        Object o = GraphList.get(s);
-        if (o != null) {
-            return o;
-        }
-        if (h == null) {
-            return null;
-        }
-
-        if ("CPU".equals(s)) {
-            o = new StackedList(mysar, "CPU", h, firstdatacolumn);
-        }
-        
-        if (o != null) {
-            GraphList.put(s, o);
-            return o;
-        }
-        return null;
-    }
+    
     private OSConfig myosconfig = null;
 }
