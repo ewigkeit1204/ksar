@@ -13,9 +13,11 @@ import net.atomique.ksar.Graph.BaseGraph;
 import net.atomique.ksar.Graph.BaseList;
 import net.atomique.ksar.GlobalOptions;
 import net.atomique.ksar.Graph.LineList;
+import net.atomique.ksar.Graph.StackedGraph;
 import net.atomique.ksar.Graph.StackedList;
 import net.atomique.ksar.XML.GraphConfig;
 import net.atomique.ksar.XML.PlotConfig;
+import net.atomique.ksar.XML.StackConfig;
 import net.atomique.ksar.kSar;
 import org.jfree.data.time.Second;
 
@@ -78,9 +80,9 @@ public class Parser extends AllParser {
             currentStat = "IGNORE";
             return 1;
         }
-
-        /** XML COLUMN PARSER **/
+/** XML COLUMN PARSER **/
         String checkStat = myosconfig.getStat(columns, firstdatacolumn);
+
         if (checkStat != null) {
             Object obj = GraphList.get(checkStat);
             if (obj == null) {
@@ -92,7 +94,7 @@ public class Parser extends AllParser {
                         Iterator<String> it = sortedset.iterator();
                         while (it.hasNext()) {
                             PlotConfig tmp = (PlotConfig) mygraphinfo.getPlotlist().get(it.next());
-                            ((BaseGraph) obj).create_newplot(tmp.getTitle(), tmp.getHeaderStr());
+                            ((LineGraph)obj).create_newplot(tmp.getTitle(), tmp.getHeaderStr());
                         }
                         GraphList.put(checkStat, obj);
                         currentStat = checkStat;
@@ -104,22 +106,44 @@ public class Parser extends AllParser {
                         Iterator<String> it = sortedset.iterator();
                         while (it.hasNext()) {
                             PlotConfig tmp = (PlotConfig) mygraphinfo.getPlotlist().get(it.next());
-                            ((BaseList) obj).create_newplot(tmp.getTitle(), tmp.getHeaderStr());
+                            ((LineList)obj).create_newplot(tmp.getTitle(), tmp.getHeaderStr());
                         }
                         GraphList.put(checkStat, obj);
                         currentStat = checkStat;
                         return 0;
 
                     }
-                    if ( "stackedlist".equals(mygraphinfo.getType())) {
-                        obj = new StackedList(mysar, mygraphinfo.getTitle(), line, firstdatacolumn);
+                    if ("stacked".equals(mygraphinfo.getType())) {
+                        obj = new StackedGraph(mysar, mygraphinfo.getTitle(), line, firstdatacolumn, mysar.graphtree);
+                        SortedSet<String> sortedset = new TreeSet<String>(mygraphinfo.getStacklist().keySet());
+                        Iterator<String> it = sortedset.iterator();
+                        while (it.hasNext()) {
+                            StackConfig tmp = (StackConfig) mygraphinfo.getStacklist().get(it.next());
+                            ((StackedGraph)obj).create_newstack(tmp.getTitle(), tmp.getHeaderStr());
+                        }
                         GraphList.put(checkStat, obj);
                         currentStat = checkStat;
                         return 0;
                     }
+                    if ("stackedlist".equals(mygraphinfo.getType())) {
+                        obj = new StackedList(mysar, mygraphinfo.getTitle(), line, firstdatacolumn);
+                        SortedSet<String> sortedset = new TreeSet<String>(mygraphinfo.getStacklist().keySet());
+                        Iterator<String> it = sortedset.iterator();
+                        while (it.hasNext()) {
+                            StackConfig tmp = (StackConfig) mygraphinfo.getStacklist().get(it.next());
+                            ((StackedList)obj).create_newstack(tmp.getTitle(), tmp.getHeaderStr());
+                        }
+                        GraphList.put(checkStat, obj);
+                        currentStat = checkStat;
+                        return 0;
+                    }
+                } else {
+                    // no graph associate
+                    currentStat = checkStat;
+                    return 0;
                 }
             } else {
-                currentStat=checkStat;
+                currentStat = checkStat;
                 return 0;
             }
         }
