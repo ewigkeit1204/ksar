@@ -11,125 +11,132 @@
 
 <ConfiG>
     <colors>
-    <itemcolor name="rawch/s">
-        <color>0,255,0</color>
-    </itemcolor>
-    <itemcolor name="canch/s">
-        <color>0,255,255</color>
-    </itemcolor>
-    <itemcolor name="outch/s">
-        <color>255,255,0</color>
-    </itemcolor>
-    <itemcolor name="xmtin/s">
-        <color>255,0,0</color>
-    </itemcolor>
-    <itemcolor name="rcvin/s">
-        <color>0,0,255</color>
-    </itemcolor>
-    <itemcolor name="mdmin/s">
-        <color>255,0,255</color>
-    </itemcolor>
-    <itemcolor name="%usr">
-        <color>0,255,0</color>
-    </itemcolor>
-    <itemcolor name="%sys">
-        <color>255,0,0</color>
-    </itemcolor>
-    <itemcolor name ="%system">
-        <color>255,0,0</color>
-    </itemcolor>
-    <itemcolor name="%user">
-        <color>0,255,0</color>
-    </itemcolor>
-    <itemcolor name="%idle">
-        <color>127,127,127</color>
-    </itemcolor>
-    <itemcolor name="%nice">
-        <color>255,255,0</color>
-    </itemcolor>
-    <itemcolor name="%steal">
-        <color>255,127,0</color>
-    </itemcolor>
-    <itemcolor name="%iowait">
-        <color>255,0,127</color>
-    </itemcolor>
-    <!-- END CPU -->
-    <itemcolor name="intr/s">
-        <color>255,127,127</color>
-    </itemcolor>
-    <!-- BEGIN LOAD AVERAGE -->
-    <itemcolor name="ldavg-1">
-        <color>255,0,0</color>
-    </itemcolor>
-    <itemcolor name="ldavg-5">
-        <color>0,255,0</color>
-    </itemcolor>
-    <itemcolor name="ldavg-15">
-        <color>0,255,0</color>
-    </itemcolor>
-    <!-- END LOAD AVERAGE -->
-    <!-- BEGIN LINUX LOAD-->
-    <itemcolor name="plist-sz">
-        <color>0,255,255</color>
-    </itemcolor>
-    <itemcolor name="runq-sz">
-        <color>255,255,0</color>
-    </itemcolor>
-    <!-- END LINUX LOAD-->
-    <!-- BEGIN NFS -->
-    <itemcolor name="coll/s">
-        <color>255,0,0</color>
-    </itemcolor>
-    <itemcolor name="rxerr/s">
-        <color>255,255,0</color>
-    </itemcolor>
-    <itemcolor name="rxdrop/s">
-        <color>255,0,255</color>
-    </itemcolor>
-    <itemcolor name="rxfram/s">
-        <color>0,255,255</color>
-    </itemcolor>
-    <itemcolor name="rxfifo/s">
-        <color>255,255,255</color>
-    </itemcolor>
-    <itemcolor name="txerr/s">
-        <color>255,0,0</color>
-    </itemcolor>
-    <itemcolor name="txdrop/s">
-        <color>0,255,0</color>
-    </itemcolor>
-    <itemcolor name="txcarr/s">
-        <color>0,0,255</color>
-    </itemcolor>
-    <itemcolor name="txfifo/s">
-        <color>255,0,255</color>
-    </itemcolor>
-    <!-- END NFS -->
-    <itemcolor name="cswch/s">
-        <color>255,0,255</color>
-    </itemcolor>
-    <!-- BEGIN DEVICE -->
-    <itemcolor name="blks/s">
-        <color>255,0,255</color>
-    </itemcolor>
-    <itemcolor name="tps">
-        <color>255,0,0</color>
-    </itemcolor>
-    <!-- END DEVICE -->
-    <!-- BEGIN BLOCK -->
-    <itemcolor name="bread/s">
-        <color>255,0,0</color>
-    </itemcolor>
-    <itemcolor name="bwrtn/s">
-        <color>255,255,0</color>
-    </itemcolor>
-    <itemcolor name="rtps">
-        <color>255,0,255</color>
-    </itemcolor>
-    <itemcolor name="wtps">
-        <color>0,0,255</color>
-    </itemcolor>
-    <!-- END BLOCK -->
+        <itemcolor name="rawch/s">
+            <color>0,255,0</color>
+        </itemcolor>
+        <itemcolor name="canch/s">
+            <color>0,255,255</color>
+        </itemcolor>
+        <itemcolor name="outch/s">
+            <color>255,255,0</color>
+        </itemcolor>
+        <itemcolor name="xmtin/s">
+            <color>255,0,0</color>
+        </itemcolor>
+        <itemcolor name="rcvin/s">
+            <color>0,0,255</color>
+        </itemcolor>
+        <itemcolor name="mdmin/s">
+            <color>255,0,255</color>
+        </itemcolor>
+        <itemcolor name="%usr">
+            <color>0,255,0</color>
+        </itemcolor>
+        <itemcolor name="%sys">
+            <color>255,0,0</color>
+        </itemcolor>
+        <itemcolor name ="%system">
+            <color>255,0,0</color>
+        </itemcolor>
+        <itemcolor name="%user">
+            <color>0,255,0</color>
+        </itemcolor>
+        <itemcolor name="%idle">
+            <color>127,127,127</color>
+        </itemcolor>
+        <itemcolor name="%nice">
+            <color>255,255,0</color>
+        </itemcolor>
+        <itemcolor name="%steal">
+            <color>255,127,0</color>
+        </itemcolor>
+        <itemcolor name="%iowait">
+            <color>255,0,127</color>
+        </itemcolor>
+        <itemcolor name="%wio">
+            <color>255,0,127</color>
+        </itemcolor>
+        <itemcolor name="intr/s">
+            <color>255,127,127</color>
+        </itemcolor>
+        <itemcolor name="ldavg-1">
+            <color>255,0,0</color>
+        </itemcolor>
+        <itemcolor name="ldavg-5">
+            <color>0,255,0</color>
+        </itemcolor>
+        <itemcolor name="ldavg-15">
+            <color>0,255,0</color>
+        </itemcolor>
+        <itemcolor name="plist-sz">
+            <color>0,255,255</color>
+        </itemcolor>
+        <itemcolor name="runq-sz">
+            <color>255,255,0</color>
+        </itemcolor>
+        <itemcolor name="coll/s">
+            <color>255,0,0</color>
+        </itemcolor>
+        <itemcolor name="rxerr/s">
+            <color>255,255,0</color>
+        </itemcolor>
+        <itemcolor name="rxdrop/s">
+            <color>255,0,255</color>
+        </itemcolor>
+        <itemcolor name="rxfram/s">
+            <color>0,255,255</color>
+        </itemcolor>
+        <itemcolor name="rxfifo/s">
+            <color>255,255,255</color>
+        </itemcolor>
+        <itemcolor name="txerr/s">
+            <color>255,0,0</color>
+        </itemcolor>
+        <itemcolor name="txdrop/s">
+            <color>0,255,0</color>
+        </itemcolor>
+        <itemcolor name="txcarr/s">
+            <color>0,0,255</color>
+        </itemcolor>
+        <itemcolor name="txfifo/s">
+            <color>255,0,255</color>
+        </itemcolor>
+        <itemcolor name="cswch/s">
+            <color>255,0,255</color>
+        </itemcolor>
+        <itemcolor name="blks/s">
+            <color>255,0,255</color>
+        </itemcolor>
+        <itemcolor name="tps">
+            <color>255,0,0</color>
+        </itemcolor>
+        <itemcolor name="bread/s">
+            <color>255,0,0</color>
+        </itemcolor>
+        <itemcolor name="bwrtn/s">
+            <color>255,255,0</color>
+        </itemcolor>
+        <itemcolor name="rtps">
+            <color>255,0,255</color>
+        </itemcolor>
+        <itemcolor name="wtps">
+            <color>0,0,255</color>
+        </itemcolor>
+        <itemcolor name="avwait">
+            <color>255,0,0</color>
+        </itemcolor>
+        <itemcolor name="avserv">
+            <color>0,255,0</color>
+        </itemcolor>
+        <itemcolor name="avque">
+            <color>255,0,255</color>
+        </itemcolor>
+        <itemcolor name="r+w/s">
+            <color>0,127,255</color>
+        </itemcolor>
+        <itemcolor name="%busy">
+            <color>255,255,0</color>
+        </itemcolor>
     </colors>
     <!--  BEGIN OS -->
     <OS>
@@ -280,37 +287,37 @@
             </Stat>
  
             <!-- GRAPHS -->
-            <Graph name="PROC" Title="Proc" type="line">
+            <Graph name="PROC" Title="Proc" type="unique">
                 <Plot Title="proc">proc/s</Plot>
             </Graph>
-            <Graph name="CSWCH" Title="Context" type="line">
+            <Graph name="CSWCH" Title="Context" type="unique">
                 <Plot Title="cwsch">cswch/s</Plot>
             </Graph>
 
-            <Graph name="INTR" Title="Interrupts" type="linelist">
+            <Graph name="INTR" Title="Interrupts" type="multiple">
                 <Plot Title="intr">intr/s</Plot>
             </Graph>
-            <Graph name="SWAP" Title="Swap" type="line">
+            <Graph name="SWAP" Title="Swap" type="unique">
                 <Plot Title="swap">pswpin/s pswpout/s</Plot>
             </Graph>
-            <Graph name="INET1" Title="Interfaces traffic" type="linelist">
+            <Graph name="INET1" Title="Interfaces traffic" type="multiple">
                 <Plot Title="packet">rxpck/s txpck/s</Plot>
                 <Plot Title="bytes">rxbyt/s txbyt/s rxkB/s txkB/s</Plot>
                 <Plot Title="cast">rxcmp/s txcmp/s rxmcst/s</Plot>
             </Graph>
-            <Graph name="INET2" Title="Interfaces error" type="linelist">
+            <Graph name="INET2" Title="Interfaces error" type="multiple">
                 <Plot Title="Rx">rxerr/s rxdrop/s rxfram/s rxfifo/s</Plot>
                 <Plot Title="Tx">txerr/s txdrop/s txcarr/s txfifo/s</Plot>
                 <Plot Title="Collision">coll/s</Plot>
             </Graph>
-            <Graph name="PAGING" Title="Paging" type="line">
+            <Graph name="PAGING" Title="Paging" type="unique">
                 <Plot Title="pgp">pgpgin/s pgpgout/s</Plot>
                 <Plot Title="pg">activepg inadtypg inaclnpg inatarpg</Plot>
                 <Plot Title="fault">fault/s majflt/s</Plot>
                 <Plot Title="free">pgfree/s pgscank/s pgscand/s pgsteal/s</Plot>
                 <Plot Title="vmeff">vmeff</Plot>
             </Graph>
-            <Graph name="DEV" Title="Devices" type="linelist">
+            <Graph name="DEV" Title="Devices" type="multiple">
                 <Plot Title="tps">tps</Plot>
                 <Plot Title="blks/s">blks/s</Plot>
                 <Plot Title="sector">rd_sec/s wr_sec/s</Plot>
@@ -318,48 +325,49 @@
                 <Plot Title="service">await svctm</Plot>
                 <Plot Title="util">%util</Plot>
             </Graph>
-            <Graph name="IO" Title="I/O" type="line">
+            <Graph name="IO" Title="I/O" type="unique">
                 <Plot Title="tps">tps rtps wtps</Plot>
                 <Plot Title="byte">bread/s bwrtn/s</Plot>
             </Graph>
-            <Graph name="PAGE" Title="Page" type="line">
+            <Graph name="PAGE" Title="Page" type="unique">
                 <Plot Title="Page">frmpg/s shmpg/s bufpg/s campg/s</Plot>
             </Graph>
-            <Graph name="KMEM" Title="KMem" type="line">
+            <Graph name="KMEM" Title="KMem" type="unique">
                 <Plot Title="KMem">kbmemfree kbmemused kbmemshrd kbbuffers kbcached kbcommit</Plot>
                 <Plot Title="Swap">kbswpfree kbswpused kbswpcad</Plot>
                 <Plot Title="%">%memused %swpused %commit</Plot>
             </Graph>
-            <Graph name="KSWAP" Title="KSwap" type="line">
+            <Graph name="KSWAP" Title="KSwap" type="unique">
                 <Plot Title="Swap">kbswpfree kbswpused kbswpcad</Plot>
                 <Plot Title="%">%swpused %swpcad</Plot>
             </Graph>
-            <Graph name="LOAD" Title="Load" type="line">
+            <Graph name="LOAD" Title="Load" type="unique">
                 <Plot Title="RunQ">runq-sz</Plot>
                 <Plot Title="Plist">plist-sz</Plot>
                 <Plot Title="LA">ldavg-1 ldavg-5 ldavg-15</Plot>
             </Graph>
-            <Graph name="SOCKET" Title="Socket" type="line">
+            <Graph name="SOCKET" Title="Socket" type="unique">
                 <Plot Title="Socket">totsck tcpsck udpsck rawsck</Plot>
                 <Plot Title="Frag">ip-frag tcp-tw</Plot>
             </Graph>
-            <Graph name="NFSC" Title="NFS Client" type="line">
+            <Graph name="NFSC" Title="NFS Client" type="unique">
                 <Plot Title="call">call/s retrans/s</Plot>
                 <Plot Title="I/O">read/s write/s</Plot>
                 <Plot Title="access">access/s getatt/s</Plot>
             </Graph>
-            <Graph name="NFSM" Title="NFS Server" type="line">
+            <Graph name="NFSM" Title="NFS Server" type="unique">
                 <Plot Title="call">call/s badcalls/s</Plot>
                 <Plot Title="I/O">packet/s udp/s tcp/s</Plot>
                 <Plot Title="cache">hit/s miss/s</Plot>
                 <Plot Title="traffic">sread/s swrite/s saccess/s sgetatt/s</Plot>
             </Graph>
-            <Graph name="PROC2" Title="Processus" type="line">
+            <Graph name="PROC2" Title="Processus" type="unique">
                 <Plot Title="Proc">proc/s</Plot>
                 <Plot Title="context">cswch/s</Plot>
             </Graph>
-            <Graph name="CPU" Title="CPU" type="stackedlist">
-                <Stack Title="cpu">%usr %user %nice %sys %iowait %steal %irq %soft %guest %idle</Stack>
+            <Graph name="CPU" Title="CPU" type="multiple">
+                <Stack Title="Used" size="2">%usr %user %nice %sys %iowait %steal %irq %soft %guest</Stack>
+                <Plot Title="Idle" size="1">%idle</Plot>
             </Graph>
         </OSType>
      
@@ -420,22 +428,22 @@
                 <headerstr>sml_mem alloc fail lg_mem alloc fail ovsz_alloc fail</headerstr>
                 <graphname>KMEM</graphname>
             </Stat>
-            <Graph name="CPU" Title="CPU" type="stacked">
+            <Graph name="CPU" Title="CPU" type="unique">
                 <Stack Title="Used">%usr %sys %wio</Stack>
                 <Plot Title="Idle">%idle</Plot>
             </Graph>
-            <Graph name="KMEM" Title="Kernel Memory" type="line">
+            <Graph name="KMEM" Title="Kernel Memory" type="unique">
                 <Plot Title="Small">sml_mem</Plot>
                 <Plot Title="Large">lg_mem</Plot>
                 <Plot Title="Oversize">ovsz_alloc</Plot>
             </Graph>
-            <Graph name="BUFFER" Title="Buffer" type="line">
+            <Graph name="BUFFER" Title="Buffer" type="unique">
                 <Plot Title="read">bread/s lread/s</Plot>
                 <Plot Title="write">bwrit/s lwrit/s</Plot>
                 <Plot Title="physical">pread/s pwrit/s</Plot>
                 <Plot Title="%">%rcache %wcache</Plot>
             </Graph>
-            <Graph name="DEVICE" Title="Device" type="linelist">
+            <Graph name="DEVICE" Title="Device" type="multiple">
                 <Plot Title="busy">%busy</Plot>
                 <Plot Title="avque">avque</Plot>
                 <Plot Title="r+w/s">r+w/s</Plot>
@@ -443,44 +451,44 @@
                 <Plot Title="avwait">avwait</Plot>
                 <Plot Title="avserv">avserv</Plot>
             </Graph>
-            <Graph name="RUNQ" Title="RunQ" type="line">
+            <Graph name="RUNQ" Title="RunQ" type="unique">
                 <Plot Title="runQ">runq-sz</Plot>
                 <Plot Title="swapQ">swpq-sz</Plot>
             </Graph>
-            <Graph name="SWAP" Title="Swap" type="line">
+            <Graph name="SWAP" Title="Swap" type="unique">
                 <Plot Title="lwp">swpin/s swpot/s</Plot>
                 <Plot Title="page">bswin/s bswot/s</Plot>
                 <Plot Title="switch">pswch/s</Plot>
             </Graph>
-            <Graph name="SYSCALL" Title="Syscal" type="line">
+            <Graph name="SYSCALL" Title="Syscal" type="unique">
                 <Plot Title="syscall">scall/s</Plot>
                 <Plot Title="r/w">sread/s swrit/s</Plot>
                 <Plot Title="fork">fork/s exec/s</Plot>
                 <Plot Title="char">rchar/s wchar/s</Plot>
             </Graph>
-            <Graph name="FILE" Title="File" type="line">
+            <Graph name="FILE" Title="File" type="unique">
                 <Plot Title="file">iget/s namei/s dirbk/s</Plot>
             </Graph>
-            <Graph name="TTY" Title="Tty" type="line">
+            <Graph name="TTY" Title="Tty" type="unique">
                 <Plot Title="TTY">rawch/s canch/s outch/s rcvin/s xmtin/s mdmin/s</Plot>
             </Graph>
-            <Graph name="MSGS" Title="Messages / Semaphores" type="line">
+            <Graph name="MSGS" Title="Messages / Semaphores" type="unique">
                 <Plot Title="Messages">msg/s</Plot>
                 <Plot Title="Semaphores">sema/s</Plot>
             </Graph>
-            <Graph name="PAGING1" Title="Paging1" type="line">
+            <Graph name="PAGING1" Title="Paging1" type="unique">
                 <Plot Title="atch">atch/s</Plot>
                 <Plot Title="in">pgin/s ppgin/s</Plot>
                 <Plot Title="fault">pflt/s vflt/s</Plot>
                 <Plot Title="lock">slock/s</Plot>
             </Graph>
-             <Graph name="PAGING2" Title="Paging2" type="line">
+            <Graph name="PAGING2" Title="Paging2" type="unique">
                 <Plot Title="out">pgout/s ppgout/s</Plot>
                 <Plot Title="free">pgfree/s</Plot>
                 <Plot Title="scan">pgscan/s</Plot>
                 <Plot Title="ufs_ipf">%ufs_ipf</Plot>
             </Graph>
-            <Graph name="MEM" Title="Memory" type="line">
+            <Graph name="MEM" Title="Memory" type="unique">
                 <Plot Title="freemem">freemem</Plot>
                 <Plot Title="freeswap">freeswap</Plot>
             </Graph>
@@ -543,31 +551,31 @@
                 <headerstr>%usr %sys %wio %idle physc</headerstr>
                 <graphname>CPU</graphname>
             </Stat>
-            <Graph name="CPU" Title="CPU" type="stacked">
+            <Graph name="CPU" Title="CPU" type="unique">
                 <Stack Title="Cpu">%usr %sys %wio %idle</Stack>
             </Graph>
-            <Graph name="TTY" Title="Tty" type="line">
+            <Graph name="TTY" Title="Tty" type="unique">
                 <Plot Title="TTY">rawch/s canch/s outch/s rcvin/s xmtin/s mdmin/s</Plot>
             </Graph>
-            <Graph name="CSWCH" Title="Context" type="line">
+            <Graph name="CSWCH" Title="Context" type="unique">
                 <Plot Title="Context">cswch/s</Plot>
             </Graph>
-            <Graph name="FILE" Title="File" type="line">
+            <Graph name="FILE" Title="File" type="unique">
                 <Plot Title="file">iget/s lookuppn/s dirblk/s</Plot>
             </Graph>
-            <Graph name="SYSCALL" Title="Syscal" type="line">
+            <Graph name="SYSCALL" Title="Syscal" type="unique">
                 <Plot Title="syscall">scall/s</Plot>
                 <Plot Title="r/w">sread/s swrit/s</Plot>
                 <Plot Title="fork">fork/s exec/s</Plot>
                 <Plot Title="char">rchar/s wchar/s</Plot>
             </Graph>
-            <Graph name="BUFFER" Title="Buffer" type="line">
+            <Graph name="BUFFER" Title="Buffer" type="unique">
                 <Plot Title="read">bread/s lread/s</Plot>
                 <Plot Title="write">bwrit/s lwrit/s</Plot>
                 <Plot Title="physical">pread/s pwrit/s</Plot>
                 <Plot Title="%">%rcache %wcache</Plot>
             </Graph>
-            <Graph name="DEVICE" Title="Device" type="linelist">
+            <Graph name="DEVICE" Title="Device" type="multiple">
                 <Plot Title="busy">%busy</Plot>
                 <Plot Title="avque">avque</Plot>
                 <Plot Title="r+w/s">r+w/s</Plot>
@@ -576,15 +584,15 @@
                 <Plot Title="avwait">avwait</Plot>
                 <Plot Title="avserv">avserv</Plot>
             </Graph>
-            <Graph name="MSGS" Title="Messages / Semaphores" type="line">
+            <Graph name="MSGS" Title="Messages / Semaphores" type="unique">
                 <Plot Title="Messages">msg/s</Plot>
                 <Plot Title="Semaphores">sema/s</Plot>
             </Graph>
-            <Graph name="RUNQ" Title="RunQ" type="line">
+            <Graph name="RUNQ" Title="RunQ" type="unique">
                 <Plot Title="runQ">runq-sz</Plot>
                 <Plot Title="swapQ">swpq-sz</Plot>
             </Graph>
-            <Graph name="CPU" Title="CPU" type="stacked">
+            <Graph name="CPU" Title="CPU" type="unique">
             </Graph>
         </OSType>
         <OSType name="HP-UX">
@@ -628,12 +636,12 @@
                 <headerstr>msg/s sema/s</headerstr>
                 <graphname>MSGS</graphname>
             </Stat>
-            <Graph name="CPU" Title="CPU" type="stacked">
+            <Graph name="CPU" Title="CPU" type="unique">
                 <Stack Title="Cpu">%usr %sys %wio %idle</Stack>
             </Graph>
-            <Graph name="CPU" Title="CPU" type="stacked">
+            <Graph name="CPU" Title="CPU" type="unique">
             </Graph>
-            <Graph name="DEVICE" Title="Device" type="linelist">
+            <Graph name="DEVICE" Title="Device" type="multiple">
                 <Plot Title="busy">%busy</Plot>
                 <Plot Title="avque">avque</Plot>
                 <Plot Title="r+w/s">r+w/s</Plot>
@@ -641,34 +649,34 @@
                 <Plot Title="avwait">avwait</Plot>
                 <Plot Title="avserv">avserv</Plot>
             </Graph>
-            <Graph name="RUNQ" Title="RunQ" type="line">
+            <Graph name="RUNQ" Title="RunQ" type="unique">
                 <Plot Title="runQ">runq-sz</Plot>
                 <Plot Title="swapQ">swpq-sz</Plot>
             </Graph>
-            <Graph name="BUFFER" Title="Buffer" type="line">
+            <Graph name="BUFFER" Title="Buffer" type="unique">
                 <Plot Title="read">bread/s lread/s</Plot>
                 <Plot Title="write">bwrit/s lwrit/s</Plot>
                 <Plot Title="physical">pread/s pwrit/s</Plot>
                 <Plot Title="%">%rcache %wcache</Plot>
             </Graph>
-            <Graph name="SWAP" Title="Swap" type="line">
+            <Graph name="SWAP" Title="Swap" type="unique">
                 <Plot Title="lwp">swpin/s swpot/s</Plot>
                 <Plot Title="page">bswin/s bswot/s</Plot>
                 <Plot Title="switch">pswch/s</Plot>
             </Graph>
-            <Graph name="SYSCALL" Title="Syscal" type="line">
+            <Graph name="SYSCALL" Title="Syscal" type="unique">
                 <Plot Title="syscall">scall/s</Plot>
                 <Plot Title="r/w">sread/s swrit/s</Plot>
                 <Plot Title="fork">fork/s exec/s</Plot>
                 <Plot Title="char">rchar/s wchar/s</Plot>
             </Graph>
-            <Graph name="FILE" Title="File" type="line">
+            <Graph name="FILE" Title="File" type="unique">
                 <Plot Title="file">iget/s namei/s dirbk/s</Plot>
             </Graph>
-            <Graph name="TTY" Title="Tty" type="line">
+            <Graph name="TTY" Title="Tty" type="unique">
                 <Plot Title="TTY">rawch/s canch/s outch/s rcvin/s xmtin/s mdmin/s</Plot>
             </Graph>
-            <Graph name="MSGS" Title="Messages / Semaphores" type="line">
+            <Graph name="MSGS" Title="Messages / Semaphores" type="unique">
                 <Plot Title="Messages">msg/s</Plot>
                 <Plot Title="Semaphores">sema/s</Plot>
             </Graph>

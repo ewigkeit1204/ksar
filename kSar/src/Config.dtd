@@ -66,11 +66,13 @@
 <!--- Put your DTDDoc comment here. -->
 <!ELEMENT Plot (#PCDATA)>
 <!ATTLIST Plot
-    Title CDATA #IMPLIED    
+    Title CDATA #IMPLIED
+    size CDATA #IMPLIED
   >
 
   <!--- Put your DTDDoc comment here. -->
 <!ELEMENT Stack (#PCDATA)>
 <!ATTLIST Stack
-    Title CDATA #IMPLIED    
+    Title CDATA #IMPLIED
+    size CDATA #IMPLIED
   >

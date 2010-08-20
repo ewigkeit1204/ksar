@@ -157,10 +157,18 @@ public class XMLConfig extends DefaultHandler {
                 if (currentGraph != null) {
                     if ("Plot".equals(qName)) {
                         currentPlot = new PlotConfig(attributes.getValue("Title"));
+                        String size_tmp = attributes.getValue("size");
+                        if ( size_tmp != null ){
+                            currentPlot.setSize(size_tmp);
+                        }
                         currentGraph.addPlot(currentPlot);
                     }
                     if ("Stack".equals(qName)) {
-                        currentStack = new StackConfig(attributes.getValue("Title"));
+                        currentStack = new StackConfig(attributes.getValue("Title"));                        
+                        String size_tmp = attributes.getValue("size");
+                        if ( size_tmp != null ){
+                            currentStack.setSize(size_tmp);
+                        }
                         currentGraph.addStack(currentStack);
                     }
                 }

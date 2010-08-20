@@ -7,14 +7,12 @@ package net.atomique.ksar.Linux;
 import java.util.Iterator;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import net.atomique.ksar.Graph.LineGraph;
 import net.atomique.ksar.AllParser;
 import net.atomique.ksar.Graph.BaseGraph;
 import net.atomique.ksar.Graph.BaseList;
 import net.atomique.ksar.GlobalOptions;
-import net.atomique.ksar.Graph.LineList;
-import net.atomique.ksar.Graph.StackedGraph;
-import net.atomique.ksar.Graph.StackedList;
+import net.atomique.ksar.Graph.GraphList;
+import net.atomique.ksar.Graph.OneGraph;
 import net.atomique.ksar.XML.GraphConfig;
 import net.atomique.ksar.XML.PlotConfig;
 import net.atomique.ksar.XML.StackConfig;
@@ -80,63 +78,50 @@ public class Parser extends AllParser {
             currentStat = "IGNORE";
             return 1;
         }
-/** XML COLUMN PARSER **/
+        /** XML COLUMN PARSER **/
         String checkStat = myosconfig.getStat(columns, firstdatacolumn);
-
+/*
         if (checkStat != null) {
-            Object obj = GraphList.get(checkStat);
+            Object obj = ListofGraph.get(checkStat);
             if (obj == null) {
                 GraphConfig mygraphinfo = myosconfig.getGraphConfig(checkStat);
                 if (mygraphinfo != null) {
-                    if ("line".equals(mygraphinfo.getType())) {
-                        obj = new LineGraph(mysar, mygraphinfo.getTitle(), line, firstdatacolumn, mysar.graphtree);
+                    if ("unique".equals(mygraphinfo.getType())) {
+                        obj = new OneGraph(mysar, mygraphinfo.getTitle(), line, firstdatacolumn, mysar.graphtree);
                         SortedSet<String> sortedset = new TreeSet<String>(mygraphinfo.getPlotlist().keySet());
                         Iterator<String> it = sortedset.iterator();
                         while (it.hasNext()) {
                             PlotConfig tmp = (PlotConfig) mygraphinfo.getPlotlist().get(it.next());
-                            ((LineGraph)obj).create_newplot(tmp.getTitle(), tmp.getHeaderStr());
+                            ((OneGraph)obj).create_newplot(tmp.getTitle(), tmp.getHeaderStr());
                         }
-                        GraphList.put(checkStat, obj);
+                        sortedset = new TreeSet<String>(mygraphinfo.getStacklist().keySet());
+                        it = sortedset.iterator();
+                        while (it.hasNext()) {
+                            StackConfig tmp = (StackConfig) mygraphinfo.getStacklist().get(it.next());
+                            ((OneGraph)obj).create_newstack(tmp.getTitle(), tmp.getHeaderStr());
+                        }
+                        ListofGraph.put(checkStat, obj);
                         currentStat = checkStat;
                         return 0;
                     }
-                    if ("linelist".equals(mygraphinfo.getType())) {
-                        obj = new LineList(mysar, mygraphinfo.getTitle(), line, firstdatacolumn);
+                    if ("multiple".equals(mygraphinfo.getType())) {
+                        obj = new GraphList(mysar, mygraphinfo.getTitle(), line, firstdatacolumn);
                         SortedSet<String> sortedset = new TreeSet<String>(mygraphinfo.getPlotlist().keySet());
                         Iterator<String> it = sortedset.iterator();
                         while (it.hasNext()) {
                             PlotConfig tmp = (PlotConfig) mygraphinfo.getPlotlist().get(it.next());
-                            ((LineList)obj).create_newplot(tmp.getTitle(), tmp.getHeaderStr());
+                            ((GraphList)obj).create_newplot(tmp.getTitle(), tmp.getHeaderStr());
                         }
-                        GraphList.put(checkStat, obj);
-                        currentStat = checkStat;
-                        return 0;
-
-                    }
-                    if ("stacked".equals(mygraphinfo.getType())) {
-                        obj = new StackedGraph(mysar, mygraphinfo.getTitle(), line, firstdatacolumn, mysar.graphtree);
-                        SortedSet<String> sortedset = new TreeSet<String>(mygraphinfo.getStacklist().keySet());
-                        Iterator<String> it = sortedset.iterator();
+                        sortedset = new TreeSet<String>(mygraphinfo.getStacklist().keySet());
+                        it = sortedset.iterator();
                         while (it.hasNext()) {
                             StackConfig tmp = (StackConfig) mygraphinfo.getStacklist().get(it.next());
-                            ((StackedGraph)obj).create_newstack(tmp.getTitle(), tmp.getHeaderStr());
+                            ((GraphList)obj).create_newstack(tmp.getTitle(), tmp.getHeaderStr());
                         }
-                        GraphList.put(checkStat, obj);
+                        ListofGraph.put(checkStat, obj);
                         currentStat = checkStat;
                         return 0;
-                    }
-                    if ("stackedlist".equals(mygraphinfo.getType())) {
-                        obj = new StackedList(mysar, mygraphinfo.getTitle(), line, firstdatacolumn);
-                        SortedSet<String> sortedset = new TreeSet<String>(mygraphinfo.getStacklist().keySet());
-                        Iterator<String> it = sortedset.iterator();
-                        while (it.hasNext()) {
-                            StackConfig tmp = (StackConfig) mygraphinfo.getStacklist().get(it.next());
-                            ((StackedList)obj).create_newstack(tmp.getTitle(), tmp.getHeaderStr());
-                        }
-                        GraphList.put(checkStat, obj);
-                        currentStat = checkStat;
-                        return 0;
-                    }
+                    }                    
                 } else {
                     // no graph associate
                     currentStat = checkStat;
@@ -147,7 +132,7 @@ public class Parser extends AllParser {
                 return 0;
             }
         }
-
+*/
         //System.out.println( currentStat +" " + line);
         
         
@@ -168,7 +153,7 @@ public class Parser extends AllParser {
             return -1;
         }
         
-        currentStatObj = GraphList.get(currentStat);
+        currentStatObj = ListofGraph.get(currentStat);
         if (currentStatObj == null) {
             return -1;
         } else {

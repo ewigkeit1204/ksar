@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 import net.atomique.ksar.UI.ParentNodeInfo;
 import net.atomique.ksar.UI.SortedTreeNode;
+import net.atomique.ksar.XML.GraphConfig;
 import net.atomique.ksar.kSar;
 import org.jfree.chart.ChartPanel;
 import org.jfree.data.time.Second;
@@ -26,9 +27,10 @@ import org.jfree.data.time.TimeTableXYDataset;
  */
 public abstract class BaseList {
 
-    public BaseList(kSar hissar, String stitle, String sheader, int i) {
+    public BaseList(kSar hissar,  GraphConfig g,String stitle, String sheader, int i) {
         mysar = hissar;
         HeaderStr = sheader;
+        graphconfig =g ;
         Title = stitle;
         skipColumn = i;
         ParentNodeInfo tmp = new ParentNodeInfo(Title, this);
@@ -113,7 +115,9 @@ public abstract class BaseList {
     public boolean isPrintSelected() {
         return false;
     }
+
     abstract public int parse(Second now, String s);
+    protected GraphConfig graphconfig = null;
     protected SortedTreeNode parentTreeNode = null;
     protected kSar mysar = null;
     protected String HeaderStr = null;

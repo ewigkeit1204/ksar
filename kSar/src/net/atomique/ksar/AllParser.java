@@ -25,11 +25,13 @@ public abstract class AllParser {
         return -1;
     }
 
-    
+    public OSConfig get_OSConfig() {
+        return myosconfig;
+    }
 
     protected OSConfig myosconfig = null;
     protected kSar mysar = null;
-    protected Map<String,Object> GraphList = new HashMap<String, Object>();
+    protected Map<String,Object> ListofGraph = new HashMap<String, Object>();
     protected String currentStat = "NONE";
     protected String lastStat = null;
     protected Object currentStatObj = null;

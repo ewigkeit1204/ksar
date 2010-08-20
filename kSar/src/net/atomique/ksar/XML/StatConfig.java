@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package net.atomique.ksar.XML;
 
 /**
@@ -11,7 +10,7 @@ package net.atomique.ksar.XML;
  */
 public class StatConfig {
 
-    public StatConfig (String s) {
+    public StatConfig(String s) {
         StatName = s;
     }
 
@@ -30,7 +29,7 @@ public class StatConfig {
     public String getHeaderStr() {
         return HeaderStr;
     }
-    
+
     public void setHeaderStr(String s) {
         HeaderStr = s;
         this.Header = HeaderStr.split("\\s+");
@@ -41,28 +40,28 @@ public class StatConfig {
         return StatName;
     }
 
-    public boolean check_Header( String  c, int i) {
-        if ( !  compare_Header(i) ) {
+    public boolean check_Header(String c, int i) {
+        if (!compare_Header(i)) {
             return false;
         }
-        
-        if ( HeaderStr.equals(c) ) {
-            return true;
-        }
-        return false;
-    }
-    public boolean compare_Header(int i) {        
-        if ( i == HeaderNum ) {
+
+        if (HeaderStr.equals(c)) {
             return true;
         }
         return false;
     }
 
+    public boolean compare_Header(int i) {
+        if (i == HeaderNum) {
+            return true;
+        }
+        return false;
+    }
 
-    private int HeaderNum = 0;
     
+    private int HeaderNum = 0;
     private String StatName = null;
     private String GraphName = null;
-    private String Header [] = null;
+    private String Header[] = null;
     private String HeaderStr = null;
 }

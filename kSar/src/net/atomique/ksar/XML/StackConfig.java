@@ -38,6 +38,23 @@ public class StackConfig {
         System.out.println("Header " + Header);
 
     }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    public void setSize(String s) {
+        Integer tmp = new Integer(s);
+        if (tmp == null) {
+            return;
+        }
+        this.size = size;
+    }
+    private int size = 1;
     private String Title = null;
     private String [] Header = null;
     private String HeaderStr = null;

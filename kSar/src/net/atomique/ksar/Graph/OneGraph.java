@@ -11,6 +11,7 @@ import net.atomique.ksar.Config;
 import net.atomique.ksar.GlobalOptions;
 import net.atomique.ksar.UI.SortedTreeNode;
 import net.atomique.ksar.UI.TreeNodeInfo;
+import net.atomique.ksar.XML.GraphConfig;
 import net.atomique.ksar.kSar;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.DateAxis;
@@ -32,22 +33,14 @@ import org.jfree.data.time.TimeTableXYDataset;
  */
 public class OneGraph extends BaseGraph {
 
-    public OneGraph(kSar hissar, String Title, String str, int i, SortedTreeNode pp) {
-        super(hissar, Title, i);
+    public OneGraph(kSar hissar, GraphConfig g,String Title, String str, int i, SortedTreeNode pp) {
+        super(hissar, Title, i,g);
         this.setTitle(str);
         if (pp != null) {
             TreeNodeInfo infotmp = new TreeNodeInfo(Title, this);
             SortedTreeNode nodetmp = new SortedTreeNode(infotmp);
             mysar.add2tree(pp, nodetmp);
         }
-    }
-
-    public void create_newstack(String s1, String s2) {
-        TimeTableXYDataset tmp = new TimeTableXYDataset();
-        String [] s = s2.split("\\s+");
-        for (int i=0 ; i< s.length; i++) {
-            StackList.put(s[i], tmp);
-        }        
     }
     
     public int parse(Second now, String s) {
@@ -79,6 +72,7 @@ public class OneGraph extends BaseGraph {
         return 0;
     }
 
+
     public JFreeChart makegraph(Second g_start, Second g_end) {
         long begingenerate = System.currentTimeMillis();
         CombinedDomainXYPlot plot = new CombinedDomainXYPlot(new DateAxis(""));
@@ -102,7 +96,7 @@ public class OneGraph extends BaseGraph {
             plot.add(all_plot, 1);
         }
         for (Object key : PlotList.keySet()) {
-            ArrayList tmp = (ArrayList) PlotList.get(key);
+            ArrayList tmp = (ArrayList) PlotList.get((String)key);
             XYItemRenderer renderer = new StandardXYItemRenderer();
             XYPlot all_plot = create_plot((String) key, tmp);
             if (all_plot == null) {
@@ -115,7 +109,7 @@ public class OneGraph extends BaseGraph {
                     renderer.setBaseStroke(new BasicStroke(1.0F));
                 }
             }
-
+            
             plot.add(all_plot, 1);
         }
         plot.setOrientation(PlotOrientation.VERTICAL);
@@ -128,6 +122,7 @@ public class OneGraph extends BaseGraph {
         }
         return mychart;
     }
+    
     private NumberAxis graphaxis = new NumberAxis();
     private String axisTitle = "";    
     
