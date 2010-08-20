@@ -421,7 +421,8 @@
                 <graphname>KMEM</graphname>
             </Stat>
             <Graph name="CPU" Title="CPU" type="stacked">
-                <Stack Title="Cpu">%usr %sys %wio %idle</Stack>
+                <Stack Title="Used">%usr %sys %wio</Stack>
+                <Plot Title="Idle">%idle</Plot>
             </Graph>
             <Graph name="KMEM" Title="Kernel Memory" type="line">
                 <Plot Title="Small">sml_mem</Plot>

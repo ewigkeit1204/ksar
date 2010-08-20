@@ -96,6 +96,7 @@ public class StackedGraph extends BaseGraph {
             }
             plot.add(all_plot, 1);
         }
+        
         plot.setOrientation(PlotOrientation.VERTICAL);
 
         JFreeChart mychart = new JFreeChart(graphtitle, Config.getDEFAULT_FONT(), plot, true);
