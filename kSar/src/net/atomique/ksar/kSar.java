@@ -11,8 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JDesktopPane;
 import net.atomique.ksar.Export.FilePDF;
-import net.atomique.ksar.Graph.BaseGraph;
-import net.atomique.ksar.Graph.BaseList;
+import net.atomique.ksar.Graph.Graph;
 import net.atomique.ksar.UI.DataView;
 import net.atomique.ksar.UI.GraphSelection;
 import net.atomique.ksar.UI.ParentNodeInfo;
@@ -113,7 +112,7 @@ public class kSar {
                 // SunOS host 5.9 Generic_118558-28 sun4u    09/01/2006
                 if ("SunOS".equals(columns[0])) {
                     if (myOS == null) {
-                        myOS = new OSInfo("SunOS", "automatically", current_line, this, new net.atomique.ksar.Solaris.Parser(this,"Solaris"));
+                        myOS = new OSInfo("SunOS", "automatically", current_line, this, new net.atomique.ksar.Parser.Solaris(this,"Solaris"));
                     }
                     myOS.setHostname(columns[1]);
                     myOS.setOSversion(columns[2]);
@@ -135,7 +134,7 @@ public class kSar {
                 if ("Linux".equals(columns[0])) {
                     String tmpstr;
                     if (myOS == null) {
-                        myOS = new OSInfo("Linux", "automatically", current_line, this, new net.atomique.ksar.Linux.Parser(this,"Linux"));
+                        myOS = new OSInfo("Linux", "automatically", current_line, this, new net.atomique.ksar.Parser.Linux(this,"Linux"));
                     }
                     myOS.setKernel(columns[1]);
                     tmpstr = columns[2];
@@ -303,7 +302,7 @@ public class kSar {
             Object obj1 = node.getUserObject();
             if (obj1 instanceof TreeNodeInfo) {
                 TreeNodeInfo tmpnode = (TreeNodeInfo) obj1;
-                BaseGraph nodeobj = tmpnode.getNode_object();
+                Graph nodeobj = tmpnode.getNode_object();
                 if ( nodeobj.isPrintSelected()) {
                     page_to_print++;
                 }

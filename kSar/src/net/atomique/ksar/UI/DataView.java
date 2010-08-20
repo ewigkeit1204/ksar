@@ -24,8 +24,8 @@ import javax.swing.tree.TreePath;
 import net.atomique.ksar.Config;
 import net.atomique.ksar.Export.FilePDF;
 import net.atomique.ksar.GlobalOptions;
-import net.atomique.ksar.Graph.BaseGraph;
-import net.atomique.ksar.Graph.BaseList;
+import net.atomique.ksar.Graph.List;
+import net.atomique.ksar.Graph.Graph;
 import net.atomique.ksar.kSar;
 
 /**
@@ -181,29 +181,37 @@ public class DataView extends javax.swing.JInternalFrame {
         TreePath treepath = evt.getPath();
         Object obj = treepath.getLastPathComponent();
         if (obj != null) {
+            if ( GlobalOptions.isDodebug()) {
+                System.out.print("mem:" + Runtime.getRuntime().totalMemory());
+                System.out.println(" free:" + Runtime.getRuntime().freeMemory());
+            }
             SortedTreeNode SortedTreeNode = (SortedTreeNode) obj;
             Object obj1 = SortedTreeNode.getUserObject();
             if (obj1 instanceof TreeNodeInfo) {
                 TreeNodeInfo tmpnode = (TreeNodeInfo) obj1;
-                BaseGraph nodeobj = tmpnode.getNode_object();
+                Graph nodeobj = tmpnode.getNode_object();
                 if (current_panel != null) {
-                    GraphPanel.remove(current_panel);
+                    System.out.println("remove panel");
+                    GraphPanel.removeAll();
+                    current_panel=null;
                 }
                 mygraphview.setGraph(nodeobj);
                 current_panel = mygraphview;
                 GraphPanel.add(mygraphview);
-
+                GraphPanel.revalidate();
                 displayPanel.validate();
             }
             if (obj1 instanceof ParentNodeInfo) {
                 ParentNodeInfo tmpnode = (ParentNodeInfo) obj1;
-                BaseList nodeobj = tmpnode.getNode_object();
+                List nodeobj = tmpnode.getNode_object();
                 if (current_panel != null) {
-                    GraphPanel.remove(current_panel);
+                    System.out.println("remove panel");
+                    GraphPanel.removeAll();
+                    current_panel=null;
                 }
                 current_panel = nodeobj.run();
                 GraphPanel.add(current_panel);
-
+                GraphPanel.revalidate();
                 displayPanel.validate();
             }
         }
@@ -306,7 +314,7 @@ public class DataView extends javax.swing.JInternalFrame {
             Object obj1 = node.getUserObject();
             if (obj1 instanceof ParentNodeInfo) {                
                 ParentNodeInfo tmpnode = (ParentNodeInfo) obj1;
-                BaseList nodeobj = tmpnode.getNode_object();
+                List nodeobj = tmpnode.getNode_object();
                 askparentPanel= nodeobj.getprintform();
                 graphselection.addPrintCheckBox(askparentPanel);
             }
@@ -319,7 +327,7 @@ public class DataView extends javax.swing.JInternalFrame {
             Object obj1 = node.getUserObject();
             if (obj1 instanceof TreeNodeInfo) {
                 TreeNodeInfo tmpnode = (TreeNodeInfo) obj1;
-                BaseGraph nodeobj = tmpnode.getNode_object();
+                Graph nodeobj = tmpnode.getNode_object();
                 JCheckBox tmp = nodeobj.getprintform();
                 if ( askparentPanel == null) {
                     graphselection.addPrintCheckBox(tmp);

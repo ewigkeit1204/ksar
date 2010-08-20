@@ -5,7 +5,7 @@
 
 package net.atomique.ksar.UI;
 
-import net.atomique.ksar.Graph.BaseGraph;
+import net.atomique.ksar.Graph.Graph;
 
 /**
  *
@@ -13,12 +13,12 @@ import net.atomique.ksar.Graph.BaseGraph;
  */
 public class TreeNodeInfo {
 
-    public TreeNodeInfo(String t, BaseGraph graph) {
+    public TreeNodeInfo(String t, Graph graph) {
         node_title = t;
         node_object = graph;
     }
 
-    public BaseGraph getNode_object() {
+    public Graph getNode_object() {
         return node_object;
     }
 
@@ -31,6 +31,6 @@ public class TreeNodeInfo {
     }
     
     private String node_title = null;
-    private BaseGraph node_object = null;
+    private Graph node_object = null;
     
 }

@@ -29,8 +29,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.JProgressBar;
-import net.atomique.ksar.Graph.BaseGraph;
-import net.atomique.ksar.Graph.BaseList;
+import net.atomique.ksar.Graph.Graph;
+import net.atomique.ksar.Graph.List;
 import net.atomique.ksar.UI.ParentNodeInfo;
 import net.atomique.ksar.UI.SortedTreeNode;
 import net.atomique.ksar.UI.TreeNodeInfo;
@@ -110,7 +110,7 @@ public class FilePDF extends PdfPageEventHelper implements Runnable {
             Object obj1 = node.getUserObject();
             if (obj1 instanceof ParentNodeInfo) {
                 ParentNodeInfo tmpnode = (ParentNodeInfo) obj1;
-                BaseList nodeobj = tmpnode.getNode_object();
+                List nodeobj = tmpnode.getNode_object();
                 System.out.println(nodeobj.doPrint());
                 root = new PdfOutline(root, new PdfDestination(PdfDestination.FIT), nodeobj.getTitle());
             }
@@ -122,7 +122,7 @@ public class FilePDF extends PdfPageEventHelper implements Runnable {
             Object obj1 = node.getUserObject();
             if (obj1 instanceof TreeNodeInfo) {
                 TreeNodeInfo tmpnode = (TreeNodeInfo) obj1;
-                BaseGraph nodeobj = tmpnode.getNode_object();
+                Graph nodeobj = tmpnode.getNode_object();
                 root = new PdfOutline(root, new PdfDestination(PdfDestination.FIT), nodeobj.getTitle());
                 System.out.println(nodeobj.doPrint());
                 update_ui();
@@ -154,10 +154,10 @@ public class FilePDF extends PdfPageEventHelper implements Runnable {
         }
     }
 
-    public int addchart(PdfWriter writer, BaseGraph graph) {
+    public int addchart(PdfWriter writer, Graph graph) {
         
 
-        JFreeChart chart = graph.getgraph();
+        JFreeChart chart = graph.getgraph(null,null);
         PdfTemplate pdftpl = pdfcb.createTemplate(height, width);
         Graphics2D g2d = pdftpl.createGraphics(height, width, mapper);
         Double r2d = new Rectangle2D.Double(0, 0, height, width);

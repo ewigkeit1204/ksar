@@ -52,7 +52,7 @@ public class StackConfig {
         if (tmp == null) {
             return;
         }
-        this.size = size;
+        this.size = tmp.intValue();
     }
     private int size = 1;
     private String Title = null;

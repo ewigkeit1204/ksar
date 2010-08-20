@@ -17,9 +17,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import net.atomique.ksar.Graph.BaseGraph;
 import net.atomique.ksar.Config;
 import net.atomique.ksar.GlobalOptions;
+import net.atomique.ksar.Graph.Graph;
 import org.jfree.chart.ChartPanel;
 
 /**
@@ -34,12 +34,12 @@ public class GraphView extends javax.swing.JPanel {
     }
 
 
-    public void setGraph(BaseGraph graph) {
+    public void setGraph(Graph graph) {
         this.thegraph = graph;
         if ( mychartpanel != null) {
             graphPanel.remove(mychartpanel);
         }
-        mychartpanel = new ChartPanel(graph.getgraph());
+        mychartpanel = graph.get_ChartPanel();
         graphPanel.add(mychartpanel);
         this.validate();
     }
@@ -197,6 +197,6 @@ public class GraphView extends javax.swing.JPanel {
     private javax.swing.JButton pngButton;
     private javax.swing.JButton printButton;
     // End of variables declaration//GEN-END:variables
-    private BaseGraph thegraph = null;
+    private Graph thegraph = null;
     private ChartPanel mychartpanel = null;
 }

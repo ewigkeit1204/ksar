@@ -366,7 +366,7 @@
                 <Plot Title="context">cswch/s</Plot>
             </Graph>
             <Graph name="CPU" Title="CPU" type="multiple">
-                <Stack Title="Used" size="2">%usr %user %nice %sys %iowait %steal %irq %soft %guest</Stack>
+                <Stack Title="Used" size="3">%usr %user %nice %sys %iowait %steal %irq %soft %guest</Stack>
                 <Plot Title="Idle" size="1">%idle</Plot>
             </Graph>
         </OSType>
@@ -429,7 +429,7 @@
                 <graphname>KMEM</graphname>
             </Stat>
             <Graph name="CPU" Title="CPU" type="unique">
-                <Stack Title="Used">%usr %sys %wio</Stack>
+                <Stack Title="Used" size="3">%usr %sys %wio</Stack>
                 <Plot Title="Idle">%idle</Plot>
             </Graph>
             <Graph name="KMEM" Title="Kernel Memory" type="unique">
