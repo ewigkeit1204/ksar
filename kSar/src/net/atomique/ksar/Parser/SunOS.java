@@ -4,28 +4,36 @@
  */
 package net.atomique.ksar.Parser;
 
-
-import java.util.Iterator;
-import java.util.SortedSet;
-import java.util.TreeSet;
 import net.atomique.ksar.AllParser;
 import net.atomique.ksar.GlobalOptions;
 import net.atomique.ksar.Graph.Graph;
 import net.atomique.ksar.Graph.List;
 import net.atomique.ksar.XML.GraphConfig;
-import net.atomique.ksar.XML.PlotConfig;
-import net.atomique.ksar.XML.StackConfig;
-import net.atomique.ksar.kSar;
 import org.jfree.data.time.Second;
 
 /**
  *
  * @author Max
  */
-public class Solaris extends AllParser {
+public class SunOS extends AllParser {
 
-    public Solaris(kSar hissar, String OS) {
-        super(hissar, OS);
+
+    public void parse_header(String s) {
+        String [] columns = s.split("\\s+");
+        setHostname(columns[1]);
+        setOSversion(columns[2]);
+        setKernel(columns[3]);
+        setCpuType(columns[4]);
+        setDate(columns[5]);
+        String[] dateSplit = getDate().split("/");
+        if (dateSplit.length == 3) {
+            day = Integer.parseInt(dateSplit[1]);
+            month = Integer.parseInt(dateSplit[0]);
+            year = Integer.parseInt(dateSplit[2]);
+            if (year < 100) { // solaris 8 show date on two digit
+                year += 2000;
+            }
+        }
     }
 
     @Override
@@ -33,10 +41,10 @@ public class Solaris extends AllParser {
         int heure = 0;
         int minute = 0;
         int seconde = 0;
-        
+
 
         if ("Average".equals(columns[0])) {
-            under_average= true;
+            under_average = true;
             return 0;
         }
 
@@ -56,7 +64,7 @@ public class Solaris extends AllParser {
 
         String[] sarTime = columns[0].split(":");
         if (sarTime.length != 3) {
-            if (!"DEVICE".equals(currentStat) ) {
+            if (!"DEVICE".equals(currentStat)) {
                 return -1;
             }
             firstdatacolumn = 0;
@@ -64,7 +72,7 @@ public class Solaris extends AllParser {
             heure = Integer.parseInt(sarTime[0]);
             minute = Integer.parseInt(sarTime[1]);
             seconde = Integer.parseInt(sarTime[2]);
-            now = new Second(seconde, minute, heure, mysar.day, mysar.month, mysar.year);
+            now = new Second(seconde, minute, heure, day, month, year);
             if (startofstat == null) {
                 startofstat = now;
             }
@@ -84,13 +92,13 @@ public class Solaris extends AllParser {
                 GraphConfig mygraphinfo = myosconfig.getGraphConfig(checkStat);
                 if (mygraphinfo != null) {
                     if ("unique".equals(mygraphinfo.getType())) {
-                        obj = new Graph(mysar, mygraphinfo, mygraphinfo.getTitle(),line, firstdatacolumn, mysar.graphtree);
+                        obj = new Graph(mysar, mygraphinfo, mygraphinfo.getTitle(), line, firstdatacolumn, mysar.graphtree);
                         ListofGraph.put(checkStat, obj);
                         currentStat = checkStat;
                         return 0;
                     }
                     if ("multiple".equals(mygraphinfo.getType())) {
-                        obj = new List(mysar, mygraphinfo, mygraphinfo.getTitle(), line, firstdatacolumn);                        
+                        obj = new List(mysar, mygraphinfo, mygraphinfo.getTitle(), line, firstdatacolumn);
                         ListofGraph.put(checkStat, obj);
                         currentStat = checkStat;
                         return 0;
@@ -114,7 +122,7 @@ public class Solaris extends AllParser {
             if (!lastStat.equals(currentStat) && GlobalOptions.isDodebug()) {
                 System.out.println("Stat change from " + lastStat + " to " + currentStat);
                 lastStat = currentStat;
-                under_average=false;
+                under_average = false;
             }
         } else {
             lastStat = currentStat;
@@ -126,7 +134,7 @@ public class Solaris extends AllParser {
             return -1;
         }
 
-        if ( under_average ) {
+        if (under_average) {
             return 0;
         }
         currentStatObj = ListofGraph.get(currentStat);
@@ -145,5 +153,5 @@ public class Solaris extends AllParser {
         return -1;
     }
     Second now = null;
-    boolean under_average=false;
+    boolean under_average = false;
 }

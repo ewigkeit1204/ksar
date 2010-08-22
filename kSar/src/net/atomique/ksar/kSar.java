@@ -10,11 +10,8 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JDesktopPane;
-import net.atomique.ksar.Export.FilePDF;
 import net.atomique.ksar.Graph.Graph;
 import net.atomique.ksar.UI.DataView;
-import net.atomique.ksar.UI.GraphSelection;
-import net.atomique.ksar.UI.ParentNodeInfo;
 import net.atomique.ksar.UI.SortedTreeNode;
 import net.atomique.ksar.UI.TreeNodeInfo;
 
@@ -68,6 +65,7 @@ public class kSar {
         launched_action.start();
     }
 
+    AllParser tmpclass =null;
     public int parse(BufferedReader br) {
         String current_line = null;
         long parsing_start = 0L;
@@ -88,6 +86,23 @@ public class kSar {
                 if (columns.length == 0) {
                     continue;
                 }
+
+                String ParserType= columns[0];
+                try {
+                    Class classtmp = GlobalOptions.getParser(ParserType);
+                    if (classtmp != null) {
+                        if ( myparser == null) {
+                        myparser =  (AllParser)classtmp.newInstance();
+                        myparser.init(this,columns[0],current_line);
+                        }
+                    }
+                } catch (InstantiationException ex) {
+                    Logger.getLogger(kSar.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IllegalAccessException ex) {
+                    Logger.getLogger(kSar.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                /*
                 // SCO_SV sco 3.2v5.0.7 i80386    09/24/2009
                 if ("SCO_SV".equals(columns[0]) && columns.length == 5) {
                     if (myOS == null) {
@@ -106,54 +121,6 @@ public class kSar {
                         if (year < 100) { // solaris 8 show date on two digit
                             year += 2000;
                         }
-                    }
-                    continue;
-                }
-                // SunOS host 5.9 Generic_118558-28 sun4u    09/01/2006
-                if ("SunOS".equals(columns[0])) {
-                    if (myOS == null) {
-                        myOS = new OSInfo("SunOS", "automatically", current_line, this, new net.atomique.ksar.Parser.Solaris(this,"Solaris"));
-                    }
-                    myOS.setHostname(columns[1]);
-                    myOS.setOSversion(columns[2]);
-                    myOS.setKernel(columns[3]);
-                    myOS.setCpuType(columns[4]);
-                    myOS.setDate(columns[5]);
-                    String[] dateSplit = myOS.getDate().split("/");
-                    if (dateSplit.length == 3) {
-                        day = Integer.parseInt(dateSplit[1]);
-                        month = Integer.parseInt(dateSplit[0]);
-                        year = Integer.parseInt(dateSplit[2]);
-                        if (year < 100) { // solaris 8 show date on two digit
-                            year += 2000;
-                        }
-                    }
-                    continue;
-                }
-                // Linux 2.4.21-32.ELsmp (host)       09/09/06
-                if ("Linux".equals(columns[0])) {
-                    String tmpstr;
-                    if (myOS == null) {
-                        myOS = new OSInfo("Linux", "automatically", current_line, this, new net.atomique.ksar.Parser.Linux(this,"Linux"));
-                    }
-                    myOS.setKernel(columns[1]);
-                    tmpstr = columns[2];
-                    myOS.setHostname(tmpstr.substring(1, tmpstr.length() - 1));
-                    myOS.setDate(columns[3]);
-                    String[] dateSplit = columns[3].split("/");
-                    if (dateSplit.length == 3) {
-                        day = Integer.parseInt(dateSplit[1]);
-                        month = Integer.parseInt(dateSplit[0]);
-                        year = Integer.parseInt(dateSplit[2]);
-                        if (year < 100) { // solaris 8 show date on two digit
-                            year += 2000;
-                        }
-                    }
-                    dateSplit = columns[3].split("-");
-                    if (dateSplit.length == 3) {
-                        day = Integer.parseInt(dateSplit[2]);
-                        month = Integer.parseInt(dateSplit[1]);
-                        year = Integer.parseInt(dateSplit[0]);
                     }
                     continue;
                 }
@@ -244,12 +211,13 @@ public class kSar {
                     }
                     continue;
                 }
-
-                if (myOS.getParser() == null) {
-                    System.out.println("unknown system");
+                */
+                if (myparser == null) {
+                    System.out.println("unknown parser");
+                    return -1;
                 }
 
-                parser_return = myOS.getParser().parse(current_line, columns);
+                parser_return = myparser.parse(current_line, columns);
                 if (parser_return == 1 && GlobalOptions.isDodebug()) {
                     System.out.println("### " + current_line);
                 }
@@ -344,10 +312,8 @@ public class kSar {
     private String reload_action = "Empty";
     private Thread launched_action = null;
     private boolean action_interrupted = false;
-    public OSInfo myOS = null;
-    public int day = 0;
-    public int month = 0;
-    public int year = 0;
+    public AllParser myparser = null;
+    
     public int total_graph=0;
     public SortedTreeNode graphtree = new SortedTreeNode("kSar");
     public int page_to_print=0;

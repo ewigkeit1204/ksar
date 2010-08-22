@@ -175,8 +175,8 @@ public class FilePDF extends PdfPageEventHelper implements Runnable {
     public void IndexPage(PdfWriter writer, Document document) {
         try {
             String title = "SAR Statistics";
-            String t_host = "For " + mysar.myOS.gethostName();
-            String t_date = "On " + mysar.myOS.getDate();
+            String t_host = "For " + mysar.myparser.gethostName();
+            String t_date = "On " + mysar.myparser.getDate();
             pdfcb.beginText();
             pdfcb.setFontAndSize(bf, 48);
             pdfcb.setColorFill(new BaseColor(0x00, 0x00, 0x00));

@@ -371,7 +371,7 @@
             </Graph>
         </OSType>
      
-        <OSType name="Solaris">
+        <OSType name="SunOS">
             <Stat name="cpu">
                 <headerstr>%usr %sys %wio %idle</headerstr>
                 <graphname>CPU</graphname>
