@@ -58,7 +58,6 @@ public class DataView extends javax.swing.JInternalFrame {
         jTree1 = new javax.swing.JTree();
         jButton1 = new javax.swing.JButton();
         displayPanel = new javax.swing.JPanel();
-        GraphPanel = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         dataMenu = new javax.swing.JMenu();
         LoadFile = new javax.swing.JMenuItem();
@@ -123,11 +122,6 @@ public class DataView extends javax.swing.JInternalFrame {
         jSplitPane1.setLeftComponent(jPanel2);
 
         displayPanel.setLayout(new java.awt.BorderLayout());
-
-        GraphPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(4, 4, 4, 4));
-        GraphPanel.setLayout(new java.awt.BorderLayout());
-        displayPanel.add(GraphPanel, java.awt.BorderLayout.CENTER);
-
         jSplitPane1.setRightComponent(displayPanel);
 
         jPanel1.add(jSplitPane1, java.awt.BorderLayout.CENTER);
@@ -185,34 +179,42 @@ public class DataView extends javax.swing.JInternalFrame {
                 System.out.print("mem:" + Runtime.getRuntime().totalMemory());
                 System.out.println(" free:" + Runtime.getRuntime().freeMemory());
             }
-            SortedTreeNode SortedTreeNode = (SortedTreeNode) obj;
-            Object obj1 = SortedTreeNode.getUserObject();
+
+            SortedTreeNode treenode = (SortedTreeNode) obj;
+            if ( treenode.getRoot() == treenode) {
+                System.out.println("in root");
+                if (current_panel != null) {
+                    displayPanel.removeAll();
+                    current_panel=null;
+                }
+                displayPanel.repaint();
+            }
+            Object obj1 = treenode.getUserObject();
             if (obj1 instanceof TreeNodeInfo) {
                 TreeNodeInfo tmpnode = (TreeNodeInfo) obj1;
                 Graph nodeobj = tmpnode.getNode_object();
                 if (current_panel != null) {
-                    System.out.println("remove panel");
-                    GraphPanel.removeAll();
+                    displayPanel.removeAll();
                     current_panel=null;
                 }
                 mygraphview.setGraph(nodeobj);
                 current_panel = mygraphview;
-                GraphPanel.add(mygraphview);
-                GraphPanel.revalidate();
+                displayPanel.add(mygraphview);
                 displayPanel.validate();
+                displayPanel.repaint();
+
             }
             if (obj1 instanceof ParentNodeInfo) {
                 ParentNodeInfo tmpnode = (ParentNodeInfo) obj1;
                 List nodeobj = tmpnode.getNode_object();
                 if (current_panel != null) {
-                    System.out.println("remove panel");
-                    GraphPanel.removeAll();
+                    displayPanel.removeAll();
                     current_panel=null;
                 }
                 current_panel = nodeobj.run();
-                GraphPanel.add(current_panel);
-                GraphPanel.revalidate();
+                displayPanel.add(current_panel);
                 displayPanel.validate();
+                displayPanel.repaint();
             }
         }
 
@@ -360,7 +362,6 @@ public class DataView extends javax.swing.JInternalFrame {
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel GraphPanel;
     private javax.swing.JMenuItem LoadCommand;
     private javax.swing.JMenuItem LoadFile;
     private javax.swing.JMenuItem LoadSSH;
