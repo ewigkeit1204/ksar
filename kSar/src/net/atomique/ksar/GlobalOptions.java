@@ -119,10 +119,11 @@ public class GlobalOptions {
     }
 
     public static Class getParser(String s) {
+        String tmp = s.replaceAll("-", "");
         if ( ParserMap.isEmpty()) {
             return null;
         }
-        return ParserMap.get(s);
+        return ParserMap.get(tmp);
     }
     
     /*

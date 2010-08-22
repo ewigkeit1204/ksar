@@ -115,7 +115,7 @@ public abstract class AllParser {
 
     public String getOSInfo() {
         StringBuilder tmpstr = new StringBuilder();
-        tmpstr.append("OS Type: ").append(ostype).append(" (").append(Detect).append(" detected)\n");
+        tmpstr.append("OS Type: ").append(ostype);
         if (OSversion != null) {
            tmpstr.append("OS Version: ").append(OSversion).append("\n");
         }
@@ -173,6 +173,14 @@ public abstract class AllParser {
 
     public String gethostName() {
         return Hostname;
+    }
+
+    public String getOstype() {
+        return ostype;
+    }
+
+    public void setOstype(String ostype) {
+        this.ostype = ostype;
     }
 
 

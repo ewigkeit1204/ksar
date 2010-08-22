@@ -20,6 +20,7 @@ public class SunOS extends AllParser {
 
     public void parse_header(String s) {
         String [] columns = s.split("\\s+");
+        setOstype(columns[0]);
         setHostname(columns[1]);
         setOSversion(columns[2]);
         setKernel(columns[3]);

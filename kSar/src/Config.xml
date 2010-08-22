@@ -552,9 +552,9 @@
                 <graphname>CPU</graphname>
             </Stat>
             <Graph name="CPU" Title="CPU" type="unique">
-                <Stack Title="Cpu">%usr %sys %wio %idle</Stack>
-            </Graph>
-            <Graph name="TTY" Title="Tty" type="unique">
+                <Stack Title="Used" size="3">%usr %sys %wio</Stack>
+                <Plot Title="Idle">%idle</Plot>
+            </Graph>            <Graph name="TTY" Title="Tty" type="unique">
                 <Plot Title="TTY">rawch/s canch/s outch/s rcvin/s xmtin/s mdmin/s</Plot>
             </Graph>
             <Graph name="CSWCH" Title="Context" type="unique">
@@ -637,9 +637,8 @@
                 <graphname>MSGS</graphname>
             </Stat>
             <Graph name="CPU" Title="CPU" type="unique">
-                <Stack Title="Cpu">%usr %sys %wio %idle</Stack>
-            </Graph>
-            <Graph name="CPU" Title="CPU" type="unique">
+                <Stack Title="Used" size="3">%usr %sys %wio</Stack>
+                <Plot Title="Idle">%idle</Plot>
             </Graph>
             <Graph name="DEVICE" Title="Device" type="multiple">
                 <Plot Title="busy">%busy</Plot>

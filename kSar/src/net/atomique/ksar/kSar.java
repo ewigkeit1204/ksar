@@ -92,8 +92,14 @@ public class kSar {
                     Class classtmp = GlobalOptions.getParser(ParserType);
                     if (classtmp != null) {
                         if ( myparser == null) {
-                        myparser =  (AllParser)classtmp.newInstance();
-                        myparser.init(this,columns[0],current_line);
+                            myparser =  (AllParser)classtmp.newInstance();
+                            myparser.init(this,columns[0],current_line);
+                            continue;
+                        } else {
+                            if ( myparser.getOstype().equals(columns[0]) ) {
+                                myparser.parse_header(current_line);
+                                continue;
+                            }
                         }
                     }
                 } catch (InstantiationException ex) {
@@ -145,28 +151,7 @@ public class kSar {
                     }
                     continue;
                 }
-                //
-                //
-                if ("HP-UX".equals(columns[0])) {
-                    if (myOS == null) {
-                        myOS = new OSInfo("HP-UX", "automatically", current_line, this, null);
-                    }
-                    myOS.setHostname(columns[1]);
-                    myOS.setOSversion(columns[2]);
-                    myOS.setKernel(columns[3]);
-                    myOS.setCpuType(columns[4]);
-                    myOS.setDate(columns[5]);
-                    String[] dateSplit = myOS.getDate().split("/");
-                    if (dateSplit.length == 3) {
-                        day = Integer.parseInt(dateSplit[1]);
-                        month = Integer.parseInt(dateSplit[0]);
-                        year = Integer.parseInt(dateSplit[2]);
-                        if (year < 100) { // solaris 8 show date on two digit
-                            year += 2000;
-                        }
-                    }
-                    continue;
-                }
+                
                 //
                 //
                 if ("Darwin".equals(columns[0])) {

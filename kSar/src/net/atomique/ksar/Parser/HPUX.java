@@ -15,17 +15,18 @@ import org.jfree.data.time.Second;
  *
  * @author Max
  */
-public class Linux extends AllParser {
+public class HPUX extends AllParser {
+
 
     public void parse_header(String s) {
         String [] columns = s.split("\\s+");
-        String tmpstr;
         setOstype(columns[0]);
-        setKernel(columns[1]);
-        tmpstr = columns[2];
-        setHostname(tmpstr.substring(1, tmpstr.length() - 1));
-        setDate(columns[3]);
-        String[] dateSplit = columns[3].split("/");
+        setHostname(columns[1]);
+        setOSversion(columns[2]);
+        setKernel(columns[3]);
+        setCpuType(columns[4]);
+        setDate(columns[5]);
+        String[] dateSplit = getDate().split("/");
         if (dateSplit.length == 3) {
             day = Integer.parseInt(dateSplit[1]);
             month = Integer.parseInt(dateSplit[0]);
@@ -34,13 +35,6 @@ public class Linux extends AllParser {
                 year += 2000;
             }
         }
-        dateSplit = columns[3].split("-");
-        if (dateSplit.length == 3) {
-            day = Integer.parseInt(dateSplit[2]);
-            month = Integer.parseInt(dateSplit[1]);
-            year = Integer.parseInt(dateSplit[0]);
-        }
-        
     }
 
     @Override
@@ -48,10 +42,10 @@ public class Linux extends AllParser {
         int heure = 0;
         int minute = 0;
         int seconde = 0;
-        Second now = null;
 
-        if ("Average:".equals(columns[0])) {
-            currentStat = "NONE";
+
+        if ("Average".equals(columns[0])) {
+            under_average = true;
             return 0;
         }
 
@@ -71,7 +65,10 @@ public class Linux extends AllParser {
 
         String[] sarTime = columns[0].split(":");
         if (sarTime.length != 3) {
-            return -1;
+            if (!"DEVICE".equals(currentStat)) {
+                return -1;
+            }
+            firstdatacolumn = 0;
         } else {
             heure = Integer.parseInt(sarTime[0]);
             minute = Integer.parseInt(sarTime[1]);
@@ -87,11 +84,6 @@ public class Linux extends AllParser {
         }
 
 
-        //00:20:01     CPU  i000/s  i001/s  i002/s  i008/s  i009/s  i010/s  i011/s  i012/s  i014/s
-        if ("CPU".equals(columns[firstdatacolumn]) && line.matches(".*i([0-9]+)/s.*")) {
-            currentStat = "IGNORE";
-            return 1;
-        }
         /** XML COLUMN PARSER **/
         String checkStat = myosconfig.getStat(columns, firstdatacolumn);
 
@@ -102,14 +94,12 @@ public class Linux extends AllParser {
                 if (mygraphinfo != null) {
                     if ("unique".equals(mygraphinfo.getType())) {
                         obj = new Graph(mysar, mygraphinfo, mygraphinfo.getTitle(), line, firstdatacolumn, mysar.graphtree);
-
                         ListofGraph.put(checkStat, obj);
                         currentStat = checkStat;
                         return 0;
                     }
                     if ("multiple".equals(mygraphinfo.getType())) {
                         obj = new List(mysar, mygraphinfo, mygraphinfo.getTitle(), line, firstdatacolumn);
-
                         ListofGraph.put(checkStat, obj);
                         currentStat = checkStat;
                         return 0;
@@ -125,15 +115,15 @@ public class Linux extends AllParser {
             }
         }
 
-        //System.out.println( currentStat +" " + line);
+        //System.out.println(currentStat + " " + line);
 
 
 
-        if (lastStat
-                != null) {
+        if (lastStat != null) {
             if (!lastStat.equals(currentStat) && GlobalOptions.isDodebug()) {
                 System.out.println("Stat change from " + lastStat + " to " + currentStat);
                 lastStat = currentStat;
+                under_average = false;
             }
         } else {
             lastStat = currentStat;
@@ -145,6 +135,9 @@ public class Linux extends AllParser {
             return -1;
         }
 
+        if (under_average) {
+            return 0;
+        }
         currentStatObj = ListofGraph.get(currentStat);
         if (currentStatObj == null) {
             return -1;
@@ -160,4 +153,6 @@ public class Linux extends AllParser {
         }
         return -1;
     }
+    Second now = null;
+    boolean under_average = false;
 }
