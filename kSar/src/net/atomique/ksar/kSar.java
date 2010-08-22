@@ -52,7 +52,7 @@ public class kSar {
             launched_action = new FileRead(this, filename);
         }
         reload_action = ((FileRead) launched_action).get_action();
-        launched_action.start();
+        do_action();
     }
 
     public void do_localcommand(String cmd) {
@@ -62,9 +62,17 @@ public class kSar {
             launched_action = new LocalCommand(this, cmd);
         }
         reload_action = ((LocalCommand) launched_action).get_action();
-        launched_action.start();
+        do_action();
     }
 
+    private void do_action() {
+        if (launched_action != null) {
+            launched_action.start();
+            if ( dataview != null) {
+                dataview.notifyrun(true);
+            }
+        }
+    }
     
     public int parse(BufferedReader br) {
         String current_line = null;
@@ -194,8 +202,10 @@ public class kSar {
 
         if (dataview != null) {
             dataview.treehome();
+            dataview.notifyrun(false);
             dataview.setHasData(true);
         }
+        
         parsing_end = System.currentTimeMillis();
         if (GlobalOptions.isDodebug()) {
             System.out.println("time to parse: " + (parsing_end - parsing_start) + "ms ");

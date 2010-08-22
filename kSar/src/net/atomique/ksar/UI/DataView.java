@@ -407,8 +407,14 @@ public class DataView extends javax.swing.JInternalFrame {
     public void treehome() {
         jTree1.setSelectionRow(0);
         jTree1.expandRow(0);
+        jTree1.repaint();
     }
 
+    public void notifyrun(boolean t) {
+        exportMenu.setEnabled(!t);
+        dataMenu.setEnabled(!t);
+    }
+    
     public void setHasData(boolean actif) {
         has_fresh_data=actif;
         exportMenu.setEnabled(actif);
