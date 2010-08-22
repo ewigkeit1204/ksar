@@ -85,6 +85,10 @@ public abstract class AllParser {
         }
     }
 
+    public TreeSet<Second> getDateSamples() {
+        return DateSamples;
+    }
+
 
     protected Second startofstat = null;
     protected Second endofstat = null;

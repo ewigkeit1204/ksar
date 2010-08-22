@@ -22,6 +22,7 @@ import javax.swing.JProgressBar;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 import net.atomique.ksar.Config;
+import net.atomique.ksar.Export.FileCSV;
 import net.atomique.ksar.Export.FilePDF;
 import net.atomique.ksar.GlobalOptions;
 import net.atomique.ksar.Graph.List;
@@ -64,6 +65,7 @@ public class DataView extends javax.swing.JInternalFrame {
         LoadCommand = new javax.swing.JMenuItem();
         exportMenu = new javax.swing.JMenu();
         PDFMenu = new javax.swing.JMenuItem();
+        CSVMenu = new javax.swing.JMenuItem();
 
         LoadSSH.setText("SSH Command...");
         LoadSSH.addActionListener(new java.awt.event.ActionListener() {
@@ -151,13 +153,21 @@ public class DataView extends javax.swing.JInternalFrame {
         exportMenu.setText("Export");
         exportMenu.setEnabled(false);
 
-        PDFMenu.setText("Export to PDF..");
+        PDFMenu.setText("Export to PDF...");
         PDFMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 PDFMenuActionPerformed(evt);
             }
         });
         exportMenu.add(PDFMenu);
+
+        CSVMenu.setText("Export to CSV...");
+        CSVMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CSVMenuActionPerformed(evt);
+            }
+        });
+        exportMenu.add(CSVMenu);
 
         jMenuBar1.add(exportMenu);
 
@@ -252,6 +262,26 @@ public class DataView extends javax.swing.JInternalFrame {
         doExportPDF(filename);
     }//GEN-LAST:event_PDFMenuActionPerformed
 
+    private void CSVMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CSVMenuActionPerformed
+        GraphSelection tmp  = new GraphSelection( GlobalOptions.getUI() ,true,this);
+        ask_treenode(mysar.graphtree,tmp);
+        tmp.setVisible(true);
+        if ( ! tmp.OkforExport ) {
+            return ;
+
+        }
+        String filename = askSaveFilename("Export CSV", Config.getLastExportDirectory());
+        if (filename == null) {
+            return;
+        }
+        Config.setLastExportDirectory(filename);
+        if (!Config.getLastExportDirectory().isDirectory()) {
+            Config.setLastExportDirectory(Config.getLastExportDirectory().getParentFile());
+            Config.save();
+        }
+        doExportCSV(filename);
+    }//GEN-LAST:event_CSVMenuActionPerformed
+
    private String askSaveFilename(String title, File chdirto) {
         String filename = null;
         JFileChooser chooser = new JFileChooser();
@@ -277,8 +307,8 @@ public class DataView extends javax.swing.JInternalFrame {
         }
         return filename;
     }
-   
-    public void doExportPDF(String filename) {
+
+   public void doExportPDF(String filename) {
         int pages = 0;
         System.out.println("print begin");
         pages= mysar.get_page_to_print();
@@ -301,8 +331,37 @@ public class DataView extends javax.swing.JInternalFrame {
         mydial.pack();
         mydial.setLocationRelativeTo(GlobalOptions.getUI());
         mydial.setVisible(true);
-        
+
         Runnable t = new FilePDF(filename, mysar, pbar, mydial);
+        Thread th = new Thread(t);
+        th.start();
+
+    }
+   
+    public void doExportCSV(String filename) {
+        int pages = 0;
+        pages= mysar.myparser.getDateSamples().size();
+        JPanel panel0 = new JPanel();
+        JPanel panel1 = new JPanel();
+        JPanel panel2 = new JPanel();
+        JProgressBar pbar = new JProgressBar();
+        pbar.setMinimum(0);
+        pbar.setMaximum(pages);
+        pbar.setStringPainted(true);
+        JLabel mytitre = new JLabel("Exporting: ");
+        panel1.add(mytitre);
+        panel2.add(pbar);
+        panel0.add(panel1);
+        panel0.add(panel2);
+        JDialog mydial = new JDialog();
+        mydial.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        mydial.setContentPane(panel0);
+        mydial.setSize(250, 80);
+        mydial.pack();
+        mydial.setLocationRelativeTo(GlobalOptions.getUI());
+        mydial.setVisible(true);
+        
+        Runnable t = new FileCSV(filename, mysar, pbar, mydial);
         Thread th = new Thread(t);
         th.start();
         
@@ -362,6 +421,7 @@ public class DataView extends javax.swing.JInternalFrame {
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem CSVMenu;
     private javax.swing.JMenuItem LoadCommand;
     private javax.swing.JMenuItem LoadFile;
     private javax.swing.JMenuItem LoadSSH;

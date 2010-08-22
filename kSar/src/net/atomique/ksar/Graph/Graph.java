@@ -124,6 +124,7 @@ public class Graph {
         StringBuilder tmp = new StringBuilder();
         tmp.append("Date;");
         tmp.append(getCsvHeader());
+        tmp.append("\n");
         TimeSeries datelist = (TimeSeries) Stats.get((1 + skipColumn));
         Iterator ite = datelist.getTimePeriods().iterator();
         while (ite.hasNext()) {
@@ -141,10 +142,9 @@ public class Graph {
         StringBuilder tmp = new StringBuilder();
         for (int i = 1 + skipColumn; i < HeaderStr.length; i++) {
             TimeSeries tmpseries = (TimeSeries) Stats.get(i - skipColumn);
-            tmp.append(tmpseries.getKey());
+            tmp.append(graphtitle).append(" ").append(tmpseries.getKey());
             tmp.append(";");
         }
-        tmp.append("\n");
         return tmp.toString();
     }
 
@@ -183,12 +183,8 @@ public class Graph {
         return printCheckBox;
     }
 
-    public String doPrint() {
-        if (printSelected) {
-            return "print " + graphtitle;
-        } else {
-            return "skip " + graphtitle;
-        }
+    public boolean doPrint() {
+        return printSelected;
     }
 
     public JFreeChart getgraph(Second g_start, Second g_end) {

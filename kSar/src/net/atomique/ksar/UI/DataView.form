@@ -43,10 +43,18 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="PDFMenu">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Export to PDF.."/>
+                <Property name="text" type="java.lang.String" value="Export to PDF..."/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="PDFMenuActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="CSVMenu">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Export to CSV..."/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CSVMenuActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
