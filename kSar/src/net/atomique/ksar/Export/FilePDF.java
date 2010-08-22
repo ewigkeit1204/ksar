@@ -174,15 +174,13 @@ public class FilePDF extends PdfPageEventHelper implements Runnable {
 
     public void IndexPage(PdfWriter writer, Document document) {
         try {
-            String title = "SAR Statistics";
-            String t_host = "For " + mysar.myparser.gethostName();
+            String title = "Statistics";
             String t_date = "On " + mysar.myparser.getDate();
             pdfcb.beginText();
             pdfcb.setFontAndSize(bf, 48);
             pdfcb.setColorFill(new BaseColor(0x00, 0x00, 0x00));
             pdfcb.showTextAligned(PdfContentByte.ALIGN_CENTER, title, ((pdfheight - pdfmargins) / 2), 500, 0);
             pdfcb.setFontAndSize(bf, 36);
-            pdfcb.showTextAligned(PdfContentByte.ALIGN_CENTER, t_host, ((pdfheight - pdfmargins) / 2), 400, 0);
             pdfcb.showTextAligned(PdfContentByte.ALIGN_CENTER, t_date, ((pdfheight - pdfmargins) / 2), 300, 0);
             pdfcb.endText();
             document.newPage();

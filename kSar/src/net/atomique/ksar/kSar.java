@@ -65,7 +65,7 @@ public class kSar {
         launched_action.start();
     }
 
-    AllParser tmpclass =null;
+    
     public int parse(BufferedReader br) {
         String current_line = null;
         long parsing_start = 0L;
@@ -93,10 +93,10 @@ public class kSar {
                     if (classtmp != null) {
                         if ( myparser == null) {
                             myparser =  (AllParser)classtmp.newInstance();
-                            myparser.init(this,columns[0],current_line);
+                            myparser.init(this,current_line);
                             continue;
                         } else {
-                            if ( myparser.getOstype().equals(columns[0]) ) {
+                            if ( myparser.getParserName().equals(columns[0]) ) {
                                 myparser.parse_header(current_line);
                                 continue;
                             }

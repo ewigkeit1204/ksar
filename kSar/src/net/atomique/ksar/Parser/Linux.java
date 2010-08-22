@@ -4,7 +4,7 @@
  */
 package net.atomique.ksar.Parser;
 
-import net.atomique.ksar.AllParser;
+import net.atomique.ksar.OSParser;
 import net.atomique.ksar.GlobalOptions;
 import net.atomique.ksar.Graph.Graph;
 import net.atomique.ksar.Graph.List;
@@ -15,7 +15,7 @@ import org.jfree.data.time.Second;
  *
  * @author Max
  */
-public class Linux extends AllParser {
+public class Linux extends OSParser {
 
     public void parse_header(String s) {
         String [] columns = s.split("\\s+");
