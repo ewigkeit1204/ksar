@@ -18,8 +18,8 @@ import net.atomique.ksar.UI.SplashScreen;
  */
 public class Main {
 
-    Config config = Config.getInstance();
-    GlobalOptions globaloptions = GlobalOptions.getInstance();
+    static Config config = null;
+    static GlobalOptions globaloptions = null;
     
     
     public static void usage() {
@@ -69,6 +69,10 @@ public class Main {
     public static void main(String[] args) {
         int i = 0;
         String arg;
+        /// load default
+        config = Config.getInstance();
+        globaloptions = GlobalOptions.getInstance();
+        
         
         if (args.length > 0) {
             while (i < args.length && args[i].startsWith("-")) {
@@ -96,6 +100,7 @@ public class Main {
         }
 
         make_ui();
+        System.out.println("exit");
     }
 
     public static void exit_error(final String message) {

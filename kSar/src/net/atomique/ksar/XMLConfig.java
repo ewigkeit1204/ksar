@@ -60,7 +60,7 @@ public class XMLConfig extends DefaultHandler {
         }        
     }
 
-    private void load_config(String xmlfile) {
+    public void load_config(String xmlfile) {
         SAXParserFactory fabric = null;
         SAXParser parser = null;
         try {

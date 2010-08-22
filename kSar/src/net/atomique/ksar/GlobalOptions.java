@@ -37,12 +37,21 @@ public class GlobalOptions {
     }
 
     GlobalOptions() {
+        Properties systemprops = System.getProperties();
+        String userhome = (String) systemprops.get("user.home") + systemprops.get("file.separator");
+        String fileseparator = (String)systemprops.get("file.separator");
         colorlist = new HashMap<String, ColorConfig>();
         OSlist = new HashMap<String, OSConfig>();
         ParserMap = new HashMap<String, Class>();
-        if (Config.getLocal_config() == -1 || Config.getLocal_config() == 0) {
-            InputStream is = this.getClass().getResourceAsStream("/Config.xml");
-            XMLConfig tmp = new XMLConfig(is);
+        InputStream is = this.getClass().getResourceAsStream("/Config.xml");
+        XMLConfig tmp = new XMLConfig(is);
+        System.out.println("load? " +Config.getLocal_configfile());
+        if ( Config.getLocal_configfile()== 1) {
+            System.out.println("load local file");
+            String filename = userhome+".ksarcfg"+fileseparator+"Config.xml";
+            if ( new File(filename).canRead() ) {
+                tmp.load_config(filename);
+            }
         }
         try {
             Class[] parserlist = getClasses("net.atomique.ksar.Parser");
@@ -55,11 +64,10 @@ public class GlobalOptions {
         }
 
         
-        if (Config.getLocal_config() == 1) {
-            // load file config
-        }
 
     }
+
+
     public static Desktop UI = null;
 
     public static Desktop getUI() {
@@ -116,6 +124,11 @@ public class GlobalOptions {
         GlobalOptions.CLfilename = CL_filename;
     }
 
+    public static String getFileseparator() {
+        return fileseparator;
+    }
+
+
     public static Class getParser(String s) {
         String tmp = s.replaceAll("-", "");
         if ( ParserMap.isEmpty()) {
@@ -168,9 +181,12 @@ public class GlobalOptions {
     private static Properties systemprops = System.getProperties();
     private static String userhome = (String) systemprops.get("user.home") + systemprops.get("file.separator");
     private static String username = (String) systemprops.get("user.name");
+    private static String fileseparator = (String)systemprops.get("file.separator");
     private static HashMap<String, ColorConfig> colorlist;
     private static HashMap<String, OSConfig> OSlist;
     private static boolean dodebug = false;
     private static String CLfilename = null;
     private static HashMap<String, Class> ParserMap;
+    private static boolean firstrun = true;
+    
 }
