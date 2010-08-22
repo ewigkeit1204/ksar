@@ -130,28 +130,6 @@ public class kSar {
                     }
                     continue;
                 }
-                // AIX rsora1 3 4 0006488F4C00    12/18/06
-                if ("AIX".equals(columns[0])) {
-                    String tmpstr;
-                    if (myOS == null) {
-                        myOS = new OSInfo("AIX", "automatically", current_line, this, null);
-                    }
-                    myOS.setHostname(columns[1]);
-                    myOS.setOSversion(columns[2] + "." + columns[3]);
-                    myOS.setMacAddress(columns[4]);
-                    myOS.setDate(columns[5]);
-                    String[] dateSplit = myOS.getDate().split("/");
-                    if (dateSplit.length == 3) {
-                        day = Integer.parseInt(dateSplit[1]);
-                        month = Integer.parseInt(dateSplit[0]);
-                        year = Integer.parseInt(dateSplit[2]);
-                        if (year < 100) { // solaris 8 show date on two digit
-                            year += 2000;
-                        }
-                    }
-                    continue;
-                }
-                
                 //
                 //
                 if ("Darwin".equals(columns[0])) {
@@ -221,6 +199,7 @@ public class kSar {
         parsing_end = System.currentTimeMillis();
         if (GlobalOptions.isDodebug()) {
             System.out.println("time to parse: " + (parsing_end - parsing_start) + "ms ");
+            System.out.println("number of datesamples: " +  myparser.DateSamples.size() );
         }
         return -1;
     }

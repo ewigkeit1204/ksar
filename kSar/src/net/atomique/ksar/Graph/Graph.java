@@ -161,7 +161,7 @@ public class Graph {
 
     public int savePNG(final Second g_start, final Second g_end, final String filename, final int width, final int height) {
         try {
-            ChartUtilities.saveChartAsPNG(new File(filename), this.getgraph(g_start, g_end), width, height);
+            ChartUtilities.saveChartAsPNG(new File(filename), this.getgraph(mysar.myparser.get_startofgraph(),mysar.myparser.get_endofgraph()), width, height);
         } catch (IOException e) {
             System.err.println("Unable to write to : " + filename);
             return -1;
@@ -171,7 +171,7 @@ public class Graph {
 
     public int saveJPG(final Second g_start, final Second g_end, final String filename, final int width, final int height) {
         try {
-            ChartUtilities.saveChartAsJPEG(new File(filename), this.getgraph(g_start, g_end), width, height);
+            ChartUtilities.saveChartAsJPEG(new File(filename), this.getgraph(mysar.myparser.get_startofgraph(),mysar.myparser.get_endofgraph()), width, height);
         } catch (IOException e) {
             System.err.println("Unable to write to : " + filename);
             return -1;
@@ -235,14 +235,15 @@ public class Graph {
 
     public ChartPanel get_ChartPanel() {
         if ( chartpanel == null) {
-            chartpanel = new ChartPanel(getgraph(null,null));
+            chartpanel = new ChartPanel(getgraph(mysar.myparser.get_startofgraph(),mysar.myparser.get_endofgraph()));
         }
         return chartpanel;
     }
     
     private JFreeChart makegraph(Second g_start, Second g_end) {
         long begingenerate = System.currentTimeMillis();
-        CombinedDomainXYPlot plot = new CombinedDomainXYPlot(new DateAxis(""));
+        DateAxis axisofdate = new DateAxis("");
+        CombinedDomainXYPlot plot = new CombinedDomainXYPlot(axisofdate);
         // do the stacked stuff
         SortedSet<String> sortedset = new TreeSet<String>(graphconfig.getStacklist().keySet());
         Iterator<String> it = sortedset.iterator();
@@ -254,7 +255,7 @@ public class Graph {
             TimeTableXYDataset tmp2 = StackListbyName.get(tmp.getTitle());
             if (tmp2 != null) {
                 StackedXYAreaRenderer2 renderer = new StackedXYAreaRenderer2();
-                XYPlot temp_plot = new XYPlot(tmp2, new DateAxis(null), graphaxis, renderer);
+                XYPlot temp_plot = new XYPlot(tmp2, axisofdate, graphaxis, renderer);
                 for (int i = 0; i < tmp2.getSeriesCount(); i++) {
                     Color color = GlobalOptions.getDataColor(tmp2.getSeriesKey(i).toString());
                     if (color != null) {
@@ -279,7 +280,7 @@ public class Graph {
             }
             XYDataset c = create_collection(t);
             NumberAxis graphaxistitle = new NumberAxis(tmp.getTitle());
-            XYPlot tmpplot = new XYPlot(c, null, graphaxistitle, renderer);
+            XYPlot tmpplot = new XYPlot(c, axisofdate, graphaxistitle, renderer);
 
             if (tmpplot == null) {
                 continue;
@@ -298,7 +299,10 @@ public class Graph {
         if ( plot.getSubplots().isEmpty() ) {
             return null;
         }
-
+        if (g_start !=null && g_end !=null) {
+            System.out.println("range seted");
+            axisofdate.setRange(g_start.getStart(), g_end.getEnd());
+        }
         plot.setOrientation(PlotOrientation.VERTICAL);
         JFreeChart mychart = new JFreeChart(graphtitle, Config.getDEFAULT_FONT(), plot, true);
         long endgenerate = System.currentTimeMillis();

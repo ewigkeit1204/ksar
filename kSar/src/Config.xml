@@ -525,11 +525,11 @@
             </Stat>
             <Stat name="kernel">
                 <headerstr>ksched/s kproc-ov kexit/s</headerstr>
-                <graphname>KERNEL</graphname>
+                <graphname>IGNORE</graphname>
             </Stat>
             <Stat name="runq">
                 <headerstr>runq-sz %runocc swpq-sz %swpocc</headerstr>
-                <graphname>RUNQ</graphname>
+                <graphname>IGNORE</graphname>
             </Stat>
             <Stat name="slot">
                 <headerstr>slots cycle/s fault/s odio/s</headerstr>
@@ -551,10 +551,19 @@
                 <headerstr>%usr %sys %wio %idle physc</headerstr>
                 <graphname>CPU</graphname>
             </Stat>
+            <Stat name="cpu3">
+                <headerstr>cpu %usr %sys %wio %idle physc</headerstr>
+                <graphname>CPUS</graphname>
+            </Stat>
             <Graph name="CPU" Title="CPU" type="unique">
                 <Stack Title="Used" size="3">%usr %sys %wio</Stack>
                 <Plot Title="Idle">%idle</Plot>
-            </Graph>            <Graph name="TTY" Title="Tty" type="unique">
+            </Graph>
+            <Graph name="CPUS" Title="CPU" type="multiple">
+                <Stack Title="Used" size="3">%usr %sys %wio</Stack>
+                <Plot Title="Idle">%idle</Plot>
+            </Graph>
+            <Graph name="TTY" Title="Tty" type="unique">
                 <Plot Title="TTY">rawch/s canch/s outch/s rcvin/s xmtin/s mdmin/s</Plot>
             </Graph>
             <Graph name="CSWCH" Title="Context" type="unique">
@@ -588,11 +597,9 @@
                 <Plot Title="Messages">msg/s</Plot>
                 <Plot Title="Semaphores">sema/s</Plot>
             </Graph>
-            <Graph name="RUNQ" Title="RunQ" type="unique">
-                <Plot Title="runQ">runq-sz</Plot>
-                <Plot Title="swapQ">swpq-sz</Plot>
-            </Graph>
-            <Graph name="CPU" Title="CPU" type="unique">
+            <Graph name="SLOT" Title="Slots" type="unique">
+                <Plot Title="" size="3">cycle/s fault/s odio/s</Plot>
+                <Plot Title="Slot">slots</Plot>
             </Graph>
         </OSType>
         <OSType name="HP-UX">

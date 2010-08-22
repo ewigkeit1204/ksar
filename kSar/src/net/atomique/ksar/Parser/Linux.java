@@ -79,9 +79,15 @@ public class Linux extends AllParser {
             now = new Second(seconde, minute, heure, day, month, year);
             if (startofstat == null) {
                 startofstat = now;
+                startofgraph =now;
+            }
+            if ( endofstat == null) {
+                endofstat = now;
+                endofgraph = now;
             }
             if (now.compareTo(endofstat) > 0) {
                 endofstat = now;
+                endofgraph = now;
             }
             firstdatacolumn = 1;
         }
@@ -149,6 +155,7 @@ public class Linux extends AllParser {
         if (currentStatObj == null) {
             return -1;
         } else {
+            DateSamples.add(now);
             if (currentStatObj instanceof Graph) {
                 Graph ag = (Graph) currentStatObj;
                 return ag.parse_line(now, line);

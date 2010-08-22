@@ -47,13 +47,11 @@ public class GlobalOptions {
         try {
             Class[] parserlist = getClasses("net.atomique.ksar.Parser");
             for (int i =0; i< parserlist.length; i++) {
-                System.out.println("parser found " + parserlist[i].getName());
                 String simplename = parserlist[i].getName().replaceFirst("net.atomique.ksar.Parser.","");
-                System.out.println("simplename " + simplename);
                 ParserMap.put(simplename,parserlist[i]);
             }
         } catch (ClassNotFoundException ex) {
-            System.out.println("oups no parser");
+            System.err.println("oups no parser in jar");
         }
 
         
@@ -129,7 +127,7 @@ public class GlobalOptions {
     /*
     http://forums.sun.com/thread.jspa?threadID=341935&tstart=0kage
     @throws ClassNotFoundException if the Package is invalid
-     */
+    */
     public static Class[] getClasses(String pckgname) throws ClassNotFoundException {
         ArrayList<Class> classes = new ArrayList<Class>();
         // Get a File object for the package

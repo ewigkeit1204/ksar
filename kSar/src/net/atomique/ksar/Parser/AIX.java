@@ -15,16 +15,16 @@ import org.jfree.data.time.Second;
  *
  * @author Max
  */
-public class SunOS extends AllParser {
+public class AIX extends AllParser {
 
 
     public void parse_header(String s) {
         String [] columns = s.split("\\s+");
         setOstype(columns[0]);
+
         setHostname(columns[1]);
-        setOSversion(columns[2]);
-        setKernel(columns[3]);
-        setCpuType(columns[4]);
+        setOSversion(columns[2]+ "." + columns[3]);
+        setMacAddress(columns[4]);
         setDate(columns[5]);
         String[] dateSplit = getDate().split("/");
         if (dateSplit.length == 3) {
@@ -65,10 +65,12 @@ public class SunOS extends AllParser {
 
         String[] sarTime = columns[0].split(":");
         if (sarTime.length != 3) {
-            if (!"DEVICE".equals(currentStat)) {
+            if (  "DEVICE".equals(currentStat) || "CPUS".equals(currentStat)) {
+                firstdatacolumn=0;
+            } else {
                 return -1;
             }
-            firstdatacolumn = 0;
+            
         } else {
             heure = Integer.parseInt(sarTime[0]);
             minute = Integer.parseInt(sarTime[1]);
@@ -160,7 +162,6 @@ public class SunOS extends AllParser {
         }
         return -1;
     }
-    
     Second now = null;
     boolean under_average = false;
 }

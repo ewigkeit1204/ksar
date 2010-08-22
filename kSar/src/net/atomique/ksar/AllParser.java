@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeSet;
 import net.atomique.ksar.GlobalOptions;
 import net.atomique.ksar.XML.OSConfig;
 import net.atomique.ksar.kSar;
@@ -183,6 +184,12 @@ public abstract class AllParser {
         this.ostype = ostype;
     }
 
+    public Second get_startofgraph() {
+        return startofgraph;
+    }
+    public Second get_endofgraph() {
+        return endofgraph;
+    }
 
     abstract public void parse_header(String s);
     
@@ -196,24 +203,28 @@ public abstract class AllParser {
     protected Second startofstat = null;
     protected Second endofstat = null;
     protected int firstdatacolumn =0;
+    protected TreeSet<Second> DateSamples = new TreeSet<Second>();
 
-    private String ostype = null;
-    private String Hostname = null;
-    private String OSversion = null;
-    private String Kernel = null;
-    private String CpuType = null;
-    private String sarStartDate = null;
-    private String sarEndDate = null;
-    private String MacAddress = null;
-    private String Memory = null;
-    private String NBDisk = null;
-    private String NBCpu = null;
-    private String ENT = null;
-    private String Detect = null;
-    private String original_line=null;
-    private AllParser parser = null;
+    protected String ostype = null;
+    protected String Hostname = null;
+    protected String OSversion = null;
+    protected String Kernel = null;
+    protected String CpuType = null;
+    protected String sarStartDate = null;
+    protected String sarEndDate = null;
+    protected String MacAddress = null;
+    protected String Memory = null;
+    protected String NBDisk = null;
+    protected String NBCpu = null;
+    protected String ENT = null;
+    protected String Detect = null;
+    protected String original_line=null;
+    protected AllParser parser = null;
     protected int day = 0;
     protected int month = 0;
     protected int year = 0;
+    // for graph
+    protected Second startofgraph = null;
+    protected Second endofgraph =null;
     
 }
