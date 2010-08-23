@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
+import net.atomique.ksar.GlobalOptions;
 import net.atomique.ksar.kSar;
 
 /**

@@ -5,7 +5,10 @@
 package net.atomique.ksar;
 
 import java.awt.Color;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
@@ -39,19 +42,18 @@ public class GlobalOptions {
 
     GlobalOptions() {
         String filename = null;
-        InputStream is =null;
+        InputStream is = null;
         XMLConfig tmp = null;
-        Properties systemprops = System.getProperties();
-        String userhome = (String) systemprops.get("user.home") + systemprops.get("file.separator");
-        String fileseparator = (String) systemprops.get("file.separator");
+        systemprops = System.getProperties();
+        username = (String) systemprops.get("user.name");
+        userhome = (String) systemprops.get("user.home") + systemprops.get("file.separator");
+        fileseparator = (String) systemprops.get("file.separator");
         colorlist = new HashMap<String, ColorConfig>();
         OSlist = new HashMap<String, OSConfig>();
         ParserMap = new HashMap<String, Class>();
         HistoryList = new ArrayList<CnxHistory>();
         is = this.getClass().getResourceAsStream("/Config.xml");
         tmp = new XMLConfig(is);
-        is = this.getClass().getResourceAsStream("/History.xml");
-        tmp.load_config(is);
         try {
             Class[] parserlist = getClasses("net.atomique.ksar.Parser");
             for (int i = 0; i < parserlist.length; i++) {
@@ -150,7 +152,6 @@ public class GlobalOptions {
         return HistoryList;
     }
 
-    
     /*
     http://forums.sun.com/thread.jspa?threadID=341935&tstart=0kage
     @throws ClassNotFoundException if the Package is invalid
@@ -190,10 +191,42 @@ public class GlobalOptions {
         classes.toArray(classesA);
         return classesA;
     }
-    private static Properties systemprops = System.getProperties();
-    private static String userhome = (String) systemprops.get("user.home") + systemprops.get("file.separator");
-    private static String username = (String) systemprops.get("user.name");
-    private static String fileseparator = (String) systemprops.get("file.separator");
+
+    public static void saveHistory() {
+        File tmpfile = null;
+        BufferedWriter tmpfile_out = null;
+
+        if( HistoryList.isEmpty()) {
+            return ;
+        }
+        
+        try {
+            tmpfile = new File(userhome + ".ksarcfg" + fileseparator + "History.xmltemp");
+            
+            
+            if (tmpfile.createNewFile() && tmpfile.canWrite()) {
+                tmpfile_out = new BufferedWriter(new FileWriter(tmpfile));
+            }
+            //xml header
+            tmpfile_out.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<ConfiG>\n\t<History>\n");
+            for (int i=0; i<HistoryList.size(); i++) {
+                CnxHistory tmp= HistoryList.get(i);
+                tmpfile_out.write(tmp.save());
+            }
+            //xml footer
+            tmpfile_out.write("\t</History>\n</ConfiG>\n");
+            tmpfile_out.flush();
+            tmpfile_out.close();
+            tmpfile.renameTo(new File(userhome + ".ksarcfg" + fileseparator + "History.xml"));
+        } catch (IOException ex) {
+            Logger.getLogger(GlobalOptions.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    private static Properties systemprops;
+    private static String userhome;
+    private static String username;
+    private static String fileseparator;
     private static HashMap<String, ColorConfig> colorlist;
     private static HashMap<String, OSConfig> OSlist;
     private static ArrayList<CnxHistory> HistoryList;

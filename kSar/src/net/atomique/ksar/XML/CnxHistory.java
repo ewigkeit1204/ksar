@@ -55,6 +55,15 @@ public class CnxHistory {
     public void dump() {
         System.out.println( username + "@" + hostname +":" + command);
     }
+    public String save() {
+        StringBuilder tmp = new StringBuilder();
+        tmp.append("\t\t<cnx>\n");
+        tmp.append("\t\t\t<username>").append(username).append("</username>\n");
+        tmp.append("\t\t\t<hostname>").append(hostname).append("</hostname>\n");
+        tmp.append("\t\t\t<command>").append(command).append("</command>\n");
+        tmp.append("\t\t</cnx>\n");
+        return tmp.toString();
+    }
     
     private String username = null;
     private String hostname = null;
