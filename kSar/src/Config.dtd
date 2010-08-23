@@ -36,7 +36,12 @@
 
 
 <!ELEMENT History (cnx)*>
-<!ELEMENT cnx (username|hostname|command)*>
+<!ATTLIST itemcolor
+    link CDATA #IMPLIED
+    type CDATA #IMPLIED
+  >
+
+<!ELEMENT cnx (command)*>
 
 
 <!--- Put your DTDDoc comment here. -->

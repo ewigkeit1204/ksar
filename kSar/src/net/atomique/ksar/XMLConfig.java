@@ -143,7 +143,7 @@ public class XMLConfig extends DefaultHandler {
         // history
         if ( in_history) {
             if ( "cnx".equals(qName)) {
-                currentCnx=new CnxHistory();
+                currentCnx=new CnxHistory(attributes.getValue("link"));
                 in_cnx=true;
             }
         }
@@ -245,15 +245,9 @@ public class XMLConfig extends DefaultHandler {
             }
         }
         
-        if( in_cnx) {
-            if ( "hostname".equals(qName) && currentCnx != null) {
-                currentCnx.setHostname(tempval);
-            }
-            if ( "username".equals(qName) && currentCnx != null) {
-                currentCnx.setUsername(tempval);
-            }
+        if( in_cnx) {            
             if ( "command".equals(qName) && currentCnx != null) {
-                currentCnx.setCommand(tempval);
+                currentCnx.addCommand(tempval);
             }
         }
         if ("cnx".equals(qName)) {
