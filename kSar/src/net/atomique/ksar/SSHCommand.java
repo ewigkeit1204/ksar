@@ -15,8 +15,11 @@ import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.logging.Level;
@@ -237,7 +240,7 @@ public class SSHCommand extends Thread {
         ((ChannelExec) channel).setCommand("LC_ALL=C " + commandComboBox.getSelectedItem() + "\n");
         channel.setInputStream(null);
         channel.setXForwarding(false);
-        ((ChannelExec) channel).setErrStream(System.err);
+        //((ChannelExec) channel).setErrStream(err);
 
         try {
             in = channel.getInputStream();
@@ -261,7 +264,8 @@ public class SSHCommand extends Thread {
             return;
         }
         if (channel.isClosed()) {
-            if (channel.getExitStatus() != -1) {
+            System.out.println("exit" + channel.getExitStatus() );
+            if (channel.getExitStatus() != 0) {
                 if (GlobalOptions.hasUI()) {
                     JOptionPane.showMessageDialog(GlobalOptions.getUI(), "There was a problem while retrieving stat", "SSH error", JOptionPane.ERROR_MESSAGE);
                 } else {
@@ -273,7 +277,48 @@ public class SSHCommand extends Thread {
         GlobalOptions.addHistory(tmp);
         return;
 
+    }
 
+    public void run() {
+        int max_waitdata = 10;
+        
+        try {
+            if (in == null) {
+                return;
+            }
+            // old fashion lead to error;
+            //  wait for channel ready
+            InputStreamReader tmpin= new InputStreamReader(in);
+            InputStreamReader tmperr = new InputStreamReader(err);
+            
+            while ( max_waitdata > 0 && ! tmpin.ready() ) {
+                // no data and not in timeout 
+                try { Thread.sleep( 100 ); }catch( Exception ee ) {}
+                max_waitdata--;
+            }
+            
+            BufferedReader myfile = new BufferedReader(tmpin);
+            BufferedReader myerror = new BufferedReader(tmperr);
+            
+            mysar.parse(myfile);
+            String current_line;
+            while ( (current_line = myerror.readLine()) != null) {
+                System.err.println("err" + current_line);
+            }
+            myfile.close();
+            myerror.close();
+            tmpin.close();
+            tmperr.close();
+            in.close();
+            err.close();
+            channel.disconnect();
+            session.disconnect();
+            channel=null;
+            session=null;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return;
     }
 
     public class MyUserInfo implements UserInfo, UIKeyboardInteractive {

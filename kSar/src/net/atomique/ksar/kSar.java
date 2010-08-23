@@ -74,9 +74,7 @@ public class kSar {
         }
         
         reload_action = ((SSHCommand) launched_action).get_action();
-        System.out.println("launch");
-        
-        //do_action();
+        do_action();
     }
 
     private void do_action() {
@@ -223,7 +221,9 @@ public class kSar {
         parsing_end = System.currentTimeMillis();
         if (GlobalOptions.isDodebug()) {
             System.out.println("time to parse: " + (parsing_end - parsing_start) + "ms ");
-            System.out.println("number of datesamples: " +  myparser.DateSamples.size() );
+            if( myparser != null) {
+                System.out.println("number of datesamples: " +  myparser.DateSamples.size() );
+            }
         }
         return -1;
     }
