@@ -241,8 +241,7 @@ public class DataView extends javax.swing.JInternalFrame {
 }//GEN-LAST:event_LoadFileActionPerformed
 
     private void LoadSSHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoadSSHActionPerformed
-        tmpSSHDialog tmp = new tmpSSHDialog(GlobalOptions.getUI() ,true,this);
-        tmp.setVisible(true);
+        mysar.do_sshread(null);
     }//GEN-LAST:event_LoadSSHActionPerformed
 
     private void PDFMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PDFMenuActionPerformed

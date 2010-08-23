@@ -26,6 +26,7 @@ public class tmpSSHDialog extends javax.swing.JDialog {
     /** Creates new form tmpSSHDialog */
     public tmpSSHDialog(java.awt.Frame parent, boolean modal,DataView dataview) {
         super(parent, modal);
+        connect=false;
         mydataview=dataview;
         // load history into combo
         Iterator<String> ite = GlobalOptions.getHistoryList().keySet().iterator();
@@ -149,7 +150,8 @@ public class tmpSSHDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_CancelbuttonActionPerformed
 
     private void ConnectionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConnectionButtonActionPerformed
-        // TODO add your handling code here:
+        connect=true;
+        this.dispose();
     }//GEN-LAST:event_ConnectionButtonActionPerformed
 
     private void HostComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HostComboBoxActionPerformed
@@ -186,4 +188,5 @@ public class tmpSSHDialog extends javax.swing.JDialog {
      private DefaultComboBoxModel userhostModel = new DefaultComboBoxModel();
      private DefaultComboBoxModel commandModel = new DefaultComboBoxModel();
      private DataView mydataview = null;
+     public boolean connect = false;
 }

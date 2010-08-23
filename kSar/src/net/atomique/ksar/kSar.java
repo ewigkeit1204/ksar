@@ -65,6 +65,18 @@ public class kSar {
         do_action();
     }
 
+    public void do_sshread(String cmd) {
+        if (cmd == null) {
+            launched_action = new SSHCommand(this);
+        //mysar.reload_command=t.get_command();
+        } else {
+            launched_action = new SSHCommand(this, cmd);
+        }
+        
+        reload_action = ((SSHCommand) launched_action).get_action();
+        do_action();
+    }
+
     private void do_action() {
         if (launched_action != null) {
             launched_action.start();

@@ -33,7 +33,7 @@ public class GlobalOptions {
         return instance;
     }
 
-    public static Object hasUI() {
+    public static boolean hasUI() {
         if (UI != null) {
             return true;
         }
@@ -80,7 +80,7 @@ public class GlobalOptions {
         }
 
     }
-    public static Desktop UI = null;
+    
 
     public static Desktop getUI() {
         return UI;
@@ -230,6 +230,8 @@ public class GlobalOptions {
         }
         
     }
+
+    private static Desktop UI = null;
     private static Properties systemprops;
     private static String userhome;
     private static String username;

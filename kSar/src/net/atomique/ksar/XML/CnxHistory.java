@@ -58,6 +58,11 @@ public class CnxHistory {
         return port;
     }
 
+    public int getPortInt() {
+        Integer tmp = Integer.parseInt(port);
+        return tmp.intValue();
+    }
+    
     public void setPort(String port) {
         this.port = port;
     }

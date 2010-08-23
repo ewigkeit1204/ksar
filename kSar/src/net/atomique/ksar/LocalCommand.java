@@ -54,8 +54,8 @@ public class LocalCommand extends Thread {
             p = Runtime.getRuntime().exec(command, envvar);
             in = p.getInputStream();
         } catch (Exception e) {
-            if (GlobalOptions.hasUI() != null) {
-                JOptionPane.showMessageDialog(null, "There was a problem while running the command " + command, "Local error", JOptionPane.ERROR_MESSAGE);
+            if (GlobalOptions.hasUI() ) {
+                JOptionPane.showMessageDialog(GlobalOptions.getUI(), "There was a problem while running the command " + command, "Local error", JOptionPane.ERROR_MESSAGE);
             } else {
                 System.err.println("There was a problem while running the command " + command);
             }
