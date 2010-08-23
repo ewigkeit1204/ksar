@@ -19,7 +19,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.logging.Level;
@@ -183,12 +182,13 @@ public class SSHCommand extends Thread {
         String link = (String) cb.getSelectedItem();
         CnxHistory tmp = GlobalOptions.getHistory(link);
         commandModel.removeAllElements();
-
         if (tmp != null) {
             Iterator<String> ite = tmp.getCommandList().iterator();
             while (ite.hasNext()) {
                 commandModel.addElement(ite.next());
             }
+        } else {
+            commandModel.addElement("sar -A");
         }
     }
 
@@ -196,7 +196,7 @@ public class SSHCommand extends Thread {
         CnxHistory tmp = new CnxHistory((String) HostComboBox.getSelectedItem());
         tmp.addCommand((String) commandComboBox.getSelectedItem());
         jsch = new JSch();
-        JSch.setLogger(new MyLogger());
+        //JSch.setLogger(new MyLogger());
         try {
             session = jsch.getSession(tmp.getUsername(), tmp.getHostname(), tmp.getPortInt());
         } catch (JSchException ex) {
@@ -213,7 +213,7 @@ public class SSHCommand extends Thread {
             t.append(response[i]);
         }
         password = t.toString();
-        
+        session.setPassword(t.toString());
         UserInfo ui = new MyUserInfo();
         session.setUserInfo(ui);
         //session.setPassword(t.toString());
@@ -280,6 +280,7 @@ public class SSHCommand extends Thread {
     }
 
     public void run() {
+        StringBuilder tmpmessage = new StringBuilder();
         int max_waitdata = 10;
         
         try {
@@ -302,8 +303,15 @@ public class SSHCommand extends Thread {
             
             mysar.parse(myfile);
             String current_line;
+            
             while ( (current_line = myerror.readLine()) != null) {
-                System.err.println("err" + current_line);
+                tmpmessage.append(current_line);
+                tmpmessage.append("\n");
+            }
+            if ( tmpmessage.length() >0 ) {
+                if ( GlobalOptions.hasUI()) {
+                    JOptionPane.showMessageDialog(GlobalOptions.getUI(), tmpmessage.toString(),"SSH error", JOptionPane.ERROR_MESSAGE);
+                }
             }
             myfile.close();
             myerror.close();
