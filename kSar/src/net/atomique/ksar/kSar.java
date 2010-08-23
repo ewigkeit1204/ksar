@@ -74,7 +74,9 @@ public class kSar {
         }
         
         reload_action = ((SSHCommand) launched_action).get_action();
-        do_action();
+        System.out.println("launch");
+        
+        //do_action();
     }
 
     private void do_action() {

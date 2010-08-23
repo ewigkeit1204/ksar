@@ -18,7 +18,6 @@ import java.awt.Insets;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -183,16 +182,16 @@ public class SSHCommand extends Thread {
         commandModel.removeAllElements();
 
         if (tmp != null) {
-            for (int i = 0; i < tmp.getCommandList().size(); i++) {
-                System.out.println("combocommand" + tmp.getCommandList().get(i));
-                commandModel.addElement(tmp.getCommandList().get(i));
+            Iterator<String> ite = tmp.getCommandList().iterator();
+            while (ite.hasNext()) {
+                commandModel.addElement(ite.next());
             }
         }
     }
 
-    private void connect()  {
+    private void connect() {
         CnxHistory tmp = new CnxHistory((String) HostComboBox.getSelectedItem());
-
+        tmp.addCommand((String) commandComboBox.getSelectedItem());
         jsch = new JSch();
         JSch.setLogger(new MyLogger());
         try {
@@ -203,9 +202,18 @@ public class SSHCommand extends Thread {
         java.util.Properties config = new java.util.Properties();
         config.put("StrictHostKeyChecking", "no");
         session.setConfig(config);
-        session.setPassword(PasswordField.getPassword().toString());
+        char[] response = new char[PasswordField.getPassword().length];
+        StringBuilder t = new StringBuilder();
+
+        for (int i = 0; i < PasswordField.getPassword().length; i++) {
+            response[i] = PasswordField.getPassword()[i];
+            t.append(response[i]);
+        }
+        password = t.toString();
+        
         UserInfo ui = new MyUserInfo();
         session.setUserInfo(ui);
+        //session.setPassword(t.toString());
         try {
             session.connect();
         } catch (JSchException ex) {
@@ -214,36 +222,56 @@ public class SSHCommand extends Thread {
             } else {
                 System.err.println("Err: unable to connect");
             }
-            
+            return;
         }
         try {
             channel = session.openChannel("exec");
         } catch (JSchException ex) {
-            Logger.getLogger(SSHCommand.class.getName()).log(Level.SEVERE, null, ex);
+            if (GlobalOptions.hasUI()) {
+                JOptionPane.showMessageDialog(GlobalOptions.getUI(), "Unable to open Channel", "SSH error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                System.err.println("Err: unable to open Channel");
+            }
+            return;
         }
         ((ChannelExec) channel).setCommand("LC_ALL=C " + commandComboBox.getSelectedItem() + "\n");
         channel.setInputStream(null);
         channel.setXForwarding(false);
         ((ChannelExec) channel).setErrStream(System.err);
+
         try {
             in = channel.getInputStream();
             err = ((ChannelExec) channel).getErrStream();
         } catch (IOException ex) {
-            Logger.getLogger(SSHCommand.class.getName()).log(Level.SEVERE, null, ex);
+            if (GlobalOptions.hasUI()) {
+                JOptionPane.showMessageDialog(GlobalOptions.getUI(), "Unable to open pipe", "SSH error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                System.err.println("Err: unable to open pipe");
+            }
+            return;
         }
         try {
             channel.connect();
         } catch (JSchException ex) {
-            Logger.getLogger(SSHCommand.class.getName()).log(Level.SEVERE, null, ex);
+            if (GlobalOptions.hasUI()) {
+                JOptionPane.showMessageDialog(GlobalOptions.getUI(), "Unable to connect Channel", "SSH error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                System.err.println("Err: unable to connect Channel");
+            }
+            return;
         }
         if (channel.isClosed()) {
             if (channel.getExitStatus() != -1) {
                 if (GlobalOptions.hasUI()) {
                     JOptionPane.showMessageDialog(GlobalOptions.getUI(), "There was a problem while retrieving stat", "SSH error", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    System.err.println("Err: Problem during ssh connection");
                 }
-                System.exit(2);
+                return;
             }
         }
+        GlobalOptions.addHistory(tmp);
+        return;
 
 
     }
@@ -286,11 +314,14 @@ public class SSHCommand extends Thread {
         }
 
         public String getPassword() {
+            if ( password != null) {
+                return password;
+            }
             return passwd;
         }
 
         public boolean promptPassword(String message) {
-            if (num_try > 0) {
+            if ( num_try > 0 || password != null) {
                 Object[] ob = {passwordField};
                 if (GlobalOptions.hasUI()) {
                     int result = JOptionPane.showConfirmDialog(GlobalOptions.getUI(), ob, message, JOptionPane.OK_CANCEL_OPTION);
@@ -313,6 +344,10 @@ public class SSHCommand extends Thread {
 
         public String[] promptKeyboardInteractive(String destination, String name, String instruction, String[] prompt, boolean[] echo) {
 
+            if (password != null) {
+                num_try++;
+                return password.split("[.]");
+            }
             panel = new JPanel();
             panel.setLayout(new GridBagLayout());
 
@@ -415,4 +450,5 @@ public class SSHCommand extends Thread {
     private int num_try = 0;
     private InputStream in = null;
     private InputStream err = null;
+    String password = null;
 }

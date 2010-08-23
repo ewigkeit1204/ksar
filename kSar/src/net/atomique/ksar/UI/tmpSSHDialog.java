@@ -155,14 +155,7 @@ public class tmpSSHDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_ConnectionButtonActionPerformed
 
     private void HostComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HostComboBoxActionPerformed
-        JComboBox cb = (JComboBox)evt.getSource();
-        String link = (String)cb.getSelectedItem();
-        CnxHistory tmp = GlobalOptions.getHistory(link);
-        commandModel.removeAllElements();
-        for (int i =0; i< tmp.getCommandList().size(); i++) {
-            System.out.println("combocommand" + tmp.getCommandList().get(i));
-            commandModel.addElement(tmp.getCommandList().get(i));
-        }
+        
     }//GEN-LAST:event_HostComboBoxActionPerformed
 
     

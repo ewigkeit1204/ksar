@@ -13,6 +13,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -51,7 +52,7 @@ public class GlobalOptions {
         colorlist = new HashMap<String, ColorConfig>();
         OSlist = new HashMap<String, OSConfig>();
         ParserMap = new HashMap<String, Class>();
-        HistoryList = new HashMap<String,CnxHistory>();
+        HistoryList = new HashMap<String, CnxHistory>();
         is = this.getClass().getResourceAsStream("/Config.xml");
         tmp = new XMLConfig(is);
         try {
@@ -80,7 +81,6 @@ public class GlobalOptions {
         }
 
     }
-    
 
     public static Desktop getUI() {
         return UI;
@@ -148,15 +148,28 @@ public class GlobalOptions {
         return ParserMap.get(tmp);
     }
 
-    public static HashMap<String,CnxHistory> getHistoryList() {
+    public static HashMap<String, CnxHistory> getHistoryList() {
         return HistoryList;
     }
 
     public static CnxHistory getHistory(String s) {
-        if ( HistoryList.isEmpty() ) {
+        if (HistoryList.isEmpty()) {
             return null;
         }
         return HistoryList.get(s);
+    }
+
+    public static void addHistory(CnxHistory s) {
+        CnxHistory tmp = HistoryList.get(s.getLink());
+        if ( tmp != null) {
+            Iterator<String> ite = s.getCommandList().iterator();
+            while (ite.hasNext()) {
+                tmp.addCommand(ite.next());
+            }
+        } else {
+            HistoryList.put(s.getLink(), s);
+        }
+        saveHistory();
     }
 
     /*
@@ -203,21 +216,24 @@ public class GlobalOptions {
         File tmpfile = null;
         BufferedWriter tmpfile_out = null;
 
-        if( HistoryList.isEmpty()) {
-            return ;
+        if (HistoryList.isEmpty()) {
+            return;
         }
-        
+
         try {
             tmpfile = new File(userhome + ".ksarcfg" + fileseparator + "History.xmltemp");
-            
-            
+
+            if ( tmpfile.exists() ) {
+                tmpfile.delete();
+            }
             if (tmpfile.createNewFile() && tmpfile.canWrite()) {
                 tmpfile_out = new BufferedWriter(new FileWriter(tmpfile));
             }
             //xml header
             tmpfile_out.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<ConfiG>\n\t<History>\n");
-            for (int i=0; i<HistoryList.size(); i++) {
-                CnxHistory tmp= HistoryList.get(i);
+            Iterator<String> ite = HistoryList.keySet().iterator();
+            while (ite.hasNext()) {
+                CnxHistory tmp = HistoryList.get(ite.next());
                 tmpfile_out.write(tmp.save());
             }
             //xml footer
@@ -228,9 +244,8 @@ public class GlobalOptions {
         } catch (IOException ex) {
             Logger.getLogger(GlobalOptions.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-    }
 
+    }
     private static Desktop UI = null;
     private static Properties systemprops;
     private static String userhome;
@@ -238,7 +253,7 @@ public class GlobalOptions {
     private static String fileseparator;
     private static HashMap<String, ColorConfig> colorlist;
     private static HashMap<String, OSConfig> OSlist;
-    private static HashMap<String,CnxHistory> HistoryList;
+    private static HashMap<String, CnxHistory> HistoryList;
     private static boolean dodebug = false;
     private static String CLfilename = null;
     private static HashMap<String, Class> ParserMap;

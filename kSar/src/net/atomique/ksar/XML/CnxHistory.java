@@ -4,7 +4,8 @@
  */
 package net.atomique.ksar.XML;
 
-import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.TreeSet;
 
 /**
  *
@@ -14,7 +15,7 @@ public class CnxHistory {
 
     public CnxHistory(String link) {
         this.link=link;
-        commandList = new ArrayList<String>();
+        commandList = new TreeSet<String>();
         String[] s = link.split("@", 2);
         if (s.length != 2) {
             return;
@@ -34,7 +35,7 @@ public class CnxHistory {
         commandList.add(s);
     }
 
-    public ArrayList<String> getCommandList() {
+    public TreeSet<String> getCommandList() {
         return commandList;
     }
 
@@ -90,16 +91,22 @@ public class CnxHistory {
 
     public String save() {
         StringBuilder tmp = new StringBuilder();
-        tmp.append("\t\t<cnx link=\"" + username + "@" + hostname + ":" + port + "\">\n");
-        for (int i = 0; i < commandList.size(); i++) {
-            tmp.append("\t\t\t<command>").append(commandList.get(i)).append("</command>\n");
+        if ( "22".equals(port)) {
+            tmp.append("\t\t<cnx link=\"" + username + "@" + hostname + "\">\n");
+        } else {
+            tmp.append("\t\t<cnx link=\"" + username + "@" + hostname + ":" + port + "\">\n");
+        }
+        Iterator<String> ite = commandList.iterator();
+        while (ite.hasNext()) {
+            tmp.append("\t\t\t<command>").append(ite.next()).append("</command>\n");
         }
         tmp.append("\t\t</cnx>\n");
         return tmp.toString();
     }
+    
     private String username = null;
     private String hostname = null;
-    private ArrayList<String> commandList = null;
+    private TreeSet<String> commandList = null;
     private String port = null;
     private String link = null;
 }
