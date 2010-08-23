@@ -39,35 +39,36 @@ public class GlobalOptions {
     GlobalOptions() {
         Properties systemprops = System.getProperties();
         String userhome = (String) systemprops.get("user.home") + systemprops.get("file.separator");
-        String fileseparator = (String)systemprops.get("file.separator");
+        String fileseparator = (String) systemprops.get("file.separator");
         colorlist = new HashMap<String, ColorConfig>();
         OSlist = new HashMap<String, OSConfig>();
         ParserMap = new HashMap<String, Class>();
         InputStream is = this.getClass().getResourceAsStream("/Config.xml");
         XMLConfig tmp = new XMLConfig(is);
-        System.out.println("load? " +Config.getLocal_configfile());
-        if ( Config.getLocal_configfile()== 1) {
-            System.out.println("load local file");
-            String filename = userhome+".ksarcfg"+fileseparator+"Config.xml";
-            if ( new File(filename).canRead() ) {
-                tmp.load_config(filename);
-            }
-        }
+
         try {
             Class[] parserlist = getClasses("net.atomique.ksar.Parser");
-            for (int i =0; i< parserlist.length; i++) {
-                String simplename = parserlist[i].getName().replaceFirst("net.atomique.ksar.Parser.","");
-                ParserMap.put(simplename,parserlist[i]);
+            for (int i = 0; i < parserlist.length; i++) {
+                String simplename = parserlist[i].getName().replaceFirst("net.atomique.ksar.Parser.", "").replaceAll("-", "");
+                ParserMap.put(simplename, parserlist[i]);
             }
         } catch (ClassNotFoundException ex) {
             System.err.println("oups no parser in jar");
         }
+        for (String parsername : ParserMap.keySet()) {
+            is = this.getClass().getResourceAsStream("/" + parsername + ".xml");
+            if (is != null) {
+                tmp.load_config(is);
+            }
+        }
 
-        
+        String filename = userhome + ".ksarcfg" + fileseparator + "Config.xml";
+        if (new File(filename).canRead()) {
+            tmp.load_config(filename);
+        }
+
 
     }
-
-
     public static Desktop UI = null;
 
     public static Desktop getUI() {
@@ -128,19 +129,18 @@ public class GlobalOptions {
         return fileseparator;
     }
 
-
     public static Class getParser(String s) {
         String tmp = s.replaceAll("-", "");
-        if ( ParserMap.isEmpty()) {
+        if (ParserMap.isEmpty()) {
             return null;
         }
         return ParserMap.get(tmp);
     }
-    
+
     /*
     http://forums.sun.com/thread.jspa?threadID=341935&tstart=0kage
     @throws ClassNotFoundException if the Package is invalid
-    */
+     */
     public static Class[] getClasses(String pckgname) throws ClassNotFoundException {
         ArrayList<Class> classes = new ArrayList<Class>();
         // Get a File object for the package
@@ -176,17 +176,14 @@ public class GlobalOptions {
         classes.toArray(classesA);
         return classesA;
     }
-
-    
     private static Properties systemprops = System.getProperties();
     private static String userhome = (String) systemprops.get("user.home") + systemprops.get("file.separator");
     private static String username = (String) systemprops.get("user.name");
-    private static String fileseparator = (String)systemprops.get("file.separator");
+    private static String fileseparator = (String) systemprops.get("file.separator");
     private static HashMap<String, ColorConfig> colorlist;
     private static HashMap<String, OSConfig> OSlist;
     private static boolean dodebug = false;
     private static String CLfilename = null;
     private static HashMap<String, Class> ParserMap;
     private static boolean firstrun = true;
-    
 }

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ConfiG SYSTEM "src/Config.dtd">
+<!--
+    Document   : Config.xml
+    Created on : 10 août 2010, 16:31
+    Author     : Max
+    Description:
+        Configure color of graphs
+
+-->
+
+<ConfiG>
+   
+    <!--  BEGIN OS -->
+    <OS>
+        <OSType name="AIX">
+            <Stat name="cswch">
+                <headerstr>cswch/s</headerstr>
+                <graphname>CSWCH</graphname>
+            </Stat>
+            <Stat name="file">
+                <headerstr>iget/s lookuppn/s dirblk/s</headerstr>
+                <graphname>FILE</graphname>
+            </Stat>
+            <Stat name="syscall">
+                <headerstr>scall/s sread/s swrit/s fork/s exec/s rchar/s wchar/s</headerstr>
+                <graphname>SYSCALL</graphname>
+            </Stat>
+            <Stat name="buffer">
+                <headerstr>bread/s lread/s %rcache bwrit/s lwrit/s %wcache pread/s pwrit/s</headerstr>
+                <graphname>BUFFER</graphname>
+            </Stat>
+            <Stat name="device1">
+                <headerstr>device %busy avque r+w/s blks/s avwait avserv</headerstr>
+                <graphname>DEVICE</graphname>
+            </Stat>
+            <Stat name="device2">
+                <headerstr>device %busy avque r+w/s Kbs/s avwait avserv</headerstr>
+                <graphname>DEVICE</graphname>
+            </Stat>
+            <Stat name="msgs">
+                <headerstr>msg/s sema/s</headerstr>
+                <graphname>MSGS</graphname>
+            </Stat>
+            <Stat name="kernel">
+                <headerstr>ksched/s kproc-ov kexit/s</headerstr>
+                <graphname>IGNORE</graphname>
+            </Stat>
+            <Stat name="runq">
+                <headerstr>runq-sz %runocc swpq-sz %swpocc</headerstr>
+                <graphname>IGNORE</graphname>
+            </Stat>
+            <Stat name="slot">
+                <headerstr>slots cycle/s fault/s odio/s</headerstr>
+                <graphname>SLOT</graphname>
+            </Stat>
+            <Stat name="proc">
+                <headerstr>proc-sz inod-sz file-sz thrd-sz</headerstr>
+                <graphname>IGNORE</graphname>
+            </Stat>
+            <Stat name="tty">
+                <headerstr>rawch/s canch/s outch/s rcvin/s xmtin/s mdmin/s</headerstr>
+                <graphname>TTY</graphname>
+            </Stat>
+            <Stat name="cpu1">
+                <headerstr>%usr %sys %wio %idle</headerstr>
+                <graphname>CPU</graphname>
+            </Stat>
+            <Stat name="cpu2">
+                <headerstr>%usr %sys %wio %idle physc</headerstr>
+                <graphname>CPU</graphname>
+            </Stat>
+            <Stat name="cpu3">
+                <headerstr>cpu %usr %sys %wio %idle physc</headerstr>
+                <graphname>CPUS</graphname>
+            </Stat>
+            <Graph name="CPU" Title="CPU" type="unique">
+                <Stack Title="Used" size="3">%usr %sys %wio</Stack>
+                <Plot Title="Idle">%idle</Plot>
+            </Graph>
+            <Graph name="CPUS" Title="CPU" type="multiple">
+                <Stack Title="Used" size="3">%usr %sys %wio</Stack>
+                <Plot Title="Idle">%idle</Plot>
+            </Graph>
+            <Graph name="TTY" Title="Tty" type="unique">
+                <Plot Title="TTY">rawch/s canch/s outch/s rcvin/s xmtin/s mdmin/s</Plot>
+            </Graph>
+            <Graph name="CSWCH" Title="Context" type="unique">
+                <Plot Title="Context">cswch/s</Plot>
+            </Graph>
+            <Graph name="FILE" Title="File" type="unique">
+                <Plot Title="file">iget/s lookuppn/s dirblk/s</Plot>
+            </Graph>
+            <Graph name="SYSCALL" Title="Syscal" type="unique">
+                <Plot Title="syscall">scall/s</Plot>
+                <Plot Title="r/w">sread/s swrit/s</Plot>
+                <Plot Title="fork">fork/s exec/s</Plot>
+                <Plot Title="char">rchar/s wchar/s</Plot>
+            </Graph>
+            <Graph name="BUFFER" Title="Buffer" type="unique">
+                <Plot Title="read">bread/s lread/s</Plot>
+                <Plot Title="write">bwrit/s lwrit/s</Plot>
+                <Plot Title="physical">pread/s pwrit/s</Plot>
+                <Plot Title="%">%rcache %wcache</Plot>
+            </Graph>
+            <Graph name="DEVICE" Title="Device" type="multiple">
+                <Plot Title="busy">%busy</Plot>
+                <Plot Title="avque">avque</Plot>
+                <Plot Title="r+w/s">r+w/s</Plot>
+                <Plot Title="blks/s">blks/s</Plot>
+                <Plot Title="Kbs/s">Kbs/s</Plot>
+                <Plot Title="avwait">avwait</Plot>
+                <Plot Title="avserv">avserv</Plot>
+            </Graph>
+            <Graph name="MSGS" Title="Messages / Semaphores" type="unique">
+                <Plot Title="Messages">msg/s</Plot>
+                <Plot Title="Semaphores">sema/s</Plot>
+            </Graph>
+            <Graph name="SLOT" Title="Slots" type="unique">
+                <Plot Title="" size="3">cycle/s fault/s odio/s</Plot>
+                <Plot Title="Slot">slots</Plot>
+            </Graph>
+        </OSType>
+    
+    </OS>
+    <!--  END OS -->
+</ConfiG>
+

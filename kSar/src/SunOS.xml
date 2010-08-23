@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ConfiG SYSTEM "src/Config.dtd">
+<!--
+    Document   : Config.xml
+    Created on : 10 août 2010, 16:31
+    Author     : Max
+    Description:
+        Configure color of graphs
+
+-->
+
+<ConfiG>
+   
+    <!--  BEGIN OS -->
+    <OS>
+        <OSType name="SunOS">
+            <Stat name="cpu">
+                <headerstr>%usr %sys %wio %idle</headerstr>
+                <graphname>CPU</graphname>
+            </Stat>
+            <Stat name="device">
+                <headerstr>device %busy avque r+w/s blks/s avwait avserv</headerstr>
+                <graphname>DEVICE</graphname>
+            </Stat>
+            <Stat name="runq">
+                <headerstr>runq-sz %runocc swpq-sz %swpocc</headerstr>
+                <graphname>RUNQ</graphname>
+            </Stat>
+            <Stat name="buffer">
+                <headerstr>bread/s lread/s %rcache bwrit/s lwrit/s %wcache pread/s pwrit/s</headerstr>
+                <graphname>BUFFER</graphname>
+            </Stat>
+            <Stat name="swap">
+                <headerstr>swpin/s bswin/s swpot/s bswot/s pswch/s</headerstr>
+                <graphname>SWAP</graphname>
+            </Stat>
+            <Stat name="syscall">
+                <headerstr>scall/s sread/s swrit/s fork/s exec/s rchar/s wchar/s</headerstr>
+                <graphname>SYSCALL</graphname>
+            </Stat>
+            <Stat name="file">
+                <headerstr>iget/s namei/s dirbk/s</headerstr>
+                <graphname>FILE</graphname>
+            </Stat>
+            <Stat name="tty">
+                <headerstr>rawch/s canch/s outch/s rcvin/s xmtin/s mdmin/s</headerstr>
+                <graphname>TTY</graphname>
+            </Stat>
+            <Stat name="ksize">
+                <headerstr>proc-sz ov inod-sz ov file-sz ov lock-sz</headerstr>
+                <graphname>IGNORE</graphname>
+            </Stat>
+            <Stat name="msgs">
+                <headerstr>msg/s sema/s</headerstr>
+                <graphname>MSGS</graphname>
+            </Stat>
+            <Stat name="paging1">
+                <headerstr>atch/s pgin/s ppgin/s pflt/s vflt/s slock/s</headerstr>
+                <graphname>PAGING1</graphname>
+            </Stat>
+            <Stat name="paging2">
+                <headerstr>pgout/s ppgout/s pgfree/s pgscan/s %ufs_ipf</headerstr>
+                <graphname>PAGING2</graphname>
+            </Stat>
+            <Stat name="mem">
+                <headerstr>freemem freeswap</headerstr>
+                <graphname>MEM</graphname>
+            </Stat>
+            <Stat name="kmem">
+                <headerstr>sml_mem alloc fail lg_mem alloc fail ovsz_alloc fail</headerstr>
+                <graphname>KMEM</graphname>
+            </Stat>
+            <Graph name="CPU" Title="CPU" type="unique">
+                <Stack Title="Used" size="3">%usr %sys %wio</Stack>
+                <Plot Title="Idle">%idle</Plot>
+            </Graph>
+            <Graph name="KMEM" Title="Kernel Memory" type="unique">
+                <Plot Title="Small">sml_mem</Plot>
+                <Plot Title="Large">lg_mem</Plot>
+                <Plot Title="Oversize">ovsz_alloc</Plot>
+            </Graph>
+            <Graph name="BUFFER" Title="Buffer" type="unique">
+                <Plot Title="read">bread/s lread/s</Plot>
+                <Plot Title="write">bwrit/s lwrit/s</Plot>
+                <Plot Title="physical">pread/s pwrit/s</Plot>
+                <Plot Title="%">%rcache %wcache</Plot>
+            </Graph>
+            <Graph name="DEVICE" Title="Device" type="multiple">
+                <Plot Title="busy">%busy</Plot>
+                <Plot Title="avque">avque</Plot>
+                <Plot Title="r+w/s">r+w/s</Plot>
+                <Plot Title="blks/s">blks/s</Plot>
+                <Plot Title="avwait">avwait</Plot>
+                <Plot Title="avserv">avserv</Plot>
+            </Graph>
+            <Graph name="RUNQ" Title="RunQ" type="unique">
+                <Plot Title="runQ">runq-sz</Plot>
+                <Plot Title="swapQ">swpq-sz</Plot>
+            </Graph>
+            <Graph name="SWAP" Title="Swap" type="unique">
+                <Plot Title="lwp">swpin/s swpot/s</Plot>
+                <Plot Title="page">bswin/s bswot/s</Plot>
+                <Plot Title="switch">pswch/s</Plot>
+            </Graph>
+            <Graph name="SYSCALL" Title="Syscal" type="unique">
+                <Plot Title="syscall">scall/s</Plot>
+                <Plot Title="r/w">sread/s swrit/s</Plot>
+                <Plot Title="fork">fork/s exec/s</Plot>
+                <Plot Title="char">rchar/s wchar/s</Plot>
+            </Graph>
+            <Graph name="FILE" Title="File" type="unique">
+                <Plot Title="file">iget/s namei/s dirbk/s</Plot>
+            </Graph>
+            <Graph name="TTY" Title="Tty" type="unique">
+                <Plot Title="TTY">rawch/s canch/s outch/s rcvin/s xmtin/s mdmin/s</Plot>
+            </Graph>
+            <Graph name="MSGS" Title="Messages / Semaphores" type="unique">
+                <Plot Title="Messages">msg/s</Plot>
+                <Plot Title="Semaphores">sema/s</Plot>
+            </Graph>
+            <Graph name="PAGING1" Title="Paging1" type="unique">
+                <Plot Title="atch">atch/s</Plot>
+                <Plot Title="in">pgin/s ppgin/s</Plot>
+                <Plot Title="fault">pflt/s vflt/s</Plot>
+                <Plot Title="lock">slock/s</Plot>
+            </Graph>
+            <Graph name="PAGING2" Title="Paging2" type="unique">
+                <Plot Title="out">pgout/s ppgout/s</Plot>
+                <Plot Title="free">pgfree/s</Plot>
+                <Plot Title="scan">pgscan/s</Plot>
+                <Plot Title="ufs_ipf">%ufs_ipf</Plot>
+            </Graph>
+            <Graph name="MEM" Title="Memory" type="unique">
+                <Plot Title="freemem">freemem</Plot>
+                <Plot Title="freeswap">freeswap</Plot>
+            </Graph>
+        </OSType>
+
+    </OS>
+    <!--  END OS -->
+</ConfiG>
+

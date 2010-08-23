@@ -259,7 +259,6 @@ public class Graph {
                         renderer.setBaseStroke(new BasicStroke(1.0F));
                     }
                 }
-                System.out.println("stack "+ tmp.getTitle() + " size " + tmp.getSize());
                 plot.add(temp_plot, tmp.getSize());
             }
         }
@@ -289,14 +288,11 @@ public class Graph {
                 }
             }
             plot.add(tmpplot, tmp.getSize());
-            System.out.println("plot "+ tmp.getTitle() + " size " + tmp.getSize());
-
         }
         if ( plot.getSubplots().isEmpty() ) {
             return null;
         }
         if (g_start !=null && g_end !=null) {
-            System.out.println("range seted");
             axisofdate.setRange(g_start.getStart(), g_end.getEnd());
         }
         plot.setOrientation(PlotOrientation.VERTICAL);

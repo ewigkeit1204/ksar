@@ -38,7 +38,7 @@ public class XMLConfig extends DefaultHandler {
         load_config(is);
     }
 
-    private void load_config(InputStream is) {
+    public void load_config(InputStream is) {
         SAXParserFactory fabric = null;
         SAXParser parser = null;
         try {
