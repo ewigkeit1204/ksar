@@ -37,14 +37,11 @@ public class tmpSSHDialog extends javax.swing.JDialog {
         infopanel = new javax.swing.JPanel();
         hostnamePanel = new javax.swing.JPanel();
         HostnameLabel = new javax.swing.JLabel();
-        HostnameField = new javax.swing.JTextField();
-        userPanel = new javax.swing.JPanel();
-        UsernameLabel = new javax.swing.JLabel();
-        UsernameField = new javax.swing.JTextField();
+        HostComboBox = new javax.swing.JComboBox();
         passwordPanel = new javax.swing.JPanel();
         PasswordLabel = new javax.swing.JLabel();
         PasswordField = new javax.swing.JPasswordField();
-        jPanel1 = new javax.swing.JPanel();
+        commandPanel = new javax.swing.JPanel();
         ComboBoxLabel = new javax.swing.JLabel();
         commandComboBox = new javax.swing.JComboBox();
         buttonpanel = new javax.swing.JPanel();
@@ -54,7 +51,7 @@ public class tmpSSHDialog extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setModalityType(java.awt.Dialog.ModalityType.DOCUMENT_MODAL);
 
-        titleLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        titleLabel.setFont(new java.awt.Font("Tahoma", 1, 14));
         titleLabel.setText("SSH Connection");
         headerpanel.add(titleLabel);
 
@@ -65,31 +62,23 @@ public class tmpSSHDialog extends javax.swing.JDialog {
 
         hostnamePanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        HostnameLabel.setLabelFor(HostnameField);
-        HostnameLabel.setText("Hostname");
+        HostnameLabel.setLabelFor(HostComboBox);
+        HostnameLabel.setText("User@Host");
         hostnamePanel.add(HostnameLabel);
 
-        HostnameField.setMinimumSize(new java.awt.Dimension(150, 20));
-        HostnameField.setPreferredSize(new java.awt.Dimension(180, 20));
-        hostnamePanel.add(HostnameField);
+        HostComboBox.setEditable(true);
+        HostComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        HostComboBox.setMinimumSize(new java.awt.Dimension(159, 27));
+        HostComboBox.setPreferredSize(new java.awt.Dimension(159, 27));
+        hostnamePanel.add(HostComboBox);
 
         infopanel.add(hostnamePanel);
-
-        userPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
-
-        UsernameLabel.setLabelFor(UsernameField);
-        UsernameLabel.setText("Username");
-        userPanel.add(UsernameLabel);
-
-        UsernameField.setPreferredSize(new java.awt.Dimension(120, 20));
-        userPanel.add(UsernameField);
-
-        infopanel.add(userPanel);
 
         passwordPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
         PasswordLabel.setLabelFor(PasswordField);
         PasswordLabel.setText("Password");
+        PasswordLabel.setPreferredSize(new java.awt.Dimension(69, 16));
         passwordPanel.add(PasswordLabel);
 
         PasswordField.setMinimumSize(new java.awt.Dimension(100, 20));
@@ -98,17 +87,19 @@ public class tmpSSHDialog extends javax.swing.JDialog {
 
         infopanel.add(passwordPanel);
 
-        jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        commandPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
         ComboBoxLabel.setLabelFor(commandComboBox);
         ComboBoxLabel.setText("Command");
-        jPanel1.add(ComboBoxLabel);
+        ComboBoxLabel.setPreferredSize(new java.awt.Dimension(69, 16));
+        commandPanel.add(ComboBoxLabel);
 
+        commandComboBox.setEditable(true);
         commandComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         commandComboBox.setPreferredSize(new java.awt.Dimension(150, 20));
-        jPanel1.add(commandComboBox);
+        commandPanel.add(commandComboBox);
 
-        infopanel.add(jPanel1);
+        infopanel.add(commandPanel);
 
         getContentPane().add(infopanel, java.awt.BorderLayout.CENTER);
 
@@ -141,42 +132,24 @@ public class tmpSSHDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_ConnectionButtonActionPerformed
 
-    /**
-    * @param args the command line arguments
-    */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                tmpSSHDialog dialog = new tmpSSHDialog(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Cancelbutton;
     private javax.swing.JLabel ComboBoxLabel;
     private javax.swing.JButton ConnectionButton;
-    private javax.swing.JTextField HostnameField;
+    private javax.swing.JComboBox HostComboBox;
     private javax.swing.JLabel HostnameLabel;
     private javax.swing.JPasswordField PasswordField;
     private javax.swing.JLabel PasswordLabel;
-    private javax.swing.JTextField UsernameField;
-    private javax.swing.JLabel UsernameLabel;
     private javax.swing.JPanel buttonpanel;
     private javax.swing.JComboBox commandComboBox;
+    private javax.swing.JPanel commandPanel;
     private javax.swing.JPanel headerpanel;
     private javax.swing.JPanel hostnamePanel;
     private javax.swing.JPanel infopanel;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel passwordPanel;
     private javax.swing.JLabel titleLabel;
-    private javax.swing.JPanel userPanel;
     // End of variables declaration//GEN-END:variables
 
 }

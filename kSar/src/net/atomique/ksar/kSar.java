@@ -251,35 +251,7 @@ public class kSar {
             }
         }
     }
-    /*
-    public void export_treenode(SortedTreeNode node,GraphSelection graphselection) {
-        int num = node.getChildCount();
-
-        if (num > 0) {
-            Object obj1 = node.getUserObject();
-            if (obj1 instanceof ParentNodeInfo) {
-                ParentNodeInfo tmpnode = (ParentNodeInfo) obj1;
-                BaseList nodeobj = tmpnode.getNode_object();
-                System.out.println(nodeobj.doPrint());
-            }
-            for (int i = 0; i < num; i++) {
-                SortedTreeNode l = (SortedTreeNode) node.getChildAt(i);
-                export_treenode(l, graphselection);
-            }
-        } else {
-            Object obj1 = node.getUserObject();
-            if (obj1 instanceof TreeNodeInfo) {
-                TreeNodeInfo tmpnode = (TreeNodeInfo) obj1;
-                BaseGraph nodeobj = tmpnode.getNode_object();
-                System.out.println(nodeobj.doPrint());
-            }
-        }
-    }
-     * 
-     */
     
-    
-
 
     DataView dataview = null;
     private long lines_parsed = 0L;

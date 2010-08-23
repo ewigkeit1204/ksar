@@ -14,6 +14,7 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.atomique.ksar.UI.Desktop;
+import net.atomique.ksar.XML.CnxHistory;
 import net.atomique.ksar.XML.ColorConfig;
 import net.atomique.ksar.XML.OSConfig;
 
@@ -37,15 +38,20 @@ public class GlobalOptions {
     }
 
     GlobalOptions() {
+        String filename = null;
+        InputStream is =null;
+        XMLConfig tmp = null;
         Properties systemprops = System.getProperties();
         String userhome = (String) systemprops.get("user.home") + systemprops.get("file.separator");
         String fileseparator = (String) systemprops.get("file.separator");
         colorlist = new HashMap<String, ColorConfig>();
         OSlist = new HashMap<String, OSConfig>();
         ParserMap = new HashMap<String, Class>();
-        InputStream is = this.getClass().getResourceAsStream("/Config.xml");
-        XMLConfig tmp = new XMLConfig(is);
-
+        HistoryList = new ArrayList<CnxHistory>();
+        is = this.getClass().getResourceAsStream("/Config.xml");
+        tmp = new XMLConfig(is);
+        is = this.getClass().getResourceAsStream("/History.xml");
+        tmp.load_config(is);
         try {
             Class[] parserlist = getClasses("net.atomique.ksar.Parser");
             for (int i = 0; i < parserlist.length; i++) {
@@ -62,11 +68,14 @@ public class GlobalOptions {
             }
         }
 
-        String filename = userhome + ".ksarcfg" + fileseparator + "Config.xml";
+        filename = userhome + ".ksarcfg" + fileseparator + "Config.xml";
         if (new File(filename).canRead()) {
             tmp.load_config(filename);
         }
-
+        filename = userhome + ".ksarcfg" + fileseparator + "History.xml";
+        if (new File(filename).canRead()) {
+            tmp.load_config(filename);
+        }
 
     }
     public static Desktop UI = null;
@@ -137,6 +146,11 @@ public class GlobalOptions {
         return ParserMap.get(tmp);
     }
 
+    public static ArrayList<CnxHistory> getHistoryList() {
+        return HistoryList;
+    }
+
+    
     /*
     http://forums.sun.com/thread.jspa?threadID=341935&tstart=0kage
     @throws ClassNotFoundException if the Package is invalid
@@ -182,6 +196,7 @@ public class GlobalOptions {
     private static String fileseparator = (String) systemprops.get("file.separator");
     private static HashMap<String, ColorConfig> colorlist;
     private static HashMap<String, OSConfig> OSlist;
+    private static ArrayList<CnxHistory> HistoryList;
     private static boolean dodebug = false;
     private static String CLfilename = null;
     private static HashMap<String, Class> ParserMap;

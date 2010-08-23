@@ -34,6 +34,11 @@
 <!--- Put your DTDDoc comment here. -->
 <!ELEMENT color (#PCDATA)>
 
+
+<!ELEMENT History (cnx)*>
+<!ELEMENT cnx (username|hostname|command)*>
+
+
 <!--- Put your DTDDoc comment here. -->
 <!ELEMENT OS (OSType)*>
 

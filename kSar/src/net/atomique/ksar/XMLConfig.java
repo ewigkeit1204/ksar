@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+import net.atomique.ksar.XML.CnxHistory;
 import net.atomique.ksar.XML.ColorConfig;
 import net.atomique.ksar.XML.GraphConfig;
 import net.atomique.ksar.XML.OSConfig;
@@ -128,14 +129,24 @@ public class XMLConfig extends DefaultHandler {
             in_OS = true;
         }
 
+        if ("History".equals(qName)) {
+            in_history=true;
+        }
         // COLORS
         if (in_colors) {
             if ("itemcolor".equals(qName)) {
-                cur_color = new ColorConfig(attributes.getValue("name"));
+                currentColor = new ColorConfig(attributes.getValue("name"));
                 in_color = true;
             }
         }
 
+        // history
+        if ( in_history) {
+            if ( "cnx".equals(qName)) {
+                currentCnx=new CnxHistory();
+                in_cnx=true;
+            }
+        }
         // OS
         if (in_OS) {
             if ("OSType".equals(qName)) {
@@ -192,6 +203,10 @@ public class XMLConfig extends DefaultHandler {
         if ("Graph".equals(qName)) {
             currentGraph = null;
         }
+        if ( "Cnx".equals(qName)) {
+            currentCnx =null;
+        }
+        
         if (currentStat != null) {
             if ("headerstr".equals(qName)) {
                 currentStat.setHeaderStr(tempval);
@@ -215,31 +230,55 @@ public class XMLConfig extends DefaultHandler {
         }
         
         if ("itemcolor".equals(qName)) {
-            if (cur_color.is_valid()) {
-                GlobalOptions.getColorlist().put(cur_color.getData_title(), cur_color);
+            if (currentColor.is_valid()) {
+                GlobalOptions.getColorlist().put(currentColor.getData_title(), currentColor);
             } else {
-                System.err.println("Err: " + cur_color.getError_message());
-                cur_color = null;
+                System.err.println("Err: " + currentColor.getError_message());
+                currentColor = null;
             }
             in_color = false;
         }
 
         if (in_color) {
-            if ("color".equals(qName) && cur_color != null) {
-                cur_color.setData_color(tempval);
+            if ("color".equals(qName) && currentColor != null) {
+                currentColor.setData_color(tempval);
+            }
+        }
+        
+        if( in_cnx) {
+            if ( "hostname".equals(qName) && currentCnx != null) {
+                currentCnx.setHostname(tempval);
+            }
+            if ( "username".equals(qName) && currentCnx != null) {
+                currentCnx.setUsername(tempval);
+            }
+            if ( "command".equals(qName) && currentCnx != null) {
+                currentCnx.setCommand(tempval);
+            }
+        }
+        if ("cnx".equals(qName)) {
+            if ( currentCnx.isValid()) {
+                GlobalOptions.getHistoryList().add(currentCnx);
+            } else {
+                System.err.println("Err cnx is not valid");
+                currentCnx=null;
             }
         }
     }
     public boolean beenparse = false;
-    private ColorConfig cur_color = null;
+    
     private String tempval;
     private boolean in_color = false;
     private boolean in_colors = false;
     private boolean in_OS = false;
+    private boolean in_history = false;
+    private boolean in_cnx = false;
+    private ColorConfig currentColor = null;
     private OSConfig currentOS = null;
     private StatConfig currentStat = null;
     private GraphConfig currentGraph = null;
     private PlotConfig currentPlot = null;
     private StackConfig currentStack = null;
+    private CnxHistory currentCnx =null;
     
 }
