@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class CnxHistory {
 
     public CnxHistory(String link) {
+        this.link=link;
         commandList = new ArrayList<String>();
         String[] s = link.split("@", 2);
         if (s.length != 2) {
@@ -33,7 +34,7 @@ public class CnxHistory {
         commandList.add(s);
     }
 
-    public ArrayList<String> getCommandList(String command) {
+    public ArrayList<String> getCommandList() {
         return commandList;
     }
 
@@ -61,6 +62,10 @@ public class CnxHistory {
         this.port = port;
     }
 
+    public String getLink() {
+        return link;
+    }
+    
     public boolean isValid() {
         if (username == null) {
             return false;
@@ -91,4 +96,5 @@ public class CnxHistory {
     private String hostname = null;
     private ArrayList<String> commandList = null;
     private String port = null;
+    private String link = null;
 }

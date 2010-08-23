@@ -11,6 +11,12 @@
 
 package net.atomique.ksar.UI;
 
+import java.util.Iterator;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+import net.atomique.ksar.GlobalOptions;
+import net.atomique.ksar.XML.CnxHistory;
+
 /**
  *
  * @author Max
@@ -18,9 +24,18 @@ package net.atomique.ksar.UI;
 public class tmpSSHDialog extends javax.swing.JDialog {
 
     /** Creates new form tmpSSHDialog */
-    public tmpSSHDialog(java.awt.Frame parent, boolean modal) {
+    public tmpSSHDialog(java.awt.Frame parent, boolean modal,DataView dataview) {
         super(parent, modal);
+        mydataview=dataview;
+        // load history into combo
+        Iterator<String> ite = GlobalOptions.getHistoryList().keySet().iterator();
+        while (ite.hasNext()) {
+            CnxHistory tmp = GlobalOptions.getHistory(ite.next());
+            userhostModel.addElement(tmp.getLink());
+        }
         initComponents();
+        HostComboBox.setSelectedIndex(0);
+        setLocationRelativeTo(parent);
     }
 
     /** This method is called from within the constructor to
@@ -67,9 +82,14 @@ public class tmpSSHDialog extends javax.swing.JDialog {
         hostnamePanel.add(HostnameLabel);
 
         HostComboBox.setEditable(true);
-        HostComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        HostComboBox.setModel(userhostModel);
         HostComboBox.setMinimumSize(new java.awt.Dimension(159, 27));
         HostComboBox.setPreferredSize(new java.awt.Dimension(159, 27));
+        HostComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                HostComboBoxActionPerformed(evt);
+            }
+        });
         hostnamePanel.add(HostComboBox);
 
         infopanel.add(hostnamePanel);
@@ -95,7 +115,7 @@ public class tmpSSHDialog extends javax.swing.JDialog {
         commandPanel.add(ComboBoxLabel);
 
         commandComboBox.setEditable(true);
-        commandComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        commandComboBox.setModel(commandModel);
         commandComboBox.setPreferredSize(new java.awt.Dimension(150, 20));
         commandPanel.add(commandComboBox);
 
@@ -132,6 +152,17 @@ public class tmpSSHDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_ConnectionButtonActionPerformed
 
+    private void HostComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HostComboBoxActionPerformed
+        JComboBox cb = (JComboBox)evt.getSource();
+        String link = (String)cb.getSelectedItem();
+        CnxHistory tmp = GlobalOptions.getHistory(link);
+        commandModel.removeAllElements();
+        for (int i =0; i< tmp.getCommandList().size(); i++) {
+            System.out.println("combocommand" + tmp.getCommandList().get(i));
+            commandModel.addElement(tmp.getCommandList().get(i));
+        }
+    }//GEN-LAST:event_HostComboBoxActionPerformed
+
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -152,4 +183,7 @@ public class tmpSSHDialog extends javax.swing.JDialog {
     private javax.swing.JLabel titleLabel;
     // End of variables declaration//GEN-END:variables
 
+     private DefaultComboBoxModel userhostModel = new DefaultComboBoxModel();
+     private DefaultComboBoxModel commandModel = new DefaultComboBoxModel();
+     private DataView mydataview = null;
 }

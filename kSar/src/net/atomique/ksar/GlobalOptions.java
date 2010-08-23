@@ -51,7 +51,7 @@ public class GlobalOptions {
         colorlist = new HashMap<String, ColorConfig>();
         OSlist = new HashMap<String, OSConfig>();
         ParserMap = new HashMap<String, Class>();
-        HistoryList = new ArrayList<CnxHistory>();
+        HistoryList = new HashMap<String,CnxHistory>();
         is = this.getClass().getResourceAsStream("/Config.xml");
         tmp = new XMLConfig(is);
         try {
@@ -148,8 +148,15 @@ public class GlobalOptions {
         return ParserMap.get(tmp);
     }
 
-    public static ArrayList<CnxHistory> getHistoryList() {
+    public static HashMap<String,CnxHistory> getHistoryList() {
         return HistoryList;
+    }
+
+    public static CnxHistory getHistory(String s) {
+        if ( HistoryList.isEmpty() ) {
+            return null;
+        }
+        return HistoryList.get(s);
     }
 
     /*
@@ -229,7 +236,7 @@ public class GlobalOptions {
     private static String fileseparator;
     private static HashMap<String, ColorConfig> colorlist;
     private static HashMap<String, OSConfig> OSlist;
-    private static ArrayList<CnxHistory> HistoryList;
+    private static HashMap<String,CnxHistory> HistoryList;
     private static boolean dodebug = false;
     private static String CLfilename = null;
     private static HashMap<String, Class> ParserMap;

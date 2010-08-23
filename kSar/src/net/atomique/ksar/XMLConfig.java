@@ -252,7 +252,7 @@ public class XMLConfig extends DefaultHandler {
         }
         if ("cnx".equals(qName)) {
             if ( currentCnx.isValid()) {
-                GlobalOptions.getHistoryList().add(currentCnx);
+                GlobalOptions.getHistoryList().put(currentCnx.getLink(),currentCnx);
             } else {
                 System.err.println("Err cnx is not valid");
                 currentCnx=null;

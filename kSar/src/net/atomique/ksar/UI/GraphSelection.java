@@ -14,7 +14,6 @@ package net.atomique.ksar.UI;
 import java.awt.Component;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
-import net.atomique.ksar.GlobalOptions;
 
 
 /**
@@ -28,7 +27,7 @@ public class GraphSelection extends javax.swing.JDialog {
         super(parent, modal);
         this.myview = myview;
         initComponents();
-        setLocationRelativeTo(GlobalOptions.getUI());
+        setLocationRelativeTo(parent);
     }
 
     /** This method is called from within the constructor to

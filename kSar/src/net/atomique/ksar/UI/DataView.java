@@ -51,7 +51,6 @@ public class DataView extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        LoadSSH = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         jSplitPane1 = new javax.swing.JSplitPane();
         jPanel2 = new javax.swing.JPanel();
@@ -63,16 +62,10 @@ public class DataView extends javax.swing.JInternalFrame {
         dataMenu = new javax.swing.JMenu();
         LoadFile = new javax.swing.JMenuItem();
         LoadCommand = new javax.swing.JMenuItem();
+        LoadSSH = new javax.swing.JMenuItem();
         exportMenu = new javax.swing.JMenu();
         PDFMenu = new javax.swing.JMenuItem();
         CSVMenu = new javax.swing.JMenuItem();
-
-        LoadSSH.setText("SSH Command...");
-        LoadSSH.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                LoadSSHActionPerformed(evt);
-            }
-        });
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -147,6 +140,14 @@ public class DataView extends javax.swing.JInternalFrame {
             }
         });
         dataMenu.add(LoadCommand);
+
+        LoadSSH.setText("SSH Command...");
+        LoadSSH.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LoadSSHActionPerformed(evt);
+            }
+        });
+        dataMenu.add(LoadSSH);
 
         jMenuBar1.add(dataMenu);
 
@@ -240,6 +241,8 @@ public class DataView extends javax.swing.JInternalFrame {
 }//GEN-LAST:event_LoadFileActionPerformed
 
     private void LoadSSHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoadSSHActionPerformed
+        tmpSSHDialog tmp = new tmpSSHDialog(GlobalOptions.getUI() ,true,this);
+        tmp.setVisible(true);
     }//GEN-LAST:event_LoadSSHActionPerformed
 
     private void PDFMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PDFMenuActionPerformed
