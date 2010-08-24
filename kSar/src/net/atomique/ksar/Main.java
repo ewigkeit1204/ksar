@@ -57,9 +57,9 @@ public class Main {
                 ie.printStackTrace();
             }
         }
-        set_lookandfeel();
-        System.setProperty("com.apple.mrj.application.growbox.intrudes", "false");
         
+        
+        set_lookandfeel();
         GlobalOptions.setUI(new Desktop());
         SwingUtilities.updateComponentTreeUI(GlobalOptions.getUI());
         GlobalOptions.getUI().add_window();
@@ -70,8 +70,17 @@ public class Main {
         int i = 0;
         String arg;
         /// load default
+        String mrjVersion = System.getProperty("mrj.version");
+        if  (mrjVersion != null) {
+            System.out.println("mac stuff");
+            System.setProperty("com.apple.mrj.application.growbox.intrudes", "false");
+            System.setProperty("com.apple.mrj.application.apple.menu.about.name", "kSar");
+            System.setProperty("apple.laf.useScreenMenuBar", "true");
+        }
+        
         config = Config.getInstance();
         globaloptions = GlobalOptions.getInstance();
+
         
         
         if (args.length > 0) {
