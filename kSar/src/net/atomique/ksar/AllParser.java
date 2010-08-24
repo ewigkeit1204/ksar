@@ -90,6 +90,7 @@ public abstract class AllParser {
     }
 
 
+
     protected Second startofstat = null;
     protected Second endofstat = null;
     protected String sarStartDate = null;
@@ -102,6 +103,7 @@ public abstract class AllParser {
 
     abstract public String getInfo();
     abstract public void parse_header(String s);
+    abstract public void updateUITitle();
      
     protected kSar mysar = null;
     protected OSConfig myosconfig = null;

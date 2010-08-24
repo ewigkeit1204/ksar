@@ -140,6 +140,12 @@ public abstract class OSParser extends AllParser {
     public void setOstype(String ostype) {
         this.ostype = ostype;
     }
+
+     public void updateUITitle() {
+        if ( mysar.getDataView() != null) {
+            mysar.getDataView().setTitle(Hostname + " from "+ startofgraph + " to " + endofgraph);
+        }
+    }
     
     protected Map<String,Object> ListofGraph = new HashMap<String, Object>();
     protected String currentStat = "NONE";

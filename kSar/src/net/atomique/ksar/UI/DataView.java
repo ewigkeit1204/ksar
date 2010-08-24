@@ -63,6 +63,8 @@ public class DataView extends javax.swing.JInternalFrame {
         LoadFile = new javax.swing.JMenuItem();
         LoadCommand = new javax.swing.JMenuItem();
         LoadSSH = new javax.swing.JMenuItem();
+        GraphMenu = new javax.swing.JMenu();
+        addgraphMenu = new javax.swing.JMenuItem();
         exportMenu = new javax.swing.JMenu();
         PDFMenu = new javax.swing.JMenuItem();
         CSVMenu = new javax.swing.JMenuItem();
@@ -150,6 +152,19 @@ public class DataView extends javax.swing.JInternalFrame {
         dataMenu.add(LoadSSH);
 
         jMenuBar1.add(dataMenu);
+
+        GraphMenu.setText("Graph");
+        GraphMenu.setEnabled(false);
+
+        addgraphMenu.setText("Add a Graph");
+        addgraphMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addgraphMenuActionPerformed(evt);
+            }
+        });
+        GraphMenu.add(addgraphMenu);
+
+        jMenuBar1.add(GraphMenu);
 
         exportMenu.setText("Export");
         exportMenu.setEnabled(false);
@@ -284,6 +299,11 @@ public class DataView extends javax.swing.JInternalFrame {
         doExportCSV(filename);
     }//GEN-LAST:event_CSVMenuActionPerformed
 
+    private void addgraphMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addgraphMenuActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_addgraphMenuActionPerformed
+
    private String askSaveFilename(String title, File chdirto) {
         String filename = null;
         JFileChooser chooser = new JFileChooser();
@@ -312,7 +332,6 @@ public class DataView extends javax.swing.JInternalFrame {
 
    public void doExportPDF(String filename) {
         int pages = 0;
-        System.out.println("print begin");
         pages= mysar.get_page_to_print();
         JPanel panel0 = new JPanel();
         JPanel panel1 = new JPanel();
@@ -430,10 +449,12 @@ public class DataView extends javax.swing.JInternalFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem CSVMenu;
+    private javax.swing.JMenu GraphMenu;
     private javax.swing.JMenuItem LoadCommand;
     private javax.swing.JMenuItem LoadFile;
     private javax.swing.JMenuItem LoadSSH;
     private javax.swing.JMenuItem PDFMenu;
+    private javax.swing.JMenuItem addgraphMenu;
     private javax.swing.JMenu dataMenu;
     private javax.swing.JPanel displayPanel;
     private javax.swing.JMenu exportMenu;

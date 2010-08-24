@@ -207,6 +207,8 @@ public class kSar {
                 if (parser_return < 0 && GlobalOptions.isDodebug()) {
                     System.out.println("ERR " + current_line);
                 }
+
+                myparser.updateUITitle();
             }
         } catch (IOException ex) {
             Logger.getLogger(kSar.class.getName()).log(Level.SEVERE, null, ex);
@@ -266,6 +268,9 @@ public class kSar {
         }
     }
     
+    public DataView getDataView() {
+        return dataview;
+    }
 
     DataView dataview = null;
     private long lines_parsed = 0L;

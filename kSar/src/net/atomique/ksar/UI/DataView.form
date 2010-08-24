@@ -35,6 +35,22 @@
             </MenuItem>
           </SubComponents>
         </Menu>
+        <Menu class="javax.swing.JMenu" name="GraphMenu">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Graph"/>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="addgraphMenu">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Add a Graph"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addgraphMenuActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
         <Menu class="javax.swing.JMenu" name="exportMenu">
           <Properties>
             <Property name="text" type="java.lang.String" value="Export"/>
