@@ -58,7 +58,7 @@ public class XMLConfig extends DefaultHandler {
             is.close();
         } catch (IOException ex) {
             Logger.getLogger(XMLConfig.class.getName()).log(Level.SEVERE, null, ex);
-        }        
+        }
     }
 
     public void load_config(String xmlfile) {
@@ -119,6 +119,7 @@ public class XMLConfig extends DefaultHandler {
     }
 
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+        
         if ("ConfiG".equals(qName)) {
             // config found
         }
@@ -130,7 +131,7 @@ public class XMLConfig extends DefaultHandler {
         }
 
         if ("History".equals(qName)) {
-            in_history=true;
+            in_history = true;
         }
         // COLORS
         if (in_colors) {
@@ -141,10 +142,10 @@ public class XMLConfig extends DefaultHandler {
         }
 
         // history
-        if ( in_history) {
-            if ( "cnx".equals(qName)) {
-                currentCnx=new CnxHistory(attributes.getValue("link"));
-                in_cnx=true;
+        if (in_history) {
+            if ("cnx".equals(qName)) {
+                currentCnx = new CnxHistory(attributes.getValue("link"));
+                in_cnx = true;
             }
         }
         // OS
@@ -169,20 +170,34 @@ public class XMLConfig extends DefaultHandler {
                     if ("Plot".equals(qName)) {
                         currentPlot = new PlotConfig(attributes.getValue("Title"));
                         String size_tmp = attributes.getValue("size");
-                        if ( size_tmp != null ){
+                        if (size_tmp != null) {
                             currentPlot.setSize(size_tmp);
                         }
                         currentGraph.addPlot(currentPlot);
                     }
                     if ("Stack".equals(qName)) {
-                        currentStack = new StackConfig(attributes.getValue("Title"));                        
+                        currentStack = new StackConfig(attributes.getValue("Title"));
                         String size_tmp = attributes.getValue("size");
-                        if ( size_tmp != null ){
+                        if (size_tmp != null) {
                             currentStack.setSize(size_tmp);
                         }
                         currentGraph.addStack(currentStack);
                     }
+
+                    if( currentPlot != null) {
+                        if ("format".equals(qName)) {
+                            currentPlot.setBase(attributes.getValue("base"));
+                            currentPlot.setFactor(attributes.getValue("factor"));
+                        }
+                    }
+                    if( currentStack != null) {
+                        if ("format".equals(qName)) {
+                            currentStack.setBase(attributes.getValue("base"));
+                            currentStack.setFactor(attributes.getValue("factor"));
+                        }
+                    }
                 }
+                
             }
         }
     }
@@ -203,32 +218,44 @@ public class XMLConfig extends DefaultHandler {
         if ("Graph".equals(qName)) {
             currentGraph = null;
         }
-        if ( "Cnx".equals(qName)) {
-            currentCnx =null;
+        if ("Cnx".equals(qName)) {
+            currentCnx = null;
         }
-        
+        if ( "Plot".equals(qName) ) {
+            currentPlot = null;
+        }
+        if ( "Stack".equals(qName)) {
+            currentStack=null;
+        }
+
         if (currentStat != null) {
             if ("headerstr".equals(qName)) {
                 currentStat.setHeaderStr(tempval);
             }
             if ("graphname".equals(qName)) {
                 currentStat.setGraphName(tempval);
-            }            
-        }
-
-        if (currentPlot != null) {
-            if ("Plot".equals(qName)) {
-                currentPlot.setHeaderStr(tempval);
-                currentPlot = null;
             }
         }
-        if ( currentStack != null) {
-            if ("Stack".equals(qName)) {
-                currentStack.setHeaderStr(tempval);                
-                currentStack = null;
+        if ( "cols".equals(qName)) {
+            if (currentPlot != null) {
+                currentPlot.setHeaderStr(tempval);
+
+            }
+            if ( currentStack != null) {
+                currentStack.setHeaderStr(tempval);
+            }
+        }
+        if ("range".equals(qName)) {
+            if (currentPlot != null) {
+                currentPlot.setRange(tempval);
+
+            }
+            if ( currentStack != null) {
+                currentStack.setRange(tempval);
             }
         }
         
+
         if ("itemcolor".equals(qName)) {
             if (currentColor.is_valid()) {
                 GlobalOptions.getColorlist().put(currentColor.getData_title(), currentColor);
@@ -244,23 +271,22 @@ public class XMLConfig extends DefaultHandler {
                 currentColor.setData_color(tempval);
             }
         }
-        
-        if( in_cnx) {            
-            if ( "command".equals(qName) && currentCnx != null) {
+
+        if (in_cnx) {
+            if ("command".equals(qName) && currentCnx != null) {
                 currentCnx.addCommand(tempval);
             }
         }
         if ("cnx".equals(qName)) {
-            if ( currentCnx.isValid()) {
-                GlobalOptions.getHistoryList().put(currentCnx.getLink(),currentCnx);
+            if (currentCnx.isValid()) {
+                GlobalOptions.getHistoryList().put(currentCnx.getLink(), currentCnx);
             } else {
                 System.err.println("Err cnx is not valid");
-                currentCnx=null;
+                currentCnx = null;
             }
         }
     }
     public boolean beenparse = false;
-    
     private String tempval;
     private boolean in_color = false;
     private boolean in_colors = false;
@@ -273,6 +299,5 @@ public class XMLConfig extends DefaultHandler {
     private GraphConfig currentGraph = null;
     private PlotConfig currentPlot = null;
     private StackConfig currentStack = null;
-    private CnxHistory currentCnx =null;
-    
+    private CnxHistory currentCnx = null;
 }

@@ -55,47 +55,97 @@
                 <graphname>MSGS</graphname>
             </Stat>
             <Graph name="CPU" Title="CPU" type="unique">
-                <Stack Title="Used" size="3">%usr %sys %wio</Stack>
-                <Plot Title="Idle">%idle</Plot>
+                <Stack Title="Used" size="3">
+                    <cols>%usr %sys %wio</cols>
+                </Stack>
+                <Plot Title="Idle">
+                    <cols>%idle</cols>
+                </Plot>
             </Graph>
             <Graph name="DEVICE" Title="Device" type="multiple">
-                <Plot Title="busy">%busy</Plot>
-                <Plot Title="avque">avque</Plot>
-                <Plot Title="r+w/s">r+w/s</Plot>
-                <Plot Title="blks/s">blks/s</Plot>
-                <Plot Title="avwait">avwait</Plot>
-                <Plot Title="avserv">avserv</Plot>
+                <Plot Title="busy">
+                    <cols>%busy</cols>
+                </Plot>
+                <Plot Title="avque">
+                    <cols>avque</cols>
+                </Plot>
+                <Plot Title="r+w/s">
+                    <cols>r+w/s</cols>
+                </Plot>
+                <Plot Title="blks/s">
+                    <cols>blks/s</cols>
+                </Plot>
+                <Plot Title="avwait">
+                    <cols>avwait</cols>
+                </Plot>
+                <Plot Title="avserv">
+                    <cols>avserv</cols>
+                </Plot>
             </Graph>
             <Graph name="RUNQ" Title="RunQ" type="unique">
-                <Plot Title="runQ">runq-sz</Plot>
-                <Plot Title="swapQ">swpq-sz</Plot>
+                <Plot Title="runQ">
+                    <cols>runq-sz</cols>
+                </Plot>
+                <Plot Title="swapQ">
+                    <cols>swpq-sz</cols>
+                </Plot>
             </Graph>
             <Graph name="BUFFER" Title="Buffer" type="unique">
-                <Plot Title="read">bread/s lread/s</Plot>
-                <Plot Title="write">bwrit/s lwrit/s</Plot>
-                <Plot Title="physical">pread/s pwrit/s</Plot>
-                <Plot Title="%">%rcache %wcache</Plot>
+                <Plot Title="read">
+                    <cols>bread/s lread/s</cols>
+                </Plot>
+                <Plot Title="write">
+                    <cols>bwrit/s lwrit/s</cols>
+                </Plot>
+                <Plot Title="physical">
+                    <cols>pread/s pwrit/s</cols>
+                </Plot>
+                <Plot Title="%">
+                    <cols>%rcache %wcache</cols>
+                </Plot>
             </Graph>
             <Graph name="SWAP" Title="Swap" type="unique">
-                <Plot Title="lwp">swpin/s swpot/s</Plot>
-                <Plot Title="page">bswin/s bswot/s</Plot>
-                <Plot Title="switch">pswch/s</Plot>
+                <Plot Title="lwp">
+                    <cols>swpin/s swpot/s</cols>
+                </Plot>
+                <Plot Title="page">
+                    <cols>bswin/s bswot/s</cols>
+                </Plot>
+                <Plot Title="switch">
+                    <cols>pswch/s</cols>
+                </Plot>
             </Graph>
             <Graph name="SYSCALL" Title="Syscal" type="unique">
-                <Plot Title="syscall">scall/s</Plot>
-                <Plot Title="r/w">sread/s swrit/s</Plot>
-                <Plot Title="fork">fork/s exec/s</Plot>
-                <Plot Title="char">rchar/s wchar/s</Plot>
+                <Plot Title="syscall">
+                    <cols>scall/s</cols>
+                </Plot>
+                <Plot Title="r/w">
+                    <cols>sread/s swrit/s</cols>
+                </Plot>
+                <Plot Title="fork">
+                    <cols>fork/s exec/s</cols>
+                </Plot>
+                <Plot Title="char">
+                    <cols>rchar/s wchar/s</cols>
+                </Plot>
             </Graph>
             <Graph name="FILE" Title="File" type="unique">
-                <Plot Title="file">iget/s namei/s dirbk/s</Plot>
+                <Plot Title="file">
+                    <cols>iget/s namei/s dirbk/s</cols>
+                </Plot>
             </Graph>
             <Graph name="TTY" Title="Tty" type="unique">
-                <Plot Title="TTY">rawch/s canch/s outch/s rcvin/s xmtin/s mdmin/s</Plot>
+                <Plot Title="TTY">
+                    <cols>rawch/s canch/s outch/s rcvin/s xmtin/s mdmin/s</cols>
+                </Plot>
             </Graph>
             <Graph name="MSGS" Title="Messages / Semaphores" type="unique">
-                <Plot Title="Messages">msg/s</Plot>
-                <Plot Title="Semaphores">sema/s</Plot>
+                <Plot Title="Messages">
+                    <cols>msg/s</cols>
+                </Plot>
+                <Plot Title="Semaphores">
+                    <cols>sema/s</cols>
+                </Plot>
             </Graph>
         </OSType>
     </OS>

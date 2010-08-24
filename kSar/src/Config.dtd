@@ -43,7 +43,6 @@
 
 <!ELEMENT cnx (command)*>
 
-
 <!--- Put your DTDDoc comment here. -->
 <!ELEMENT OS (OSType)*>
 
@@ -74,15 +73,21 @@
   >
 
 <!--- Put your DTDDoc comment here. -->
-<!ELEMENT Plot (#PCDATA)>
-<!ATTLIST Plot
-    Title CDATA #IMPLIED
+<!ELEMENT Stack (range|cols)*>
+<!ATTLIST Stack
     size CDATA #IMPLIED
+    Title CDATA #IMPLIED
   >
 
-  <!--- Put your DTDDoc comment here. -->
-<!ELEMENT Stack (#PCDATA)>
-<!ATTLIST Stack
-    Title CDATA #IMPLIED
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT cols (#PCDATA)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT range (#PCDATA)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT Plot (range|cols)*>
+<!ATTLIST Plot
     size CDATA #IMPLIED
+    Title CDATA #IMPLIED
   >

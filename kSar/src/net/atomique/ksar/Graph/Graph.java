@@ -161,7 +161,7 @@ public class Graph {
 
     public int savePNG(final Second g_start, final Second g_end, final String filename, final int width, final int height) {
         try {
-            ChartUtilities.saveChartAsPNG(new File(filename), this.getgraph(mysar.myparser.get_startofgraph(),mysar.myparser.get_endofgraph()), width, height);
+            ChartUtilities.saveChartAsPNG(new File(filename), this.getgraph(mysar.myparser.get_startofgraph(), mysar.myparser.get_endofgraph()), width, height);
         } catch (IOException e) {
             System.err.println("Unable to write to : " + filename);
             return -1;
@@ -171,7 +171,7 @@ public class Graph {
 
     public int saveJPG(final Second g_start, final Second g_end, final String filename, final int width, final int height) {
         try {
-            ChartUtilities.saveChartAsJPEG(new File(filename), this.getgraph(mysar.myparser.get_startofgraph(),mysar.myparser.get_endofgraph()), width, height);
+            ChartUtilities.saveChartAsJPEG(new File(filename), this.getgraph(mysar.myparser.get_startofgraph(), mysar.myparser.get_endofgraph()), width, height);
         } catch (IOException e) {
             System.err.println("Unable to write to : " + filename);
             return -1;
@@ -194,7 +194,6 @@ public class Graph {
         return mygraph;
     }
 
-
     public String getTitle() {
         return graphtitle;
     }
@@ -202,8 +201,8 @@ public class Graph {
     public boolean isPrintSelected() {
         return printSelected;
     }
-    
-     private XYDataset create_collection(ArrayList l) {
+
+    private XYDataset create_collection(ArrayList l) {
         TimeSeriesCollection graphcollection = new TimeSeriesCollection();
         TimeSeries found = null;
         boolean hasdata = false;
@@ -230,12 +229,12 @@ public class Graph {
     }
 
     public ChartPanel get_ChartPanel() {
-        if ( chartpanel == null) {
-            chartpanel = new ChartPanel(getgraph(mysar.myparser.get_startofgraph(),mysar.myparser.get_endofgraph()));
+        if (chartpanel == null) {
+            chartpanel = new ChartPanel(getgraph(mysar.myparser.get_startofgraph(), mysar.myparser.get_endofgraph()));
         }
         return chartpanel;
     }
-    
+
     private JFreeChart makegraph(Second g_start, Second g_end) {
         long begingenerate = System.currentTimeMillis();
         DateAxis axisofdate = new DateAxis("");
@@ -249,9 +248,11 @@ public class Graph {
                 continue;
             }
             TimeTableXYDataset tmp2 = StackListbyName.get(tmp.getTitle());
+
             if (tmp2 != null) {
                 StackedXYAreaRenderer2 renderer = new StackedXYAreaRenderer2();
-                XYPlot temp_plot = new XYPlot(tmp2, axisofdate, graphaxis, renderer);
+                NumberAxis graphaxistitle = tmp.getAxis();
+                XYPlot temp_plot = new XYPlot(tmp2, axisofdate, graphaxistitle, renderer);
                 for (int i = 0; i < tmp2.getSeriesCount(); i++) {
                     Color color = GlobalOptions.getDataColor(tmp2.getSeriesKey(i).toString());
                     if (color != null) {
@@ -274,7 +275,7 @@ public class Graph {
                 t.add(s[i]);
             }
             XYDataset c = create_collection(t);
-            NumberAxis graphaxistitle = new NumberAxis(tmp.getTitle());
+            NumberAxis graphaxistitle = tmp.getAxis();
             XYPlot tmpplot = new XYPlot(c, axisofdate, graphaxistitle, renderer);
 
             if (tmpplot == null) {
@@ -289,10 +290,10 @@ public class Graph {
             }
             plot.add(tmpplot, tmp.getSize());
         }
-        if ( plot.getSubplots().isEmpty() ) {
+        if (plot.getSubplots().isEmpty()) {
             return null;
         }
-        if (g_start !=null && g_end !=null) {
+        if (g_start != null && g_end != null) {
             axisofdate.setRange(g_start.getStart(), g_end.getEnd());
         }
         plot.setOrientation(PlotOrientation.VERTICAL);
@@ -304,11 +305,9 @@ public class Graph {
         }
         return mychart;
     }
-    
     private kSar mysar = null;
     private JFreeChart mygraph = null;
-    private ChartPanel chartpanel =null;
-    private NumberAxis graphaxis = new NumberAxis();
+    private ChartPanel chartpanel = null;
     private String graphtitle = null;
     public boolean printSelected = true;
     private JCheckBox printCheckBox = null;
