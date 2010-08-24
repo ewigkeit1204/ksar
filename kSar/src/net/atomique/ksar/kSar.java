@@ -79,10 +79,11 @@ public class kSar {
 
     private void do_action() {
         if (launched_action != null) {
-            launched_action.start();
             if ( dataview != null) {
                 dataview.notifyrun(true);
             }
+            launched_action.start();
+            
         }
     }
     
