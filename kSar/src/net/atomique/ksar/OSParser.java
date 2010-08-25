@@ -4,13 +4,10 @@
  */
 package net.atomique.ksar;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import net.atomique.ksar.XML.OSConfig;
-import org.jfree.data.time.Second;
 
 /**
  *
@@ -25,6 +22,7 @@ public abstract class OSParser extends AllParser {
     public void init (kSar hissar, String header) {
         String [] s = header.split("\\s+");
         mysar = hissar;
+        ParserName = s[0];
         myosconfig = GlobalOptions.getOSinfo(s[0]);
         parse_header(header);
     }

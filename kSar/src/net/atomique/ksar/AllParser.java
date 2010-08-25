@@ -28,7 +28,6 @@ public abstract class AllParser {
         String [] s = header.split("\\s+");
         mysar = hissar;
         ParserName = s[0];
-        myosconfig = GlobalOptions.getOSinfo(ParserName);
         parse_header(header);
     }
 

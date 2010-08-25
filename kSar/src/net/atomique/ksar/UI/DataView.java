@@ -135,7 +135,7 @@ public class DataView extends javax.swing.JInternalFrame {
         });
         dataMenu.add(LoadFile);
 
-        LoadCommand.setText("Local Command");
+        LoadCommand.setText("Load from a local Command...");
         LoadCommand.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 LoadCommandActionPerformed(evt);
@@ -143,7 +143,7 @@ public class DataView extends javax.swing.JInternalFrame {
         });
         dataMenu.add(LoadCommand);
 
-        LoadSSH.setText("SSH Command...");
+        LoadSSH.setText("Load from a SSH Command...");
         LoadSSH.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 LoadSSHActionPerformed(evt);
@@ -439,7 +439,15 @@ public class DataView extends javax.swing.JInternalFrame {
     public void setHasData(boolean actif) {
         has_fresh_data=actif;
         exportMenu.setEnabled(actif);
-        dataMenu.setEnabled(!actif);
+        if (actif) {
+            LoadFile.setText("Append from a file...");
+            LoadCommand.setText("Append from a local Command...");
+            LoadSSH.setText("Append from a SSH Command...");
+        } else {
+            LoadFile.setText("Load from a file...");
+            LoadCommand.setText("Load from a local Command...");
+            LoadSSH.setText("Load from a SSH Command...");
+        }
     }
     
     private void save_data() {

@@ -97,7 +97,7 @@
                 <graphname>SOCKET</graphname>
             </Stat>
             <Stat name="cpu4">
-                <headerstr> CPU %user %nice %system %iowait %steal %idle</headerstr>
+                <headerstr>CPU %user %nice %system %iowait %steal %idle</headerstr>
                 <graphname>CPU</graphname>
             </Stat>
             <Stat name="tty">

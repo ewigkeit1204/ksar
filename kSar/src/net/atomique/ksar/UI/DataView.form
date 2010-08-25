@@ -19,7 +19,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="LoadCommand">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Local Command"/>
+                <Property name="text" type="java.lang.String" value="Load from a local Command..."/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="LoadCommandActionPerformed"/>
@@ -27,7 +27,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="LoadSSH">
               <Properties>
-                <Property name="text" type="java.lang.String" value="SSH Command..."/>
+                <Property name="text" type="java.lang.String" value="Load from a SSH Command..."/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="LoadSSHActionPerformed"/>

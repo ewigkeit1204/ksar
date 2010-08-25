@@ -100,7 +100,6 @@ public class Linux extends OSParser {
         }
         /** XML COLUMN PARSER **/
         String checkStat = myosconfig.getStat(columns, firstdatacolumn);
-
         if (checkStat != null) {
             Object obj = ListofGraph.get(checkStat);
             if (obj == null) {

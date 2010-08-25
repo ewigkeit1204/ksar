@@ -231,13 +231,20 @@ public class Graph {
     public ChartPanel get_ChartPanel() {
         if (chartpanel == null) {
             chartpanel = new ChartPanel(getgraph(mysar.myparser.get_startofgraph(), mysar.myparser.get_endofgraph()));
+        } else {
+            if ( ! axisofdate.getMaximumDate().equals(mysar.myparser.get_endofgraph().getEnd())) {
+                axisofdate.setMaximumDate(mysar.myparser.get_endofgraph().getEnd());
+            }
+            if ( ! axisofdate.getMinimumDate().equals(mysar.myparser.get_startofgraph().getStart())) {
+                axisofdate.setMinimumDate(mysar.myparser.get_startofgraph().getStart());
+            }
         }
         return chartpanel;
     }
 
     private JFreeChart makegraph(Second g_start, Second g_end) {
         long begingenerate = System.currentTimeMillis();
-        DateAxis axisofdate = new DateAxis("");
+        
         CombinedDomainXYPlot plot = new CombinedDomainXYPlot(axisofdate);
         // do the stacked stuff
         SortedSet<String> sortedset = new TreeSet<String>(graphconfig.getStacklist().keySet());
@@ -305,6 +312,8 @@ public class Graph {
         }
         return mychart;
     }
+
+    private DateAxis axisofdate = new DateAxis("");
     private kSar mysar = null;
     private JFreeChart mygraph = null;
     private ChartPanel chartpanel = null;

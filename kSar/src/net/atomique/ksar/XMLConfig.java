@@ -203,6 +203,9 @@ public class XMLConfig extends DefaultHandler {
     }
 
     public void endElement(String uri, String localName, String qName) throws SAXException {
+
+        // clean up tempval;
+        tempval=tempval.trim();
         if ("ConfiG".equals(qName)) {
             beenparse = true;
         }
