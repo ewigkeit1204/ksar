@@ -42,7 +42,6 @@ public class Config {
             
         }
         load();
-        System.out.println("local=" + local_configfile);
     }
 
     private static void load() {

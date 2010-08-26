@@ -72,7 +72,6 @@ public class Main {
         /// load default
         String mrjVersion = System.getProperty("mrj.version");
         if  (mrjVersion != null) {
-            System.out.println("mac stuff");
             System.setProperty("com.apple.mrj.application.growbox.intrudes", "false");
             System.setProperty("com.apple.mrj.application.apple.menu.about.name", "kSar");
             System.setProperty("apple.laf.useScreenMenuBar", "true");
