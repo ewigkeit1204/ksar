@@ -51,6 +51,11 @@ public class Config {
         setLandf(myPref.get("landf", UIManager.getLookAndFeel().getName()));
         setLastReadDirectory(myPref.get("lastReadDirectory", null));
         setLastExportDirectory(myPref.get("lastExportDirectory", null));
+
+        setImageHeight(myPref.getInt("ImageHeight", 600));
+        setImageWidth(myPref.getInt("ImageWidth", 800));
+        setPDFPageFormat(myPref.get("PDFPageFormat","A4"));
+        
         setNumber_host_history(myPref.getInt("HostHistory", 0));
         for (int i = 0; i < getNumber_host_history(); i++) {
             host_history.add(myPref.get("HostHistory_" + i, null));
@@ -69,6 +74,11 @@ public class Config {
         if (lastExportDirectory != null) {
             myPref.put("lastExportDirectory", lastExportDirectory.toString());
         }
+
+        myPref.putInt("ImageHeight", ImageHeight);
+        myPref.putInt("ImageWidth", ImageWidth);
+        myPref.put("PDFPageFormat", PDFPageFormat);
+
         for (int i = 0; i < host_history.size(); i++) {
             myPref.put("HostHistory_" + i, host_history.get(i));
         }
@@ -142,6 +152,32 @@ public class Config {
         return DEFAULT_FONT;
     }
 
+    public static int getImageHeight() {
+        return ImageHeight;
+    }
+
+    public static void setImageHeight(int ImageHeight) {
+        Config.ImageHeight = ImageHeight;
+    }
+
+    public static int getImageWidth() {
+        return ImageWidth;
+    }
+
+    public static void setImageWidth(int ImageWidth) {
+        Config.ImageWidth = ImageWidth;
+    }
+
+    public static String getPDFPageFormat() {
+        return PDFPageFormat;
+    }
+
+    public static void setPDFPageFormat(String PDFPageFormat) {
+        Config.PDFPageFormat = PDFPageFormat;
+    }
+
+    
+
     public static int store_configdir() {
         Properties systemprops = System.getProperties();
         String userhome = (String) systemprops.get("user.home") + systemprops.get("file.separator");
@@ -174,6 +210,7 @@ public class Config {
     public static void setLocal_configfile(int local_configfile) {
         Config.local_configfile = local_configfile;
     }
+    
     private static String landf;
     private static File lastReadDirectory;
     private static File lastExportDirectory;
@@ -182,4 +219,9 @@ public class Config {
     private static int local_configfile;
     private static ArrayList<String> host_history = new ArrayList<String>();
     public static final Font DEFAULT_FONT = new Font("SansSerif", Font.BOLD, 18);
+
+    private static String PDFPageFormat;
+    private static int ImageWidth;
+    private static int ImageHeight;
+    
 }

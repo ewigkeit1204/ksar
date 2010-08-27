@@ -13,6 +13,8 @@ package net.atomique.ksar.UI;
 import java.awt.Dimension;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import net.atomique.ksar.Config;
@@ -29,6 +31,7 @@ public class Preferences extends javax.swing.JDialog {
         super(parent);
         initComponents();
         load_landf();
+        load_pageformat();
         Dimension d1 = getSize();
         Dimension d2 = parent.getSize();
         int x = (d2.width - (d1.width / 2)) / 2;
@@ -49,6 +52,13 @@ public class Preferences extends javax.swing.JDialog {
         }
     }
 
+    private void load_pageformat() {
+        PageFormatComboBox.addElement("A4");
+        PageFormatComboBox.addElement("LETTER");
+        PageFormatComboBox.addElement("LEGAL");
+        jComboBox2.setSelectedItem(Config.getPDFPageFormat());
+        
+    }
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -66,6 +76,16 @@ public class Preferences extends javax.swing.JDialog {
         jComboBox1 = new javax.swing.JComboBox();
         jPanel6 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        jPanel8 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        jPanel7 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jSpinner1 = new javax.swing.JSpinner();
+        jLabel4 = new javax.swing.JLabel();
+        jSpinner2 = new javax.swing.JSpinner();
+        jPanel9 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jComboBox2 = new javax.swing.JComboBox();
         jPanel3 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         OkButton = new javax.swing.JButton();
@@ -99,6 +119,46 @@ public class Preferences extends javax.swing.JDialog {
         jPanel6.add(jLabel2);
 
         jPanel4.add(jPanel6);
+
+        jPanel8.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jLabel5.setText("JPG/PNG");
+        jPanel8.add(jLabel5);
+
+        jPanel7.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jLabel3.setText("Width:");
+        jPanel7.add(jLabel3);
+
+        jSpinner1.setModel(imageWidthSpinner);
+        jSpinner1.setMinimumSize(new java.awt.Dimension(80, 28));
+        jSpinner1.setPreferredSize(new java.awt.Dimension(80, 28));
+        jSpinner1.setValue(800);
+        jPanel7.add(jSpinner1);
+
+        jLabel4.setText("Height:");
+        jPanel7.add(jLabel4);
+
+        jSpinner2.setModel(imageHeightSpinner);
+        jSpinner2.setMinimumSize(new java.awt.Dimension(80, 28));
+        jSpinner2.setPreferredSize(new java.awt.Dimension(80, 28));
+        jPanel7.add(jSpinner2);
+
+        jPanel8.add(jPanel7);
+
+        jPanel4.add(jPanel8);
+
+        jPanel9.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jLabel6.setText("PDF Page Format:");
+        jPanel9.add(jLabel6);
+
+        jComboBox2.setModel(PageFormatComboBox);
+        jComboBox2.setMinimumSize(new java.awt.Dimension(100, 27));
+        jComboBox2.setPreferredSize(new java.awt.Dimension(100, 27));
+        jPanel9.add(jComboBox2);
+
+        jPanel4.add(jPanel9);
 
         jScrollPane1.setViewportView(jPanel4);
 
@@ -156,6 +216,9 @@ public class Preferences extends javax.swing.JDialog {
 
     private void OkButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OkButtonActionPerformed
         Config.setLandf(jComboBox1.getSelectedItem().toString());
+        Config.setPDFPageFormat(jComboBox2.getSelectedItem().toString());
+        Config.setImageHeight((Integer)jSpinner2.getModel().getValue());
+        Config.setImageWidth((Integer)jSpinner1.getModel().getValue());
         Config.save();
         dispose();
     }//GEN-LAST:event_OkButtonActionPerformed
@@ -168,15 +231,28 @@ public class Preferences extends javax.swing.JDialog {
     private javax.swing.JButton CancelButton;
     private javax.swing.JButton OkButton;
     private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JComboBox jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSpinner jSpinner1;
+    private javax.swing.JSpinner jSpinner2;
     // End of variables declaration//GEN-END:variables
     DefaultComboBoxModel UI_lanf_model = new DefaultComboBoxModel();
+    DefaultComboBoxModel PageFormatComboBox = new DefaultComboBoxModel();
+    SpinnerNumberModel imageWidthSpinner = new javax.swing.SpinnerNumberModel(Config.getImageWidth(), Integer.valueOf(1), null, Integer.valueOf(1));
+    SpinnerNumberModel imageHeightSpinner = new javax.swing.SpinnerNumberModel(Config.getImageHeight(), Integer.valueOf(1), null, Integer.valueOf(1));
 }

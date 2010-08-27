@@ -10,7 +10,6 @@
  */
 package net.atomique.ksar.UI;
 
-import java.awt.Component;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
