@@ -82,6 +82,11 @@ public class GraphView extends javax.swing.JPanel {
         buttonPanel.add(jpgBuitton);
 
         pngButton.setText("Expprt PNG");
+        pngButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pngButtonActionPerformed(evt);
+            }
+        });
         buttonPanel.add(pngButton);
 
         ctrlcButton.setText("Copy");
@@ -148,7 +153,7 @@ public class GraphView extends javax.swing.JPanel {
         if ( filename == null ) {
             return;
         }
-        thegraph.saveJPG(null, null, filename, 800, 600);
+        thegraph.saveJPG(null, null, filename, Config.getImageWidth(), Config.getImageHeight());
     }//GEN-LAST:event_jpgBuittonActionPerformed
 
     private void ctrlcButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ctrlcButtonActionPerformed
@@ -158,6 +163,14 @@ public class GraphView extends javax.swing.JPanel {
     private void printButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printButtonActionPerformed
         mychartpanel.createChartPrintJob();
     }//GEN-LAST:event_printButtonActionPerformed
+
+    private void pngButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pngButtonActionPerformed
+        String filename = askSaveFilename("Export PNG", Config.getLastExportDirectory());
+        if ( filename == null ) {
+            return;
+        }
+        thegraph.savePNG(null, null, filename, Config.getImageWidth(), Config.getImageHeight());
+    }//GEN-LAST:event_pngButtonActionPerformed
 
 
     

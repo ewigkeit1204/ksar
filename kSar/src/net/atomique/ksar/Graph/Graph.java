@@ -169,7 +169,7 @@ public class Graph {
         return 0;
     }
 
-    public int saveJPG(final Second g_start, final Second g_end, final String filename, final int width, final int height) {
+    public int saveJPG(final Second g_start, final Second g_end, final String filename, final int width, final int height) {    
         try {
             ChartUtilities.saveChartAsJPEG(new File(filename), this.getgraph(mysar.myparser.get_startofgraph(), mysar.myparser.get_endofgraph()), width, height);
         } catch (IOException e) {
@@ -190,6 +190,13 @@ public class Graph {
     public JFreeChart getgraph(Second g_start, Second g_end) {
         if (mygraph == null) {
             mygraph = makegraph(g_start, g_end);
+        } else {
+            if ( ! axisofdate.getMaximumDate().equals(mysar.myparser.get_endofgraph().getEnd())) {
+                axisofdate.setMaximumDate(mysar.myparser.get_endofgraph().getEnd());
+            }
+            if ( ! axisofdate.getMinimumDate().equals(mysar.myparser.get_startofgraph().getStart())) {
+                axisofdate.setMinimumDate(mysar.myparser.get_startofgraph().getStart());
+            }
         }
         return mygraph;
     }
@@ -230,13 +237,19 @@ public class Graph {
 
     public ChartPanel get_ChartPanel() {
         if (chartpanel == null) {
-            chartpanel = new ChartPanel(getgraph(mysar.myparser.get_startofgraph(), mysar.myparser.get_endofgraph()));
+            if ( mysar.isParsing() ) {
+                chartpanel = new ChartPanel(getgraph(null, null));
+            } else {
+                chartpanel = new ChartPanel(getgraph(mysar.myparser.get_startofgraph(), mysar.myparser.get_endofgraph()));
+            }
         } else {
-            if ( ! axisofdate.getMaximumDate().equals(mysar.myparser.get_endofgraph().getEnd())) {
+            if ( ! mysar.isParsing() ) {
+                if ( ! axisofdate.getMaximumDate().equals(mysar.myparser.get_endofgraph().getEnd())) {
                 axisofdate.setMaximumDate(mysar.myparser.get_endofgraph().getEnd());
             }
             if ( ! axisofdate.getMinimumDate().equals(mysar.myparser.get_startofgraph().getStart())) {
                 axisofdate.setMinimumDate(mysar.myparser.get_startofgraph().getStart());
+            }
             }
         }
         return chartpanel;
@@ -303,6 +316,7 @@ public class Graph {
         if (g_start != null && g_end != null) {
             axisofdate.setRange(g_start.getStart(), g_end.getEnd());
         }
+        
         plot.setOrientation(PlotOrientation.VERTICAL);
         JFreeChart mychart = new JFreeChart(graphtitle, Config.getDEFAULT_FONT(), plot, true);
         long endgenerate = System.currentTimeMillis();

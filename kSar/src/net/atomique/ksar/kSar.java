@@ -98,6 +98,14 @@ public class kSar {
 
         try {
             while ((current_line = br.readLine()) != null && !action_interrupted) {
+                Parsing=true;
+                /*
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(kSar.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                */
                 lines_parsed++;
                 if (current_line.length() == 0) {
                     continue;
@@ -198,6 +206,7 @@ public class kSar {
                 */
                 if (myparser == null) {
                     System.out.println("unknown parser");
+                    Parsing=false;
                     return -1;
                 }
 
@@ -213,6 +222,7 @@ public class kSar {
             }
         } catch (IOException ex) {
             Logger.getLogger(kSar.class.getName()).log(Level.SEVERE, null, ex);
+            Parsing=false;
         }
 
         if (dataview != null) {
@@ -228,6 +238,7 @@ public class kSar {
                 System.out.println("number of datesamples: " +  myparser.DateSamples.size() );
             }
         }
+        Parsing=false;
         return -1;
     }
 
@@ -273,12 +284,19 @@ public class kSar {
         return dataview;
     }
 
+    public boolean isParsing() {
+        return Parsing;
+    }
+
+    
+
     DataView dataview = null;
     private long lines_parsed = 0L;
     private String reload_action = "Empty";
     private Thread launched_action = null;
     private boolean action_interrupted = false;
     public AllParser myparser = null;
+    private boolean Parsing = false;
     
     public int total_graph=0;
     public SortedTreeNode graphtree = new SortedTreeNode("kSar");
