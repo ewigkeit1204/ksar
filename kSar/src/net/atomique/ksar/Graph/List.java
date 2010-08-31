@@ -79,7 +79,7 @@ public class List {
         return tmppanel;
     }
 
-    public String doPrint() {
+    public boolean isPrintSelected() {
         boolean leaftoprint = false;
         SortedSet<String> sortedset = new TreeSet<String>(nodeHashList.keySet());
 
@@ -93,9 +93,9 @@ public class List {
             }
         }
         if (leaftoprint) {
-            return "print " + Title;
+            return true;
         } else {
-            return "skip " + Title;
+            return false;
         }
     }
 
@@ -103,10 +103,6 @@ public class List {
         return Title;
     }
 
-    public boolean isPrintSelected() {
-        return false;
-    }
-    
     public JPanel getprintform() {
         JPanel panel = new JPanel();
         panel.setBorder(new TitledBorder(Title));

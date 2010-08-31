@@ -29,6 +29,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.JProgressBar;
+import net.atomique.ksar.Config;
 import net.atomique.ksar.Graph.Graph;
 import net.atomique.ksar.Graph.List;
 import net.atomique.ksar.UI.ParentNodeInfo;
@@ -59,10 +60,22 @@ public class FilePDF extends PdfPageEventHelper implements Runnable {
     }
 
     public void run() {
-        
-        total_pages=+mysar.get_page_to_print();
+        total_pages+=mysar.get_page_to_print();
         org.jfree.text.TextUtilities.setUseDrawRotatedStringWorkaround(true);
-        document = new Document(PageSize.A4.rotate());
+        if ("A4".equals(Config.getPDFPageFormat())) {
+            document = new Document(PageSize.A4.rotate());
+            pdfheight=document.getPageSize().getHeight();
+        }else if ("LEGAL".equals(Config.getPDFPageFormat())) {
+            document = new Document(PageSize.LEGAL.rotate());
+        } else if ("LETTER".equals(Config.getPDFPageFormat())) {
+            document = new Document(PageSize.LETTER.rotate());
+        } else {
+            document = new Document(PageSize.A4.rotate());
+        }
+        pdfheight=document.getPageSize().getHeight();
+        pdfwidth=document.getPageSize().getWidth();
+        pageheight = pdfheight - (2 * pdfmargins);
+        pagewidth = pdfwidth - (2 * pdfmargins);
         try {
             writer = PdfWriter.getInstance(document, new FileOutputStream(pdffilename));
         } catch (DocumentException ex) {
@@ -105,14 +118,14 @@ public class FilePDF extends PdfPageEventHelper implements Runnable {
 
     public void export_treenode(SortedTreeNode node, PdfOutline root) {
         int num = node.getChildCount();
-
         if (num > 0) {
             Object obj1 = node.getUserObject();
             if (obj1 instanceof ParentNodeInfo) {
                 ParentNodeInfo tmpnode = (ParentNodeInfo) obj1;
                 List nodeobj = tmpnode.getNode_object();
-                System.out.println(nodeobj.doPrint());
-                root = new PdfOutline(root, new PdfDestination(PdfDestination.FIT), nodeobj.getTitle());
+                if ( nodeobj.isPrintSelected() ) {
+                    root = new PdfOutline(root, new PdfDestination(PdfDestination.FIT), nodeobj.getTitle());
+                }
             }
             for (int i = 0; i < num; i++) {
                 SortedTreeNode l = (SortedTreeNode) node.getChildAt(i);
@@ -123,11 +136,13 @@ public class FilePDF extends PdfPageEventHelper implements Runnable {
             if (obj1 instanceof TreeNodeInfo) {
                 TreeNodeInfo tmpnode = (TreeNodeInfo) obj1;
                 Graph nodeobj = tmpnode.getNode_object();
-                root = new PdfOutline(root, new PdfDestination(PdfDestination.FIT), nodeobj.getTitle());
-                System.out.println(nodeobj.doPrint());
-                update_ui();
-                addchart(writer, nodeobj);
-                document.newPage();
+                if ( nodeobj.isPrintSelected() ) {
+                    root = new PdfOutline(root, new PdfDestination(PdfDestination.FIT), nodeobj.getTitle());
+                    update_ui();
+                    addchart(writer, nodeobj);
+                    document.newPage();
+                    
+                }
             }
         }
     }
@@ -155,12 +170,10 @@ public class FilePDF extends PdfPageEventHelper implements Runnable {
     }
 
     public int addchart(PdfWriter writer, Graph graph) {
-        
-
         JFreeChart chart = graph.getgraph(mysar.myparser.get_startofgraph(),mysar.myparser.get_endofgraph());
-        PdfTemplate pdftpl = pdfcb.createTemplate(height, width);
-        Graphics2D g2d = pdftpl.createGraphics(height, width, mapper);
-        Double r2d = new Rectangle2D.Double(0, 0, height, width);
+        PdfTemplate pdftpl = pdfcb.createTemplate(pagewidth,pageheight);
+        Graphics2D g2d = pdftpl.createGraphics(pagewidth,pageheight , mapper);
+        Double r2d = new Rectangle2D.Double(0, 0, pagewidth,pageheight );
         chart.draw(g2d, r2d, chartinfo);
         g2d.dispose();
         pdfcb.addTemplate(pdftpl, pdfmargins, pdfmargins);
@@ -174,6 +187,7 @@ public class FilePDF extends PdfPageEventHelper implements Runnable {
 
     public void IndexPage(PdfWriter writer, Document document) {
         try {
+            
             String title = "Statistics";
             String t_date = "On " + mysar.myparser.getDate();
             pdfcb.beginText();
@@ -184,17 +198,18 @@ public class FilePDF extends PdfPageEventHelper implements Runnable {
             pdfcb.showTextAligned(PdfContentByte.ALIGN_CENTER, t_date, ((pdfheight - pdfmargins) / 2), 300, 0);
             pdfcb.endText();
             document.newPage();
+            
         } catch (Exception de) {
             return;
         }
     }
 
     private int progress_info =0;
-    private int pdfheight = 842;
-    private int pdfwidth = 595;
+    private float pdfheight;
+    private float pdfwidth;
     private int pdfmargins = 10;
-    int height = pdfheight - (2 * pdfmargins);
-    int width = pdfwidth - (2 * pdfmargins);
+    float pageheight;
+    float pagewidth;
     private int total_pages = 1; // page 1 (index)
     private String pdffilename = null;
     private Document document = null;

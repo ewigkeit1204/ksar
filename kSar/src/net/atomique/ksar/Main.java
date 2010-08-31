@@ -4,6 +4,7 @@
  */
 package net.atomique.ksar;
 
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
@@ -20,6 +21,7 @@ public class Main {
 
     static Config config = null;
     static GlobalOptions globaloptions = null;
+    static ResourceBundle resource = ResourceBundle.getBundle("net/atomique/ksar/Language/Message");;
     
     
     public static void usage() {
@@ -76,7 +78,7 @@ public class Main {
             System.setProperty("com.apple.mrj.application.apple.menu.about.name", "kSar");
             System.setProperty("apple.laf.useScreenMenuBar", "true");
         }
-        
+         
         config = Config.getInstance();
         globaloptions = GlobalOptions.getInstance();
 
@@ -95,12 +97,13 @@ public class Main {
                 }
                 if ( "-test".equals(arg)) {
                     GlobalOptions.setDodebug(true);
+                    continue;
                 }
                 if ("-input".equals(arg)) {
                     if (i < args.length) {
                         GlobalOptions.setCLfilename(args[i++]);
                     } else {
-                        exit_error("-input requires an option");
+                        exit_error(resource.getString("INPUT_REQUIRE_ARG"));
                     }
                     continue;
                 }
