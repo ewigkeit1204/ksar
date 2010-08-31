@@ -163,9 +163,6 @@ public abstract class OSParser extends AllParser {
     protected String ENT = null;
     protected String Detect = null;
     protected String original_line=null;
-    protected int day = 0;
-    protected int month = 0;
-    protected int year = 0;
     // for graph
     
     

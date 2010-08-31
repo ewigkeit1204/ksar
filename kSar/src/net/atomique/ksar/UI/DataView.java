@@ -433,9 +433,9 @@ public class DataView extends javax.swing.JInternalFrame {
     public void add2tree(SortedTreeNode parent, SortedTreeNode newNode) {
         DefaultTreeModel model = (DefaultTreeModel) jTree1.getModel();
         model.insertNodeInto(newNode, parent, parent.getChildCount());
-        if( newNode.getUserObject() instanceof TreeNodeInfo ) {
+        /*if( newNode.getUserObject() instanceof TreeNodeInfo ) {
             model.reload();
-        }
+        }*/
     }
 
     public void treehome() {

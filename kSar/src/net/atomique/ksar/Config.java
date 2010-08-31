@@ -55,7 +55,8 @@ public class Config {
         setImageHeight(myPref.getInt("ImageHeight", 600));
         setImageWidth(myPref.getInt("ImageWidth", 800));
         setPDFPageFormat(myPref.get("PDFPageFormat","A4"));
-        
+        setLinuxDateFormat(myPref.get("LinuxDateFormat","Always aks"));
+
         setNumber_host_history(myPref.getInt("HostHistory", 0));
         for (int i = 0; i < getNumber_host_history(); i++) {
             host_history.add(myPref.get("HostHistory_" + i, null));
@@ -78,6 +79,7 @@ public class Config {
         myPref.putInt("ImageHeight", ImageHeight);
         myPref.putInt("ImageWidth", ImageWidth);
         myPref.put("PDFPageFormat", PDFPageFormat);
+        myPref.put("LinuxDateFormat", LinuxDateFormat);
 
         for (int i = 0; i < host_history.size(); i++) {
             myPref.put("HostHistory_" + i, host_history.get(i));
@@ -210,6 +212,16 @@ public class Config {
     public static void setLocal_configfile(int local_configfile) {
         Config.local_configfile = local_configfile;
     }
+
+    public static String getLinuxDateFormat() {
+        return LinuxDateFormat;
+    }
+
+    public static void setLinuxDateFormat(String LinuxDateFormat) {
+        Config.LinuxDateFormat = LinuxDateFormat;
+    }
+
+    
     
     private static String landf;
     private static File lastReadDirectory;
@@ -220,6 +232,7 @@ public class Config {
     private static ArrayList<String> host_history = new ArrayList<String>();
     public static final Font DEFAULT_FONT = new Font("SansSerif", Font.BOLD, 18);
 
+    private static String LinuxDateFormat;
     private static String PDFPageFormat;
     private static int ImageWidth;
     private static int ImageHeight;

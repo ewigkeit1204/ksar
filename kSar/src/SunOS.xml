@@ -25,7 +25,7 @@
             </Stat>
             <Stat name="runq">
                 <headerstr>runq-sz %runocc swpq-sz %swpocc</headerstr>
-                <graphname>RUNQ</graphname>
+                <graphname>IGNORE</graphname>
             </Stat>
             <Stat name="buffer">
                 <headerstr>bread/s lread/s %rcache bwrit/s lwrit/s %wcache pread/s pwrit/s</headerstr>

@@ -7,8 +7,10 @@ package net.atomique.ksar;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.TreeSet;
+import net.atomique.ksar.Parser.Linux;
 import net.atomique.ksar.XML.OSConfig;
 import org.jfree.data.time.Second;
 
@@ -55,16 +57,34 @@ public abstract class AllParser {
         Date dateSimple1;
         Date dateSimple2;
         Date dateSimple3;
+        String dateFormat = "MM/dd/yy";
         if (sarStartDate == null) {
             sarStartDate = s;
         }
         if (sarEndDate == null) {
             sarEndDate = s;
         }
+        if ( this instanceof Linux ) {
+            if ( "MM/DD/YYYY 23:59:59".equals(Config.getLinuxDateFormat()) ) {
+                dateFormat = "MM/dd/yy";
+            } else if ("MM/DD/YYYY 12:59:59 AM|PM".equals(Config.getLinuxDateFormat()) ) {
+                dateFormat = "MM/dd/yy";
+            } else if ( "DD/MM/YYYY 23:59:59".equals(Config.getLinuxDateFormat())) {
+                dateFormat = "dd/MM/yy";
+            } else if ( "YYYY/MM/DD 23:59:59".equals(Config.getLinuxDateFormat()) ) {
+                dateFormat = "yy/MM/dd";
+            } else if ( "Always ask".equals(Config.getLinuxDateFormat())) {
+                dateFormat="MM/dd/yy";
+            }
+        }
         try {
-            dateSimple1 = new SimpleDateFormat("MM/dd/yy").parse(s);
-            dateSimple2 = new SimpleDateFormat("MM/dd/yy").parse(sarStartDate);
-            dateSimple3 = new SimpleDateFormat("MM/dd/yy").parse(sarEndDate);
+            dateSimple1 = new SimpleDateFormat(dateFormat).parse(s);            
+            cal.setTime(dateSimple1);
+            day=cal.get(cal.DAY_OF_MONTH);
+            month=cal.get(cal.MONTH)+1;
+            year=cal.get(cal.YEAR);
+            dateSimple2 = new SimpleDateFormat(dateFormat).parse(sarStartDate);
+            dateSimple3 = new SimpleDateFormat(dateFormat).parse(sarEndDate);
         } catch (ParseException e) {
             return;
         }
@@ -107,4 +127,10 @@ public abstract class AllParser {
     protected kSar mysar = null;
     protected OSConfig myosconfig = null;
     protected String ParserName = null;
+
+    Calendar cal=Calendar.getInstance();
+    protected int day = 0;
+    protected int month = 0;
+    protected int year = 0;
+
 }

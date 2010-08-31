@@ -13,7 +13,6 @@ package net.atomique.ksar.UI;
 import java.awt.Dimension;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
-import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -32,6 +31,7 @@ public class Preferences extends javax.swing.JDialog {
         initComponents();
         load_landf();
         load_pageformat();
+        load_linuxformat();
         Dimension d1 = getSize();
         Dimension d2 = parent.getSize();
         int x = (d2.width - (d1.width / 2)) / 2;
@@ -52,6 +52,15 @@ public class Preferences extends javax.swing.JDialog {
         }
     }
 
+    private void load_linuxformat() {
+        LinuxFormatComboModel.addElement("Always aks");
+        LinuxFormatComboModel.addElement("MM/DD/YYYY 12:59:59 AM|PM");
+        LinuxFormatComboModel.addElement("MM/DD/YYYY 23:59:59");
+        LinuxFormatComboModel.addElement("DD/MM/YYYY 23:59:59");
+        LinuxFormatComboModel.addElement("YYYY/MM/DD 23:59:59");
+        jComboBox3.setSelectedItem(Config.getLinuxDateFormat());
+    }
+    
     private void load_pageformat() {
         PageFormatComboBox.addElement("A4");
         PageFormatComboBox.addElement("LETTER");
@@ -74,6 +83,9 @@ public class Preferences extends javax.swing.JDialog {
         jPanel5 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox();
+        jPanel10 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        jComboBox3 = new javax.swing.JComboBox();
         jPanel6 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
@@ -112,6 +124,17 @@ public class Preferences extends javax.swing.JDialog {
         jPanel5.add(jComboBox1);
 
         jPanel4.add(jPanel5);
+
+        jPanel10.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jLabel7.setLabelFor(jComboBox3);
+        jLabel7.setText("Linux Format:");
+        jPanel10.add(jLabel7);
+
+        jComboBox3.setModel(LinuxFormatComboModel);
+        jPanel10.add(jComboBox3);
+
+        jPanel4.add(jPanel10);
 
         jPanel6.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 2, 2));
 
@@ -232,13 +255,16 @@ public class Preferences extends javax.swing.JDialog {
     private javax.swing.JButton OkButton;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;
+    private javax.swing.JComboBox jComboBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -253,6 +279,7 @@ public class Preferences extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
     DefaultComboBoxModel UI_lanf_model = new DefaultComboBoxModel();
     DefaultComboBoxModel PageFormatComboBox = new DefaultComboBoxModel();
+    DefaultComboBoxModel LinuxFormatComboModel = new DefaultComboBoxModel();
     SpinnerNumberModel imageWidthSpinner = new javax.swing.SpinnerNumberModel(Config.getImageWidth(), Integer.valueOf(1), null, Integer.valueOf(1));
     SpinnerNumberModel imageHeightSpinner = new javax.swing.SpinnerNumberModel(Config.getImageHeight(), Integer.valueOf(1), null, Integer.valueOf(1));
 }

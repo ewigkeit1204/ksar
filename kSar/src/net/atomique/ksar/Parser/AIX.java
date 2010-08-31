@@ -26,15 +26,7 @@ public class AIX extends OSParser {
         setOSversion(columns[2]+ "." + columns[3]);
         setMacAddress(columns[4]);
         setDate(columns[5]);
-        String[] dateSplit = getDate().split("/");
-        if (dateSplit.length == 3) {
-            day = Integer.parseInt(dateSplit[1]);
-            month = Integer.parseInt(dateSplit[0]);
-            year = Integer.parseInt(dateSplit[2]);
-            if (year < 100) { // solaris 8 show date on two digit
-                year += 2000;
-            }
-        }
+        
     }
 
     @Override

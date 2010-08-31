@@ -24,23 +24,7 @@ public class Linux extends OSParser {
         setKernel(columns[1]);
         tmpstr = columns[2];
         setHostname(tmpstr.substring(1, tmpstr.length() - 1));
-        setDate(columns[3]);
-        String[] dateSplit = columns[3].split("/");
-        if (dateSplit.length == 3) {
-            day = Integer.parseInt(dateSplit[1]);
-            month = Integer.parseInt(dateSplit[0]);
-            year = Integer.parseInt(dateSplit[2]);
-            if (year < 100) { // solaris 8 show date on two digit
-                year += 2000;
-            }
-        }
-        dateSplit = columns[3].split("-");
-        if (dateSplit.length == 3) {
-            day = Integer.parseInt(dateSplit[2]);
-            month = Integer.parseInt(dateSplit[1]);
-            year = Integer.parseInt(dateSplit[0]);
-        }
-        
+        setDate(columns[3]);        
     }
 
     @Override
