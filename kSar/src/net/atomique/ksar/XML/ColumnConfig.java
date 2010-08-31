@@ -10,9 +10,9 @@ import java.awt.Color;
  *
  * @author Max
  */
-public class ColorConfig {
+public class ColumnConfig {
 
-    public ColorConfig(String s) {
+    public ColumnConfig(String s) {
         data_title=s;
     }
     public String getData_colorstr() {
@@ -45,6 +45,19 @@ public class ColorConfig {
         this.data_title = data_title;
     }
 
+    public void setType(String s){
+        if ( "gauge".equals(s)) {
+            type=1;
+        }
+        if ( "counter".equals(s)) {
+            type=2;
+        }
+    }
+
+    public int getType() {
+        return type;
+    }
+    
     public boolean is_valid() {
         if (data_title == null) {
             error_message = "Column header name not found";
@@ -64,6 +77,8 @@ public class ColorConfig {
     public String getError_message() {
         return error_message;
     }
+
+    private int type = 0;
     private Color data_color = null;
     private String error_message = null;
     private String data_title = null;

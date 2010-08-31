@@ -109,6 +109,7 @@
         </itemcolor>
         <itemcolor name="blks/s">
             <color>255,0,255</color>
+            <type>counter</type>
         </itemcolor>
         <itemcolor name="tps">
             <color>255,0,0</color>
@@ -127,18 +128,23 @@
         </itemcolor>
         <itemcolor name="avwait">
             <color>255,0,0</color>
+            <type>gauge</type>
         </itemcolor>
         <itemcolor name="avserv">
             <color>0,255,0</color>
+            <type>gauge</type>
         </itemcolor>
         <itemcolor name="avque">
             <color>255,0,255</color>
+            <type>gauge</type>
         </itemcolor>
         <itemcolor name="r+w/s">
             <color>0,127,255</color>
+            <type>counter</type>
         </itemcolor>
         <itemcolor name="%busy">
             <color>255,255,0</color>
+            <type>gauge</type>
         </itemcolor>
     </colors>
     

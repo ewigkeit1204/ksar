@@ -15,7 +15,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import net.atomique.ksar.XML.CnxHistory;
-import net.atomique.ksar.XML.ColorConfig;
+import net.atomique.ksar.XML.ColumnConfig;
 import net.atomique.ksar.XML.GraphConfig;
 import net.atomique.ksar.XML.OSConfig;
 import net.atomique.ksar.XML.PlotConfig;
@@ -136,7 +136,7 @@ public class XMLConfig extends DefaultHandler {
         // COLORS
         if (in_colors) {
             if ("itemcolor".equals(qName)) {
-                currentColor = new ColorConfig(attributes.getValue("name"));
+                currentColor = new ColumnConfig(attributes.getValue("name"));
                 in_color = true;
             }
         }
@@ -238,6 +238,9 @@ public class XMLConfig extends DefaultHandler {
             if ("graphname".equals(qName)) {
                 currentStat.setGraphName(tempval);
             }
+            if ("duplicate".equals(qName)) {
+                currentStat.setDuplicateTime(tempval);
+            }
         }
         if ( "cols".equals(qName)) {
             if (currentPlot != null) {
@@ -296,7 +299,7 @@ public class XMLConfig extends DefaultHandler {
     private boolean in_OS = false;
     private boolean in_history = false;
     private boolean in_cnx = false;
-    private ColorConfig currentColor = null;
+    private ColumnConfig currentColor = null;
     private OSConfig currentOS = null;
     private StatConfig currentStat = null;
     private GraphConfig currentGraph = null;

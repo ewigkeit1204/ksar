@@ -17,11 +17,14 @@ import java.util.TreeSet;
 import javax.swing.JCheckBox;
 import net.atomique.ksar.Config;
 import net.atomique.ksar.GlobalOptions;
+import net.atomique.ksar.OSParser;
 import net.atomique.ksar.UI.SortedTreeNode;
 import net.atomique.ksar.UI.TreeNodeInfo;
+import net.atomique.ksar.XML.ColumnConfig;
 import net.atomique.ksar.XML.GraphConfig;
 import net.atomique.ksar.XML.PlotConfig;
 import net.atomique.ksar.XML.StackConfig;
+import net.atomique.ksar.XML.StatConfig;
 import net.atomique.ksar.kSar;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.ChartUtilities;
@@ -107,7 +110,30 @@ public class Graph {
             try {
                 ((TimeSeries) (Stats.get(i - skipColumn))).add(now, colvalue);
             } catch (SeriesException se) {
-                System.out.println(graphtitle + "oups" + s);
+                StatConfig tmp = ((OSParser)mysar.myparser).get_OSConfig().getStat(mysar.myparser.getCurrentStat());
+                if ( tmp != null ) {
+                    if ( tmp.canDuplicateTime() ) {
+                        Number oldval = ((TimeSeries)(Stats.get(i-skipColumn))).getValue(now);
+                        Double tempval;
+                        if( oldval == null) {
+                            return -1;
+                        }
+                        ColumnConfig tmp2 = GlobalOptions.getColumnConfig(HeaderStr[i]);
+                        if ( tmp2.getType() == 1) {
+                            tempval=new Double( (oldval.doubleValue() + colvalue) /2 );
+                        } else if ( tmp2.getType() == 2) {
+                            tempval=new Double( oldval.doubleValue() + colvalue );
+                        } else {
+                            return -1;
+                        }
+                        
+                        try {
+                            ((TimeSeries) (Stats.get(i - skipColumn))).update(now, tempval);
+                            return 0;
+                        } catch  (SeriesException se2) {
+                        }
+                    }
+                }                
                 System.exit(1);
             }
 

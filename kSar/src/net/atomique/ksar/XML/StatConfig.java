@@ -58,10 +58,22 @@ public class StatConfig {
         return false;
     }
 
+    public boolean canDuplicateTime() {
+        return duplicatetime;
+    }
+
+    public void setDuplicateTime(String s) {
+        if ( "yes".equals(s) || "true".equals(s) ){
+            duplicatetime=true;
+        }
+    }
+
     
+
     private int HeaderNum = 0;
     private String StatName = null;
     private String GraphName = null;
     private String Header[] = null;
     private String HeaderStr = null;
+    private boolean duplicatetime = false;
 }

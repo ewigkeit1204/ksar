@@ -146,7 +146,7 @@ public abstract class OSParser extends AllParser {
     }
     
     protected Map<String,Object> ListofGraph = new HashMap<String, Object>();
-    protected String currentStat = "NONE";
+    
     protected String lastStat = null;
     protected Object currentStatObj = null;
     //List graphlist = new ArrayList();

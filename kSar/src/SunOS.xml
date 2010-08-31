@@ -22,6 +22,7 @@
             <Stat name="device">
                 <headerstr>device %busy avque r+w/s blks/s avwait avserv</headerstr>
                 <graphname>DEVICE</graphname>
+                <duplicate>yes</duplicate>
             </Stat>
             <Stat name="runq">
                 <headerstr>runq-sz %runocc swpq-sz %swpocc</headerstr>

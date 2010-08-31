@@ -108,6 +108,9 @@ public abstract class AllParser {
         return DateSamples;
     }
 
+    public String getCurrentStat() {
+        return currentStat;
+    }
 
 
     protected Second startofstat = null;
@@ -132,5 +135,5 @@ public abstract class AllParser {
     protected int day = 0;
     protected int month = 0;
     protected int year = 0;
-
+    protected String currentStat = "NONE";
 }

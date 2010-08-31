@@ -19,7 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.atomique.ksar.UI.Desktop;
 import net.atomique.ksar.XML.CnxHistory;
-import net.atomique.ksar.XML.ColorConfig;
+import net.atomique.ksar.XML.ColumnConfig;
 import net.atomique.ksar.XML.OSConfig;
 
 /**
@@ -49,7 +49,7 @@ public class GlobalOptions {
         username = (String) systemprops.get("user.name");
         userhome = (String) systemprops.get("user.home") + systemprops.get("file.separator");
         fileseparator = (String) systemprops.get("file.separator");
-        colorlist = new HashMap<String, ColorConfig>();
+        columnlist = new HashMap<String, ColumnConfig>();
         OSlist = new HashMap<String, OSConfig>();
         ParserMap = new HashMap<String, Class>();
         HistoryList = new HashMap<String, CnxHistory>();
@@ -98,16 +98,22 @@ public class GlobalOptions {
         return username;
     }
 
-    public static HashMap<String, ColorConfig> getColorlist() {
-        return colorlist;
+    public static HashMap<String, ColumnConfig> getColorlist() {
+        return columnlist;
     }
 
     public static HashMap<String, OSConfig> getOSlist() {
         return OSlist;
     }
 
+    public static ColumnConfig getColumnConfig(String s) {
+        if ( columnlist.isEmpty()) {
+            return null;
+        }
+        return columnlist.get(s);
+    }
     public static Color getDataColor(String s) {
-        ColorConfig tmp = colorlist.get(s);
+        ColumnConfig tmp = columnlist.get(s);
         if (tmp != null) {
             return tmp.getData_color();
         } else {
@@ -251,7 +257,7 @@ public class GlobalOptions {
     private static String userhome;
     private static String username;
     private static String fileseparator;
-    private static HashMap<String, ColorConfig> colorlist;
+    private static HashMap<String, ColumnConfig> columnlist;
     private static HashMap<String, OSConfig> OSlist;
     private static HashMap<String, CnxHistory> HistoryList;
     private static boolean dodebug = false;
