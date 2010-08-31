@@ -59,7 +59,6 @@ public class FileRead extends Thread {
     }
 
     public void run() {
-        String current_line;
         if (sarfilename == null) {
             return;
         }

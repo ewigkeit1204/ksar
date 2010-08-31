@@ -28,6 +28,7 @@ public class GraphSelection extends javax.swing.JDialog {
         this.myview = myview;
         initComponents();
         setLocationRelativeTo(parent);
+        toFront();
     }
 
     /** This method is called from within the constructor to

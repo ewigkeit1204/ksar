@@ -99,13 +99,13 @@ public class kSar {
         try {
             while ((current_line = br.readLine()) != null && !action_interrupted) {
                 Parsing=true;
-                /*
+                
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(kSar.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                */
+                
                 lines_parsed++;
                 if (current_line.length() == 0) {
                     continue;
@@ -246,6 +246,12 @@ public class kSar {
         return action_interrupted;
     }
 
+    public void interrupt_parsing() {
+        if ( isParsing()) {
+            action_interrupted=true;
+        }
+    }
+    
     public void add2tree(SortedTreeNode parent, SortedTreeNode newNode) {
         if (dataview != null) {
             dataview.add2tree(parent, newNode);

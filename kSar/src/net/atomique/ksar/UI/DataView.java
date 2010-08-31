@@ -112,8 +112,12 @@ public class DataView extends javax.swing.JInternalFrame {
 
         jPanel2.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
-        jButton1.setText("Command");
         jButton1.setEnabled(false);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         jPanel2.add(jButton1, java.awt.BorderLayout.SOUTH);
 
         jSplitPane1.setLeftComponent(jPanel2);
@@ -264,9 +268,10 @@ public class DataView extends javax.swing.JInternalFrame {
         ask_treenode(mysar.graphtree,tmp);
         tmp.setVisible(true);
         if ( ! tmp.OkforExport ) {
-            return ;
-            
+            tmp=null;
+            return ;            
         }
+        tmp=null;
         String filename = askSaveFilename("Export PDF", Config.getLastExportDirectory());
         if (filename == null) {
             return;
@@ -303,6 +308,11 @@ public class DataView extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         
     }//GEN-LAST:event_addgraphMenuActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        mysar.interrupt_parsing();
+        jButton1.setText("");
+    }//GEN-LAST:event_jButton1ActionPerformed
 
    private String askSaveFilename(String title, File chdirto) {
         String filename = null;
@@ -437,6 +447,13 @@ public class DataView extends javax.swing.JInternalFrame {
     public void notifyrun(boolean t) {
         exportMenu.setEnabled(!t);
         dataMenu.setEnabled(!t);
+        if ( t ) {
+            jButton1.setText("Stop");
+            jButton1.setEnabled(true);
+        } else {
+            jButton1.setText("");
+            jButton1.setEnabled(false);
+        }
     }
     
     public void setHasData(boolean actif) {
