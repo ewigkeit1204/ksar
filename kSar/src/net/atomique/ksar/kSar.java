@@ -99,13 +99,13 @@ public class kSar {
         try {
             while ((current_line = br.readLine()) != null && !action_interrupted) {
                 Parsing=true;
-                
+                /*
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(kSar.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
+                */
                 lines_parsed++;
                 if (current_line.length() == 0) {
                     continue;
