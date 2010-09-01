@@ -4,6 +4,8 @@
  */
 package net.atomique.ksar.Parser;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import net.atomique.ksar.OSParser;
 import net.atomique.ksar.GlobalOptions;
 import net.atomique.ksar.Graph.Graph;
@@ -55,18 +57,12 @@ public class AIX extends OSParser {
         }
 
 
-        String[] sarTime = columns[0].split(":");
-        if (sarTime.length != 3) {
-            if (  "DEVICE".equals(currentStat) || "CPUS".equals(currentStat)) {
-                firstdatacolumn=0;
-            } else {
-                return -1;
-            }
-            
-        } else {
-            heure = Integer.parseInt(sarTime[0]);
-            minute = Integer.parseInt(sarTime[1]);
-            seconde = Integer.parseInt(sarTime[2]);
+        try {
+            parsedate = new SimpleDateFormat(timeFormat).parse(columns[0]);
+            cal.setTime(parsedate);
+            heure = cal.get(cal.HOUR_OF_DAY);
+            minute = cal.get(cal.MINUTE);
+            seconde = cal.get(cal.SECOND);
             now = new Second(seconde, minute, heure, day, month, year);
             if (startofstat == null) {
                 startofstat = now;
@@ -81,6 +77,12 @@ public class AIX extends OSParser {
                 endofgraph = now;
             }
             firstdatacolumn = 1;
+        } catch (ParseException ex) {
+            if (! "DEVICE".equals(currentStat) || "CPUS".equals(currentStat)) {
+                System.out.println("unable to parse time " + columns[0]);
+                return -1;
+            }
+            firstdatacolumn = 0;
         }
 
 

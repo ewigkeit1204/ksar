@@ -55,7 +55,7 @@ public class Config {
         setImageHeight(myPref.getInt("ImageHeight", 600));
         setImageWidth(myPref.getInt("ImageWidth", 800));
         setPDFPageFormat(myPref.get("PDFPageFormat","A4"));
-        setLinuxDateFormat(myPref.get("LinuxDateFormat","Always aks"));
+        setLinuxDateFormat(myPref.get("LinuxDateFormat","Always ask"));
 
         setNumber_host_history(myPref.getInt("HostHistory", 0));
         for (int i = 0; i < getNumber_host_history(); i++) {

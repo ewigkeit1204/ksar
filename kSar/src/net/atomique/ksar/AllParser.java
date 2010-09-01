@@ -53,30 +53,18 @@ public abstract class AllParser {
         return ParserName;
     }
 
-     public void setDate(String s) {
+     public boolean setDate(String s) {
         Date dateSimple1;
         Date dateSimple2;
         Date dateSimple3;
-        String dateFormat = "MM/dd/yy";
+        
         if (sarStartDate == null) {
             sarStartDate = s;
         }
         if (sarEndDate == null) {
             sarEndDate = s;
         }
-        if ( this instanceof Linux ) {
-            if ( "MM/DD/YYYY 23:59:59".equals(Config.getLinuxDateFormat()) ) {
-                dateFormat = "MM/dd/yy";
-            } else if ("MM/DD/YYYY 12:59:59 AM|PM".equals(Config.getLinuxDateFormat()) ) {
-                dateFormat = "MM/dd/yy";
-            } else if ( "DD/MM/YYYY 23:59:59".equals(Config.getLinuxDateFormat())) {
-                dateFormat = "dd/MM/yy";
-            } else if ( "YYYY/MM/DD 23:59:59".equals(Config.getLinuxDateFormat()) ) {
-                dateFormat = "yy/MM/dd";
-            } else if ( "Always ask".equals(Config.getLinuxDateFormat())) {
-                dateFormat="MM/dd/yy";
-            }
-        }
+        
         try {
             dateSimple1 = new SimpleDateFormat(dateFormat).parse(s);            
             cal.setTime(dateSimple1);
@@ -86,7 +74,7 @@ public abstract class AllParser {
             dateSimple2 = new SimpleDateFormat(dateFormat).parse(sarStartDate);
             dateSimple3 = new SimpleDateFormat(dateFormat).parse(sarEndDate);
         } catch (ParseException e) {
-            return;
+            return false;
         }
         if (dateSimple1.compareTo(dateSimple2) < 0) {
             sarStartDate = s;
@@ -94,6 +82,7 @@ public abstract class AllParser {
         if (dateSimple1.compareTo(dateSimple3) > 0) {
             sarEndDate = s;
         }
+        return true;
     }
 
      public String getDate() {
@@ -131,9 +120,13 @@ public abstract class AllParser {
     protected OSConfig myosconfig = null;
     protected String ParserName = null;
 
-    Calendar cal=Calendar.getInstance();
+    protected Calendar cal=Calendar.getInstance();
+    protected Date parsedate = null;
     protected int day = 0;
     protected int month = 0;
     protected int year = 0;
     protected String currentStat = "NONE";
+    protected String dateFormat = "MM/dd/yy";
+    protected String timeFormat = "HH:mm:ss";
+    protected int timeColumn = 1;
 }

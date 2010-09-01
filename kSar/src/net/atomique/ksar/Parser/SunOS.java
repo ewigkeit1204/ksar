@@ -59,7 +59,7 @@ public class SunOS extends OSParser {
 
 
         try {
-            parsedate = new SimpleDateFormat("HH:mm:SS").parse(columns[0]);
+            parsedate = new SimpleDateFormat(timeFormat).parse(columns[0]);
             cal.setTime(parsedate);
             heure = cal.get(cal.HOUR_OF_DAY);
             minute = cal.get(cal.MINUTE);
@@ -160,7 +160,6 @@ public class SunOS extends OSParser {
     
     Second now = null;
     boolean under_average = false;
-    Calendar cal = Calendar.getInstance();
-    Date parsedate = null;
+    
 
 }

@@ -4,10 +4,16 @@
  */
 package net.atomique.ksar.Parser;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import net.atomique.ksar.Config;
 import net.atomique.ksar.OSParser;
 import net.atomique.ksar.GlobalOptions;
 import net.atomique.ksar.Graph.Graph;
 import net.atomique.ksar.Graph.List;
+import net.atomique.ksar.UI.LinuxDateFormat;
 import net.atomique.ksar.XML.GraphConfig;
 import org.jfree.data.time.Second;
 
@@ -18,15 +24,39 @@ import org.jfree.data.time.Second;
 public class Linux extends OSParser {
 
     public void parse_header(String s) {
-        String [] columns = s.split("\\s+");
+        boolean retdate = false;
+        LinuxDateFormat = Config.getLinuxDateFormat();
+        String[] columns = s.split("\\s+");
         String tmpstr;
         setOstype(columns[0]);
         setKernel(columns[1]);
         tmpstr = columns[2];
         setHostname(tmpstr.substring(1, tmpstr.length() - 1));
-        setDate(columns[3]);        
+        retdate=setDate(columns[3]);
     }
 
+    private void checkDateFormat() {
+
+        if ("MM/DD/YYYY 23:59:59".equals(LinuxDateFormat)) {
+            dateFormat = "MM/dd/yy";
+        } else if ("MM/DD/YYYY 12:59:59 AM|PM".equals(LinuxDateFormat)) {
+            dateFormat = "MM/dd/yy";
+            timeFormat = "hh:mm:ss a";
+        } else if ("DD/MM/YYYY 23:59:59".equals(LinuxDateFormat)) {
+            dateFormat = "dd/MM/yy";
+        } else if ("YYYY-MM-DD 23:59:59".equals(LinuxDateFormat)) {
+            dateFormat = "yy-MM-dd";
+        } else if ("Always ask".equals(LinuxDateFormat)) {
+            askDateFormat();
+        }
+    }
+
+    private void askDateFormat() {
+        if ( GlobalOptions.hasUI() ) {
+            LinuxDateFormat tmp = new LinuxDateFormat(GlobalOptions.getUI(),true);
+        }
+    }
+    
     @Override
     public int parse(String line, String[] columns) {
         int heure = 0;
@@ -52,20 +82,22 @@ public class Linux extends OSParser {
             return 0;
         }
 
-
-        String[] sarTime = columns[0].split(":");
-        if (sarTime.length != 3) {
-            return -1;
-        } else {
-            heure = Integer.parseInt(sarTime[0]);
-            minute = Integer.parseInt(sarTime[1]);
-            seconde = Integer.parseInt(sarTime[2]);
+        try {
+            if ( timeColumn ==2) {
+                parsedate = new SimpleDateFormat(timeFormat).parse(columns[0]+" "+columns[1]);
+            } else {
+                parsedate = new SimpleDateFormat(timeFormat).parse(columns[0]);
+            }
+            cal.setTime(parsedate);
+            heure = cal.get(cal.HOUR_OF_DAY);
+            minute = cal.get(cal.MINUTE);
+            seconde = cal.get(cal.SECOND);
             now = new Second(seconde, minute, heure, day, month, year);
             if (startofstat == null) {
                 startofstat = now;
-                startofgraph =now;
+                startofgraph = now;
             }
-            if ( endofstat == null) {
+            if (endofstat == null) {
                 endofstat = now;
                 endofgraph = now;
             }
@@ -73,7 +105,10 @@ public class Linux extends OSParser {
                 endofstat = now;
                 endofgraph = now;
             }
-            firstdatacolumn = 1;
+            firstdatacolumn = timeColumn;
+        } catch (ParseException ex) {
+            System.out.println("unable to parse time " + columns[0]);
+            return -1;
         }
 
 
@@ -118,8 +153,7 @@ public class Linux extends OSParser {
 
 
 
-        if (lastStat
-                != null) {
+        if (lastStat != null) {
             if (!lastStat.equals(currentStat) && GlobalOptions.isDodebug()) {
                 System.out.println("Stat change from " + lastStat + " to " + currentStat);
                 lastStat = currentStat;
@@ -150,4 +184,6 @@ public class Linux extends OSParser {
         }
         return -1;
     }
+    
+    private String LinuxDateFormat;
 }

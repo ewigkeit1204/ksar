@@ -107,29 +107,73 @@ public class Graph {
                 System.out.println(graphtitle + " " + cols[i] + "is undef " + s);
             }
 
-            add_datapoint_plot(now, i-skipColumn,HeaderStr[i], colvalue);
+            add_datapoint_plot(now, i - skipColumn, HeaderStr[i], colvalue);
 
 
             TimeTableXYDataset tmp = StackListbyCol.get(HeaderStr[i]);
             if (tmp != null) {
-                add_datapoint_stack(tmp,now,i-skipColumn,HeaderStr[i], colvalue);
-//                tmp.add(now, colvalue, HeaderStr[i]);
+                add_datapoint_stack(tmp, now, i - skipColumn, HeaderStr[i], colvalue);
             }
         }
 
         return 0;
     }
 
-    private boolean add_datapoint_stack(TimeTableXYDataset dataset,Second now, int col, String colheader, Double value) {
+    private boolean add_datapoint_stack(TimeTableXYDataset dataset, Second now, int col, String colheader, Double value) {
         try {
             dataset.add(now, col, colheader);
             return true;
         } catch (SeriesException se) {
+            /*
+             *
+             * not update on stack
+             *
+            int indexcol = -1;
+            // add not working
+            // find timeseries index
+            for (int i = 0; i < dataset.getSeriesCount(); i++) {
+                String name = (String) dataset.getSeriesKey(i);
+                if (colheader.equals(name)) {
+                    indexcol = i;
+                    break;
+                }
+                System.out.println(dataset.indexOf(name) + ": " + name);
+            }
+            if (indexcol == -1) {
+                return false;
+            }
+            StatConfig statconfig = ((OSParser) mysar.myparser).get_OSConfig().getStat(mysar.myparser.getCurrentStat());
+            if (statconfig != null) {
+                if (statconfig.canDuplicateTime()) {
+                    Number oldval = dataset.getXValue(indexcol, col);
+                    Double tempval;
+                    if (oldval == null) {
+                        return false;
+                    }
+                    ColumnConfig colconfig = GlobalOptions.getColumnConfig(colheader);
+                    if (colconfig.getType() == 1) {
+                        tempval = new Double((oldval.doubleValue() + value) / 2);
+                    } else if (colconfig.getType() == 2) {
+                        tempval = new Double(oldval.doubleValue() + value);
+                    } else {
+                        return false;
+                    }
+
+                    try {
+                        ((TimeSeries) (Stats.get(col))).update(now, tempval);
+                        return true;
+                    } catch (SeriesException se2) {
+                        return false;
+                    }
+                }
+            }
+            */
             return false;
         }
-        
+
     }
-    private boolean add_datapoint_plot(Second now, int col, String colheader,Double value) {
+
+    private boolean add_datapoint_plot(Second now, int col, String colheader, Double value) {
         try {
             ((TimeSeries) (Stats.get(col))).add(now, value);
             return true;
@@ -163,7 +207,7 @@ public class Graph {
             }
             return false;
         }
-        
+
     }
 
     public String make_csv() {
