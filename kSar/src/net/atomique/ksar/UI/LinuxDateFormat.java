@@ -23,15 +23,19 @@ public class LinuxDateFormat extends javax.swing.JDialog {
     public LinuxDateFormat(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        load_linuxformat();
+        pack();
+        setLocationRelativeTo(parent);
         toFront();
         setVisible(true);
+        
     }
 
     private void load_linuxformat() {
-        LinuxFormatComboModel.addElement("MM/DD/YYYY 12:59:59 AM|PM");
         LinuxFormatComboModel.addElement("MM/DD/YYYY 23:59:59");
         LinuxFormatComboModel.addElement("DD/MM/YYYY 23:59:59");
         LinuxFormatComboModel.addElement("YYYY-MM-DD 23:59:59");
+        LinuxFormatComboModel.addElement("MM/DD/YYYY 12:59:59 AM|PM");
     }
     
     /** This method is called from within the constructor to
@@ -63,6 +67,7 @@ public class LinuxDateFormat extends javax.swing.JDialog {
         jPanel3.add(jLabel1);
 
         jComboBox1.setModel(LinuxFormatComboModel);
+        jComboBox1.setPreferredSize(new java.awt.Dimension(300, 27));
         jPanel3.add(jComboBox1);
 
         jPanel1.add(jPanel3);
@@ -91,6 +96,7 @@ public class LinuxDateFormat extends javax.swing.JDialog {
 
     private void OkButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OkButtonActionPerformed
         this.dispose();
+        ok_to_proceed=true;
     }//GEN-LAST:event_OkButtonActionPerformed
 
     public boolean hasToRemenber() {
@@ -99,6 +105,10 @@ public class LinuxDateFormat extends javax.swing.JDialog {
 
     public String getDateFormat() {
         return (String)jComboBox1.getSelectedItem();
+    }
+
+    public boolean isOk() {
+        return ok_to_proceed;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -113,4 +123,5 @@ public class LinuxDateFormat extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     DefaultComboBoxModel LinuxFormatComboModel = new DefaultComboBoxModel();
+    boolean ok_to_proceed =false;
 }

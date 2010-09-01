@@ -242,6 +242,7 @@ public class Preferences extends javax.swing.JDialog {
         Config.setPDFPageFormat(jComboBox2.getSelectedItem().toString());
         Config.setImageHeight((Integer)jSpinner2.getModel().getValue());
         Config.setImageWidth((Integer)jSpinner1.getModel().getValue());
+        Config.setLinuxDateFormat(jComboBox3.getSelectedItem().toString());
         Config.save();
         dispose();
     }//GEN-LAST:event_OkButtonActionPerformed

@@ -32,11 +32,17 @@ public class Linux extends OSParser {
         setKernel(columns[1]);
         tmpstr = columns[2];
         setHostname(tmpstr.substring(1, tmpstr.length() - 1));
+        checkDateFormat();
         retdate=setDate(columns[3]);
+        
     }
 
     private void checkDateFormat() {
 
+        if ("Always ask".equals(LinuxDateFormat)) {
+            askDateFormat("Provide date Format");
+        }
+        
         if ("MM/DD/YYYY 23:59:59".equals(LinuxDateFormat)) {
             dateFormat = "MM/dd/yy";
         } else if ("MM/DD/YYYY 12:59:59 AM|PM".equals(LinuxDateFormat)) {
@@ -46,14 +52,20 @@ public class Linux extends OSParser {
             dateFormat = "dd/MM/yy";
         } else if ("YYYY-MM-DD 23:59:59".equals(LinuxDateFormat)) {
             dateFormat = "yy-MM-dd";
-        } else if ("Always ask".equals(LinuxDateFormat)) {
-            askDateFormat();
-        }
+        }  
     }
 
-    private void askDateFormat() {
+    private void askDateFormat(String s) {
         if ( GlobalOptions.hasUI() ) {
             LinuxDateFormat tmp = new LinuxDateFormat(GlobalOptions.getUI(),true);
+            tmp.setTitle(s);
+            if ( tmp.isOk()) {
+                LinuxDateFormat=tmp.getDateFormat();
+                if ( tmp.hasToRemenber() ) {
+                    Config.setLinuxDateFormat(tmp.getDateFormat());
+                    Config.save();
+                }
+            }
         }
     }
     
@@ -184,6 +196,8 @@ public class Linux extends OSParser {
         }
         return -1;
     }
-    
+
+
     private String LinuxDateFormat;
+    
 }
