@@ -96,10 +96,10 @@ public class Graph {
 
     public int parse_line(Second now, String s) {
         String[] cols = s.split("\\s+");
-        Float colvalue = null;
+        Double colvalue = null;
         for (int i = skipColumn; i < HeaderStr.length; i++) {
             try {
-                colvalue = new Float(cols[i]);
+                colvalue = new Double(cols[i]);
             } catch (NumberFormatException ne) {
                 System.out.println(graphtitle + " " + cols[i] + "is NaN");
                 return 0;
@@ -107,43 +107,63 @@ public class Graph {
                 System.out.println(graphtitle + " " + cols[i] + "is undef " + s);
             }
 
-            try {
-                ((TimeSeries) (Stats.get(i - skipColumn))).add(now, colvalue);
-            } catch (SeriesException se) {
-                StatConfig tmp = ((OSParser)mysar.myparser).get_OSConfig().getStat(mysar.myparser.getCurrentStat());
-                if ( tmp != null ) {
-                    if ( tmp.canDuplicateTime() ) {
-                        Number oldval = ((TimeSeries)(Stats.get(i-skipColumn))).getValue(now);
-                        Double tempval;
-                        if( oldval == null) {
-                            return -1;
-                        }
-                        ColumnConfig tmp2 = GlobalOptions.getColumnConfig(HeaderStr[i]);
-                        if ( tmp2.getType() == 1) {
-                            tempval=new Double( (oldval.doubleValue() + colvalue) /2 );
-                        } else if ( tmp2.getType() == 2) {
-                            tempval=new Double( oldval.doubleValue() + colvalue );
-                        } else {
-                            return -1;
-                        }
-                        
-                        try {
-                            ((TimeSeries) (Stats.get(i - skipColumn))).update(now, tempval);
-                            return 0;
-                        } catch  (SeriesException se2) {
-                        }
-                    }
-                }                
-                System.exit(1);
-            }
+            add_datapoint_plot(now, i-skipColumn,HeaderStr[i], colvalue);
+
 
             TimeTableXYDataset tmp = StackListbyCol.get(HeaderStr[i]);
             if (tmp != null) {
-                tmp.add(now, colvalue, HeaderStr[i]);
+                add_datapoint_stack(tmp,now,i-skipColumn,HeaderStr[i], colvalue);
+//                tmp.add(now, colvalue, HeaderStr[i]);
             }
         }
 
         return 0;
+    }
+
+    private boolean add_datapoint_stack(TimeTableXYDataset dataset,Second now, int col, String colheader, Double value) {
+        try {
+            dataset.add(now, col, colheader);
+            return true;
+        } catch (SeriesException se) {
+            return false;
+        }
+        
+    }
+    private boolean add_datapoint_plot(Second now, int col, String colheader,Double value) {
+        try {
+            ((TimeSeries) (Stats.get(col))).add(now, value);
+            return true;
+        } catch (SeriesException se) {
+            // insert not possible
+            // check if column can be update
+            StatConfig statconfig = ((OSParser) mysar.myparser).get_OSConfig().getStat(mysar.myparser.getCurrentStat());
+            if (statconfig != null) {
+                if (statconfig.canDuplicateTime()) {
+                    Number oldval = ((TimeSeries) (Stats.get(col))).getValue(now);
+                    Double tempval;
+                    if (oldval == null) {
+                        return false;
+                    }
+                    ColumnConfig colconfig = GlobalOptions.getColumnConfig(colheader);
+                    if (colconfig.getType() == 1) {
+                        tempval = new Double((oldval.doubleValue() + value) / 2);
+                    } else if (colconfig.getType() == 2) {
+                        tempval = new Double(oldval.doubleValue() + value);
+                    } else {
+                        return false;
+                    }
+
+                    try {
+                        ((TimeSeries) (Stats.get(col))).update(now, tempval);
+                        return true;
+                    } catch (SeriesException se2) {
+                        return false;
+                    }
+                }
+            }
+            return false;
+        }
+        
     }
 
     public String make_csv() {
@@ -195,7 +215,7 @@ public class Graph {
         return 0;
     }
 
-    public int saveJPG(final Second g_start, final Second g_end, final String filename, final int width, final int height) {    
+    public int saveJPG(final Second g_start, final Second g_end, final String filename, final int width, final int height) {
         try {
             ChartUtilities.saveChartAsJPEG(new File(filename), this.getgraph(mysar.myparser.get_startofgraph(), mysar.myparser.get_endofgraph()), width, height);
         } catch (IOException e) {
@@ -217,10 +237,10 @@ public class Graph {
         if (mygraph == null) {
             mygraph = makegraph(g_start, g_end);
         } else {
-            if ( ! axisofdate.getMaximumDate().equals(mysar.myparser.get_endofgraph().getEnd())) {
+            if (!axisofdate.getMaximumDate().equals(mysar.myparser.get_endofgraph().getEnd())) {
                 axisofdate.setMaximumDate(mysar.myparser.get_endofgraph().getEnd());
             }
-            if ( ! axisofdate.getMinimumDate().equals(mysar.myparser.get_startofgraph().getStart())) {
+            if (!axisofdate.getMinimumDate().equals(mysar.myparser.get_startofgraph().getStart())) {
                 axisofdate.setMinimumDate(mysar.myparser.get_startofgraph().getStart());
             }
         }
@@ -263,19 +283,19 @@ public class Graph {
 
     public ChartPanel get_ChartPanel() {
         if (chartpanel == null) {
-            if ( mysar.isParsing() ) {
+            if (mysar.isParsing()) {
                 chartpanel = new ChartPanel(getgraph(null, null));
             } else {
                 chartpanel = new ChartPanel(getgraph(mysar.myparser.get_startofgraph(), mysar.myparser.get_endofgraph()));
             }
         } else {
-            if ( ! mysar.isParsing() ) {
-                if ( ! axisofdate.getMaximumDate().equals(mysar.myparser.get_endofgraph().getEnd())) {
-                axisofdate.setMaximumDate(mysar.myparser.get_endofgraph().getEnd());
-            }
-            if ( ! axisofdate.getMinimumDate().equals(mysar.myparser.get_startofgraph().getStart())) {
-                axisofdate.setMinimumDate(mysar.myparser.get_startofgraph().getStart());
-            }
+            if (!mysar.isParsing()) {
+                if (!axisofdate.getMaximumDate().equals(mysar.myparser.get_endofgraph().getEnd())) {
+                    axisofdate.setMaximumDate(mysar.myparser.get_endofgraph().getEnd());
+                }
+                if (!axisofdate.getMinimumDate().equals(mysar.myparser.get_startofgraph().getStart())) {
+                    axisofdate.setMinimumDate(mysar.myparser.get_startofgraph().getStart());
+                }
             }
         }
         return chartpanel;
@@ -283,7 +303,7 @@ public class Graph {
 
     private JFreeChart makegraph(Second g_start, Second g_end) {
         long begingenerate = System.currentTimeMillis();
-        
+
         CombinedDomainXYPlot plot = new CombinedDomainXYPlot(axisofdate);
         // do the stacked stuff
         SortedSet<String> sortedset = new TreeSet<String>(graphconfig.getStacklist().keySet());
@@ -342,7 +362,7 @@ public class Graph {
         if (g_start != null && g_end != null) {
             axisofdate.setRange(g_start.getStart(), g_end.getEnd());
         }
-        
+
         plot.setOrientation(PlotOrientation.VERTICAL);
         JFreeChart mychart = new JFreeChart(graphtitle, Config.getDEFAULT_FONT(), plot, true);
         long endgenerate = System.currentTimeMillis();
@@ -352,7 +372,6 @@ public class Graph {
         }
         return mychart;
     }
-
     private DateAxis axisofdate = new DateAxis("");
     private kSar mysar = null;
     private JFreeChart mygraph = null;
