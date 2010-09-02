@@ -113,5 +113,16 @@
 
         <delete file="${store.dir}/temp_final.jar"/>
 
+        <!-- make the zip -->
+        <property name="store.zip" value="${store.dir}/${store.jar.name}.zip"/>
+
+        <echo message="Packaging ${application.title} into a single ZIP at ${store.zip}"/>
+
+        <zip destfile="${store.zip}" >
+            <zipfileset dir="contrib" prefix="contrib" />
+            <zipfileset dir="doc" prefix="doc" />
+            <zipfileset file="${store.jar}" />
+        </zip>
+
     </target>
 </project>
